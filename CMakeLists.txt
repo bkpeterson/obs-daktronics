@@ -23,6 +23,10 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs)
 #        pkg_check_modules(PANGOCAIRO pangocairo)
 #endif()
 
+find_package(pango REQUIRED)
+find_package(cairo REQUIRED)
+find_package(pangocairo REQUIRED)
+
 include_directories(
 	${PANGO_INCLUDE_DIRS}
 	${CAIRO_INCLUDE_DIRS}
