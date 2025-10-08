@@ -14,9 +14,9 @@ public:
 	DAKSource(obs_data_t *settings, obs_source_t *obs_source);
 	~DAKSource();
 
-    void SetTextValue(std::string newValue);
-    uint32_t GetIndex();
-    void Update(obs_data_t *settings);
+	void SetTextValue(std::string newValue);
+	uint32_t GetIndex();
+	void Update(obs_data_t *settings);
 
 	static void *Create(obs_data_t *settings, obs_source_t *obs_source);
 	static void Destroy(void *data);
@@ -28,28 +28,26 @@ public:
 	static obs_properties_t *GetProperties(void *data);
 	static void GetDefaults(obs_data_t *settings);
 
-    void _DoRender();
-	static bool DAKSportChanged(obs_properties_t *props,
-				     obs_property_t *property,
-				     obs_data_t *settings);
+	void _DoRender();
+	static bool DAKSportChanged(obs_properties_t *props, obs_property_t *property, obs_data_t *settings);
 
 private:
-    obs_source_t *_source;
+	obs_source_t *_source;
 
-    uint32_t _width;
-    uint32_t _height;
+	uint32_t _width;
+	uint32_t _height;
 
-    std::string _sport;
-    uint32_t _index;
-    const char *_textValue;
+	std::string _sport;
+	uint32_t _index;
+	const char *_textValue;
 
-    gs_texture_t *_texture;
+	gs_texture_t *_texture;
 
-    PangoAlignment _align;
-    struct vec4 _bg;
-    struct vec4 _fg;
-    struct vec4 _outline;
+	PangoAlignment _align;
+	struct vec4 _bg;
+	struct vec4 _fg;
+	struct vec4 _outline;
 
-    double _outlinew;
-    char _font[FONT_MAXLEN + 1];
+	double _outlinew;
+	char _font[FONT_MAXLEN + 1];
 };

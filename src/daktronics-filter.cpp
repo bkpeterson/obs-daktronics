@@ -22,16 +22,13 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #include "daktronics-filter.hpp"
 #include "dak-data-utils.hpp"
 
-DAKFilter::DAKFilter(obs_data_t *settings, obs_source_t *source)
-	: _source(source)
+DAKFilter::DAKFilter(obs_data_t *settings, obs_source_t *source) : _source(source)
 {
-    _visible = true;
+	_visible = true;
 	Update(this, settings);
 }
 
-DAKFilter::~DAKFilter()
-{
-}
+DAKFilter::~DAKFilter() {}
 
 void *DAKFilter::Create(obs_data_t *settings, obs_source_t *source)
 {
@@ -47,36 +44,37 @@ void DAKFilter::Destroy(void *data)
 	delete instance;
 }
 
-
 const char *DAKFilter::GetName(void *type_data)
 {
 	UNUSED_PARAMETER(type_data);
 	return obs_module_text("DaktronicsFilter");
 }
 
-void DAKFilter::SetVisible(bool visible) {
+void DAKFilter::SetVisible(bool visible)
+{
 	_visible = visible;
-	
 }
 
-uint32_t DAKFilter::GetIndex() {
+uint32_t DAKFilter::GetIndex()
+{
 	return _index;
 }
 
 void DAKFilter::Render(void *data, gs_effect_t *effect)
 {
-    UNUSED_PARAMETER(effect);
+	UNUSED_PARAMETER(effect);
 
-    auto instance = static_cast<DAKFilter *>(data);
+	auto instance = static_cast<DAKFilter *>(data);
 	instance->_DoRender();
 }
 
-void DAKFilter::_DoRender() {
-    // Get the source being filtered
-    if (!_source) return;
-    obs_source_set_enabled(_source, _visible);
+void DAKFilter::_DoRender()
+{
+	// Get the source being filtered
+	if (!_source)
+		return;
+	obs_source_set_enabled(_source, _visible);
 }
-
 
 void DAKFilter::Update(void *data, obs_data_t *settings)
 {
@@ -84,11 +82,11 @@ void DAKFilter::Update(void *data, obs_data_t *settings)
 	instance.Update(settings);
 }
 
-void DAKFilter::Update(obs_data_t *settings) {
+void DAKFilter::Update(obs_data_t *settings)
+{
 	_sport = (std::string)obs_data_get_string(settings, "dak_sport_type");
 	_index = (uint32_t)obs_data_get_int(settings, "dak_field_list");
 }
-
 
 void DAKFilter::GetDefaults(obs_data_t *settings)
 {
@@ -102,44 +100,30 @@ obs_properties_t *DAKFilter::GetProperties(void *data)
 
 	obs_properties_t *props = obs_properties_create();
 
-	obs_property_t *sport_type = obs_properties_add_list(
-			props, 
-			"dak_sport_type",
-			obs_module_text("DaktronicsSource.SportType"), 
-			OBS_COMBO_TYPE_LIST,
-			OBS_COMBO_FORMAT_STRING);
+	obs_property_t *sport_type = obs_properties_add_list(props, "dak_sport_type",
+							     obs_module_text("DaktronicsSource.SportType"),
+							     OBS_COMBO_TYPE_LIST, OBS_COMBO_FORMAT_STRING);
 
 	DAKDataUtils::PopulateSportProps(sport_type);
 
-	obs_property_set_modified_callback(
-			sport_type,
-			DAKFilter::DAKSportChanged);
+	obs_property_set_modified_callback(sport_type, DAKFilter::DAKSportChanged);
 
-	obs_properties_add_list(
-			props, 
-			"dak_field_list",
-			obs_module_text("DaktronicsSource.FieldList"), 
-			OBS_COMBO_TYPE_LIST,
-			OBS_COMBO_FORMAT_INT);
+	obs_properties_add_list(props, "dak_field_list", obs_module_text("DaktronicsSource.FieldList"),
+				OBS_COMBO_TYPE_LIST, OBS_COMBO_FORMAT_INT);
 
 	std::string info = "<a href=\"https://github.com/bkpeterson/obs-daktronics\">Daktronics Source</a> (";
 	info += PLUGIN_VERSION;
 	info += ") by bkpeterson";
 
-	obs_properties_add_text(
-			props, 
-			"plugin_info", 
-			info.c_str(),
-			OBS_TEXT_INFO);
-
+	obs_properties_add_text(props, "plugin_info", info.c_str(), OBS_TEXT_INFO);
 
 	return props;
 }
 
 bool DAKFilter::DAKSportChanged(obs_properties_t *props, obs_property_t *property, obs_data_t *settings)
 {
-    UNUSED_PARAMETER(property);
-    
+	UNUSED_PARAMETER(property);
+
 	std::string sport_type = (std::string)obs_data_get_string(settings, "dak_sport_type");
 
 	obs_property_t *list = obs_properties_get(props, "dak_field_list");

@@ -23,9 +23,7 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #include "dak-data-utils.hpp"
 #include <pango/pangocairo.h>
 
-
-DAKSource::DAKSource(obs_data_t* settings, obs_source_t* source)
-	: _source(source)
+DAKSource::DAKSource(obs_data_t *settings, obs_source_t *source) : _source(source)
 {
 	Update(this, settings);
 }
@@ -39,7 +37,7 @@ DAKSource::~DAKSource()
 	}
 }
 
-void *DAKSource::Create(obs_data_t* settings, obs_source_t* source)
+void *DAKSource::Create(obs_data_t *settings, obs_source_t *source)
 {
 	auto context = new DAKSource(settings, source);
 	DAKDataUtils::AddSource(context);
@@ -53,18 +51,19 @@ void DAKSource::Destroy(void *data)
 	delete instance;
 }
 
-
 const char *DAKSource::GetName(void *type_data)
 {
 	UNUSED_PARAMETER(type_data);
 	return obs_module_text("DaktronicsSource");
 }
 
-void DAKSource::SetTextValue(std::string newValue) {
+void DAKSource::SetTextValue(std::string newValue)
+{
 	_textValue = newValue.c_str();
 }
 
-uint32_t DAKSource::GetIndex() {
+uint32_t DAKSource::GetIndex()
+{
 	return _index;
 }
 
@@ -106,8 +105,7 @@ void DAKSource::_DoRender()
 	if (_texture) {
 		gs_texture_destroy(_texture);
 	}
-	_texture = gs_texture_create(_width, _height,
-		GS_BGRA, 1, (const uint8_t **)&textdata, 0);
+	_texture = gs_texture_create(_width, _height, GS_BGRA, 1, (const uint8_t **)&textdata, 0);
 	obs_leave_graphics();
 
 	/* Cleanup */
@@ -117,20 +115,17 @@ void DAKSource::_DoRender()
 	g_object_unref(pango);
 }
 
-
 uint32_t DAKSource::GetWidth(void *data)
 {
 	auto &instance = *static_cast<DAKSource *>(data);
 	return instance._width;
 }
 
-
 uint32_t DAKSource::GetHeight(void *data)
 {
 	auto &instance = *static_cast<DAKSource *>(data);
 	return instance._height;
 }
-
 
 void DAKSource::Render(void *data, gs_effect_t *effect)
 {
@@ -142,37 +137,36 @@ void DAKSource::Render(void *data, gs_effect_t *effect)
 	obs_source_draw(instance._texture, 0, 0, instance._width, instance._height, false);
 }
 
-
 void DAKSource::Update(void *data, obs_data_t *settings)
 {
 	auto &instance = *static_cast<DAKSource *>(data);
 	instance.Update(settings);
 }
 
-void DAKSource::Update(obs_data_t *settings) {
+void DAKSource::Update(obs_data_t *settings)
+{
 	SetTextValue(obs_data_get_string(settings, "dak_field_default_val"));
 
 	_sport = (std::string)obs_data_get_string(settings, "dak_sport_type");
 	_index = (uint32_t)obs_data_get_int(settings, "dak_field_list");
 
 	obs_data_t *font_obj = obs_data_get_obj(settings, "font");
-	snprintf(_font, FONT_MAXLEN, "%s %lld",
-		obs_data_get_string(font_obj, "face"),
-		obs_data_get_int(font_obj, "size"));
+	snprintf(_font, FONT_MAXLEN, "%s %lld", obs_data_get_string(font_obj, "face"),
+		 obs_data_get_int(font_obj, "size"));
 	obs_data_release(font_obj);
 
-    int align = obs_data_get_int(settings, "dak_text_align");
-    switch(align) {
-        case 1:
-            _align = PANGO_ALIGN_LEFT;
-            break;
-        case 2:
-            _align = PANGO_ALIGN_CENTER;
-            break;
-        case 3:
-            _align = PANGO_ALIGN_RIGHT;
-            break;
-    }
+	int align = obs_data_get_int(settings, "dak_text_align");
+	switch (align) {
+	case 1:
+		_align = PANGO_ALIGN_LEFT;
+		break;
+	case 2:
+		_align = PANGO_ALIGN_CENTER;
+		break;
+	case 3:
+		_align = PANGO_ALIGN_RIGHT;
+		break;
+	}
 
 	vec4_from_rgba(&_bg, obs_data_get_int(settings, "bg"));
 	vec4_from_rgba(&_fg, obs_data_get_int(settings, "fg"));
@@ -181,7 +175,6 @@ void DAKSource::Update(obs_data_t *settings) {
 
 	_DoRender();
 }
-
 
 void DAKSource::GetDefaults(obs_data_t *settings)
 {
@@ -207,107 +200,63 @@ obs_properties_t *DAKSource::GetProperties(void *data)
 	obs_properties_t *props = obs_properties_create();
 	obs_properties_t *prop_dak_group = obs_properties_create();
 
-	obs_property_t *sport_type = obs_properties_add_list(
-			prop_dak_group, 
-			"dak_sport_type",
-			obs_module_text("DaktronicsSource.SportType"), 
-			OBS_COMBO_TYPE_LIST,
-			OBS_COMBO_FORMAT_STRING);
+	obs_property_t *sport_type = obs_properties_add_list(prop_dak_group, "dak_sport_type",
+							     obs_module_text("DaktronicsSource.SportType"),
+							     OBS_COMBO_TYPE_LIST, OBS_COMBO_FORMAT_STRING);
 
 	DAKDataUtils::PopulateSportProps(sport_type);
 
-	obs_property_set_modified_callback(
-			sport_type,
-			DAKSource::DAKSportChanged);
+	obs_property_set_modified_callback(sport_type, DAKSource::DAKSportChanged);
 
-	obs_properties_add_list(
-			prop_dak_group, 
-			"dak_field_list",
-			obs_module_text("DaktronicsSource.FieldList"), 
-			OBS_COMBO_TYPE_LIST,
-			OBS_COMBO_FORMAT_INT);
+	obs_properties_add_list(prop_dak_group, "dak_field_list", obs_module_text("DaktronicsSource.FieldList"),
+				OBS_COMBO_TYPE_LIST, OBS_COMBO_FORMAT_INT);
 
-	obs_properties_add_text(
-			prop_dak_group,
-			"dak_field_default_val",
-			obs_module_text("DaktronicsSource.FieldDefaultVal"),
-            OBS_TEXT_DEFAULT);
+	obs_properties_add_text(prop_dak_group, "dak_field_default_val",
+				obs_module_text("DaktronicsSource.FieldDefaultVal"), OBS_TEXT_DEFAULT);
 
-	obs_properties_add_group(props, "sport_group",
-			obs_module_text("DaktronicsSource.SportGroupLabel"),
-			OBS_GROUP_NORMAL, prop_dak_group);
+	obs_properties_add_group(props, "sport_group", obs_module_text("DaktronicsSource.SportGroupLabel"),
+				 OBS_GROUP_NORMAL, prop_dak_group);
 
-   obs_properties_add_font(
-			props, 
-			"font", 
-			obs_module_text("DaktronicsSource.Font"));
+	obs_properties_add_font(props, "font", obs_module_text("DaktronicsSource.Font"));
 
-	obs_property_t *align_type = obs_properties_add_list(
-			props, 
-			"dak_text_align",
-			obs_module_text("DaktronicsSource.AlignList"), 
-			OBS_COMBO_TYPE_LIST,
-			OBS_COMBO_FORMAT_INT);
+	obs_property_t *align_type = obs_properties_add_list(props, "dak_text_align",
+							     obs_module_text("DaktronicsSource.AlignList"),
+							     OBS_COMBO_TYPE_LIST, OBS_COMBO_FORMAT_INT);
 
-	obs_property_list_add_int(
-			align_type,
-			"Left",
-			1);
+	obs_property_list_add_int(align_type, "Left", 1);
 
-	obs_property_list_add_int(
-			align_type,
-			"Center",
-			2);
+	obs_property_list_add_int(align_type, "Center", 2);
 
-	obs_property_list_add_int(
-			align_type,
-			"Right",
-			3);
+	obs_property_list_add_int(align_type, "Right", 3);
 
-	obs_properties_add_color_alpha(
-			props, 
-			"bg",
-			obs_module_text("DaktronicsSource.BackgroundColor"));
+	obs_properties_add_color_alpha(props, "bg", obs_module_text("DaktronicsSource.BackgroundColor"));
 
-	obs_properties_add_color_alpha(
-			props, 
-			"fg",
-			obs_module_text("DaktronicsSource.ForegroundColor"));
+	obs_properties_add_color_alpha(props, "fg", obs_module_text("DaktronicsSource.ForegroundColor"));
 
-	obs_properties_add_color_alpha(
-			props, 
-			"outline",
-			obs_module_text("DaktronicsSource.OutlineColor"));
+	obs_properties_add_color_alpha(props, "outline", obs_module_text("DaktronicsSource.OutlineColor"));
 
-	obs_properties_add_float(
-			props, 
-			"outlinew",
-			obs_module_text("DaktronicsSource.OutlineWidth"), 0.0, INFINITY, 1.0);
+	obs_properties_add_float(props, "outlinew", obs_module_text("DaktronicsSource.OutlineWidth"), 0.0, INFINITY,
+				 1.0);
 
 	std::string info = "<a href=\"https://github.com/bkpeterson/obs-daktronics\">Daktronics Source</a> (";
 	info += PLUGIN_VERSION;
 	info += ") by bkpeterson";
 
-	obs_properties_add_text(
-			props, 
-			"plugin_info", 
-			info.c_str(),
-			OBS_TEXT_INFO);
-
+	obs_properties_add_text(props, "plugin_info", info.c_str(), OBS_TEXT_INFO);
 
 	return props;
 }
 
 bool DAKSource::DAKSportChanged(obs_properties_t *props, obs_property_t *property, obs_data_t *settings)
 {
-    UNUSED_PARAMETER(property);
-    
+	UNUSED_PARAMETER(property);
+
 	std::string sport_type = obs_data_get_string(settings, "dak_sport_type");
 
 	obs_property_t *list = obs_properties_get(props, "dak_field_list");
 	obs_property_list_clear(list);
 
-	DAKSportData* sportData = DAKDataUtils::getSportData(sport_type);
+	DAKSportData *sportData = DAKDataUtils::getSportData(sport_type);
 	sportData->PopulateFieldProps(list);
 
 	return true;
