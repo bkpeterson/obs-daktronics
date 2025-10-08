@@ -112,18 +112,19 @@ jobs:
           print "pluginName=${product_name}" >> $GITHUB_OUTPUT
           print "pluginVersion=${product_version}" >> $GITHUB_OUTPUT
 
-      - name: Install PangoCairo dependencies
+      - name: Install Pango dependencies
         if: runner.os == 'macOS'
         run: |
-          brew install cairo pango
+          brew install pango
 
-      - name: Set Homebrew Library Path
-        run: echo "LIBRARY_PATH=/opt/homebrew/lib" >> $GITHUB_ENV
-        if: runner.os == 'macOS' && runner.arch == 'ARM64' # For Apple Silicon
+      #- name: Set Homebrew Library Path
+      #  run: echo "LIBRARY_PATH=/opt/homebrew/lib" >> $GITHUB_ENV
+      #  if: runner.os == 'macOS' && runner.arch == 'ARM64' # For Apple Silicon
 
       - name: Set Homebrew Library Path (Intel)
-        run: echo "LIBRARY_PATH=/usr/local/lib" >> $GITHUB_ENV
         if: runner.os == 'macOS' && runner.arch == 'X64' # For Intel Macs
+        run: |
+          echo "LIBRARY_PATH=/usr/local/lib" >> $GITHUB_ENV
   
       - uses: actions/cache/restore@v4
         id: ccache-cache
