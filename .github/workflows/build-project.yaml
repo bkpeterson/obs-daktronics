@@ -112,6 +112,11 @@ jobs:
           print "pluginName=${product_name}" >> $GITHUB_OUTPUT
           print "pluginVersion=${product_version}" >> $GITHUB_OUTPUT
 
+      - name: Install PangoCairo dependencies
+        if: runner.os == 'macOS'
+        run: |
+          brew install cairo pango
+
       - uses: actions/cache/restore@v4
         id: ccache-cache
         with:
