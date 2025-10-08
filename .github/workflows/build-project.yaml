@@ -123,7 +123,7 @@ jobs:
 
       - name: Set Homebrew Library Path
         run: |
-          echo "LIBRARY_PATH=/opt/homebrew/Cellar/pango/1.57.0/lib" >> $GITHUB_ENV
+          echo "LIBRARY_PATH=/opt/homebrew/Cellar/pango/1.57.0/lib;/opt/homebrew/Cellar/cairo/1.18.4/lib" >> $GITHUB_ENV
   
       - uses: actions/cache/restore@v4
         id: ccache-cache
