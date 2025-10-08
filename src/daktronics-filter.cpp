@@ -115,7 +115,7 @@ obs_properties_t *DAKFilter::GetProperties(void *data)
 			sport_type,
 			DAKFilter::DAKSportChanged);
 
-	obs_property_t *field_type = obs_properties_add_list(
+	obs_properties_add_list(
 			props, 
 			"dak_field_list",
 			obs_module_text("DaktronicsSource.FieldList"), 

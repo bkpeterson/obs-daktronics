@@ -7,6 +7,11 @@
 #include "dak-sport-data.hpp"
 #include "dak-data-utils.hpp"
 
+std::map<std::string, DAKSportData *> DAKDataUtils::_allSportsData;
+std::map<uint32_t, std::vector<DAKSource *>> DAKDataUtils::_sources;
+std::map<uint32_t, std::vector<DAKFilter *>> DAKDataUtils::_filters;
+
+
 void DAKDataUtils::read_csv_field(std::istringstream& ss, std::string& field) {
     std::getline(ss, field, '\t');
 }

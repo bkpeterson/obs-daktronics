@@ -5,6 +5,14 @@
 
 #include "obs-module.h"
 
+struct DAKFieldData {
+    std::string _sport;
+    uint32_t _index;
+    uint32_t _length;
+    std::string _field;
+    std::string _curValue;
+};
+
 class DAKSportData {
 public:
 	DAKSportData(std::string sport, uint32_t dataSize);
@@ -24,16 +32,4 @@ private:
     std::string _sport;
     uint32_t _dataSize;
     std::vector<DAKFieldData *> _fieldData;
-};
-
-class DAKFieldData {
-public:
-    DAKFieldData(std::string sport, uint32_t index, uint32_t length, std::string field);
-    ~DAKFieldData();
-
-    std::string _sport;
-    uint32_t _index;
-    uint32_t _length;
-    std::string _field;
-    std::string _curValue;
 };

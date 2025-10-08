@@ -14,7 +14,12 @@ DAKSportData::~DAKSportData() {
 }
 
 void DAKSportData::AddFieldData(uint32_t index, std::string field, uint32_t length) {
-    _fieldData.emplace_back(_sport, index, field, length);
+    DAKFieldData *newData = new DAKFieldData;
+    newData->_sport = _sport;
+    newData->_index = index;
+    newData->_field = field;
+    newData->_length = length;
+    _fieldData.push_back(newData);
 }
 
 std::string DAKSportData::GetSportName() {
@@ -50,17 +55,4 @@ void DAKSportData::PopulateFieldProps(obs_property_t* fieldList) {
                 fieldData->_field.c_str(),
                 fieldData->_index);
     }
-}
-
-
-DAKFieldData::DAKFieldData(std::string sport, uint32_t index, uint32_t length, std::string field) 
-    : _sport(sport),
-      _index(index),
-      _field(field),
-      _length(length) {
-
-}
-    
-DAKFieldData::~DAKFieldData() {
-
 }

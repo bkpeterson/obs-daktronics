@@ -205,10 +205,7 @@ obs_properties_t *DAKSource::GetProperties(void *data)
 	UNUSED_PARAMETER(data);
 
 	obs_properties_t *props = obs_properties_create();
-
 	obs_properties_t *prop_dak_group = obs_properties_create();
-	obs_properties_t *prop_group = obs_properties_create();
-	obs_property_t *p;
 
 	obs_property_t *sport_type = obs_properties_add_list(
 			prop_dak_group, 
@@ -223,7 +220,7 @@ obs_properties_t *DAKSource::GetProperties(void *data)
 			sport_type,
 			DAKSource::DAKSportChanged);
 
-	obs_property_t *field_type = obs_properties_add_list(
+	obs_properties_add_list(
 			prop_dak_group, 
 			"dak_field_list",
 			obs_module_text("DaktronicsSource.FieldList"), 
