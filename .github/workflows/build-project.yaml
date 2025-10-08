@@ -117,6 +117,14 @@ jobs:
         run: |
           brew install cairo pango
 
+      - name: Set Homebrew Library Path
+        run: echo "LIBRARY_PATH=/opt/homebrew/lib" >> $GITHUB_ENV
+        if: runner.os == 'macOS' && runner.arch == 'ARM64' # For Apple Silicon
+
+      - name: Set Homebrew Library Path (Intel)
+        run: echo "LIBRARY_PATH=/usr/local/lib" >> $GITHUB_ENV
+        if: runner.os == 'macOS' && runner.arch == 'X64' # For Intel Macs
+  
       - uses: actions/cache/restore@v4
         id: ccache-cache
         with:
