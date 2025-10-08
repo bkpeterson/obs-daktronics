@@ -16,6 +16,25 @@ add_library(${CMAKE_PROJECT_NAME} MODULE)
 find_package(libobs REQUIRED)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs)
 
+find_package(PkgConfig REQUIRED)
+if (PKG_CONFIG_FOUND)
+        pkg_check_modules(PANGO pango)
+        pkg_check_modules(CAIRO cairo)
+        pkg_check_modules(PANGOCAIRO pangocairo)
+endif()
+
+include_directories(
+	${PANGO_INCLUDE_DIRS}
+	${CAIRO_INCLUDE_DIRS}
+	${PANGOCAIRO_INCLUDE_DIRS}
+)
+
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
+	${PANGO_LIBRARIES}
+	${CAIRO_LIBRARIES}
+	${PANGOCAIRO_LIBRARIES}
+)
+
 if(ENABLE_FRONTEND_API)
   find_package(obs-frontend-api REQUIRED)
   target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::obs-frontend-api)
@@ -34,6 +53,7 @@ if(ENABLE_QT)
   )
 endif()
 
-target_sources(${CMAKE_PROJECT_NAME} PRIVATE src/plugin-main.c)
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE src)
+target_sources(${CMAKE_PROJECT_NAME} PRIVATE src/plugin-main.cpp src/dak-data-utils.cpp src/dak-sport-data.cpp src/daktronics-filter.cpp src/daktronics-source.cpp src/dak-source-support.c)
 
 set_target_properties_plugin(${CMAKE_PROJECT_NAME} PROPERTIES OUTPUT_NAME ${_name})

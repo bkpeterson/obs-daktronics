@@ -1,0 +1,716 @@
+Basketball  646
+1   Main Clock Time (mm:ss, ss.t)   5
+6   Main Clock Time (mm:ss.t)   8
+14	Main Clock, Time Out Time, Time of Day (mm:ss ss.t)	5
+19	Main Clock, Time Out Time, Time of Day (mm:ss.t)	8
+27	Main Clock = 00:00	1
+28	Main Clock Stopped	1
+29	Main Clock or Time Out Horn	1
+30	Main Clock Horn	1
+31	Time Out Horn	1
+32	Time Out Time (mm:ss)	8
+40	Time of Day (hh:mm:ss)	8
+48	Home Team Name	20
+68	Guest Team Name	20
+88	Home Team Abbreviation	10
+98	Guest Team Abbreviation	10
+108	Home Team Score	4
+112	Guest Team Score	4
+116	Home Time Outs Left - Full	2
+118	Home Time Outs Left - Partial	2
+120	Home Time Outs Left - Television	2
+122	Home Time Outs Left - Total	2
+124	Guest Time Outs Left - Full	2
+126	Guest Time Outs Left - Partial	2
+128	Guest Time Outs Left - Television	2
+130	Guest Time Outs Left - Total	2
+132	Home Time Out Indicator	1
+133	Home Time Out Text	4
+137	Guest Time Out Indicator	1
+138	Guest Time Out Text	4
+142	Period	2
+144	Period Text	4
+148	Period Description	12
+160	Internal Relay	1
+161	Ad Panel Caption Power	1
+162	Ad Panel Caption #1	1
+163	Ad Panel Caption #2	1
+164	Ad Panel Caption #3	1
+165	Ad Panel Caption #4	1
+166	Reserved for Future Use	35
+201	Shot Clock Time (mm:ss)	8
+209	Shot Clock Horn	1
+210	Home Possession Indicator	1
+211	Home Possession Arrow	1
+212	Home Possession Text	4
+216	Guest Possession Indicator	1
+217	Guest Possession Arrow	1
+218	Guest Possession Text	4
+222	Home 1-on-1 Bonus Indicator	1
+223	Home 2-shot Bonus Indicator	1
+224	Home Bonus Text	5
+229	Guest 1-on-1 Bonus Indicator	1
+230	Guest 2-shot Bonus Indicator	1
+231	Guest Bonus Text	5
+236	Home Team Fouls	2
+238	Guest Team Fouls	2
+240	Home Player-Foul-Points	8
+248	Guest Player-Foul-Points	8
+256	Player-Foul	3
+259	Player-Foul-Points	5
+264	Home Score - Period 1	2
+266	Home Score - Period 2	2
+268	Home Score - Period 3	2
+270	Home Score - Period 4	2
+272	Home Score - Period 5	2
+276	Home Score - Period 7	2
+278	Home Score - Period 8	2
+280	Home Score - Period 9	2
+282	Home Score - Current Period	2
+284	Guest Score - Period 1	2
+286	Guest Score - Period 2	2
+288	Guest Score - Period 3	2
+290	Guest Score - Period 4	2
+292	Guest Score - Period 5	2
+294	Guest Score - Period 6	2
+296	Guest Score - Period 7	2
+298	Guest Score - Period 8	2
+300	Guest Score - Period 9	2
+302	Guest Score - Current Period	2
+304	Home In-game Plyr 1-Status	1
+305	Home In-game Plyr 1-Number	2
+307	Home In-game Plyr 1-Fouls	2
+309	Home In-game Plyr 1-Points	2
+311	Home In-game Plyr 2-Status	1
+312	Home In-game Plyr 2-Number	2
+314	Home In-game Plyr 2-Fouls	2
+316	Home In-game Plyr 2-Points	2
+318	Home In-game Plyr 3-Status	1
+319	Home In-game Plyr 3-Number	2
+321	Home In-game Plyr 3-Fouls	2
+323	Home In-game Plyr 3-Points	2
+325	Home In-game Plyr 4-Status	1
+326	Home In-game Plyr 4-Number	2
+328	Home In-game Plyr 4-Fouls	2
+330	Home In-game Plyr 4-Points	2
+332	Home In-game Plyr 5-Status	1
+333	Home In-game Plyr 5-Number	2
+335	Home In-game Plyr 5-Fouls	2
+337	Home In-game Plyr 5-Points	2
+339	Reserved - Home In-game Plyr 6	7
+346	Home Roster Plyr 1-Status	1
+347	Home Roster Plyr 1-Number	2
+349	Home Roster Plyr 1-Fouls	2
+351	Home Roster Plyr 1-Points	2
+353	Home Roster Plyr 2-Status	1
+354	Home Roster Plyr 2-Number	2
+356	Home Roster Plyr 2-Fouls	2
+358	Home Roster Plyr 2-Points	2
+360	Home Roster Plyr 3-Status	1
+361	Home Roster Plyr 3-Number	2
+363	Home Roster Plyr 3-Fouls	2
+365	Home Roster Plyr 3-Points	2
+367	Home Roster Plyr 4-Status	1
+368	Home Roster Plyr 4-Number	2
+370	Home Roster Plyr 4-Fouls	2
+372	Home Roster Plyr 4-Points	2
+374	Home Roster Plyr 5-Status	1
+375	Home Roster Plyr 5-Number	2
+377	Home Roster Plyr 5-Fouls	2
+379	Home Roster Plyr 5-Points	2
+381	Home Roster Plyr 6-Status	1
+382	Home Roster Plyr 6-Number	2
+384	Home Roster Plyr 6-Fouls	2
+386	Home Roster Plyr 6-Points	2
+388	Home Roster Plyr 7-Status	1
+389	Home Roster Plyr 7-Number	2
+391	Home Roster Plyr 7-Fouls	2
+393	Home Roster Plyr 7-Points	2
+395	Home Roster Plyr 8-Status	1
+396	Home Roster Plyr 8-Number	2
+398	Home Roster Plyr 8-Fouls	2
+400	Home Roster Plyr 8-Points	2
+402	Home Roster Plyr 9-Status	1
+403	Home Roster Plyr 9-Number	2
+405	Home Roster Plyr 9-Fouls	2
+407	Home Roster Plyr 9-Points	2
+409	Home Roster Plyr 10-Status	1
+410	Home Roster Plyr 10-Number	2
+412	Home Roster Plyr 10-Fouls	2
+414	Home Roster Plyr 10-Points	2
+416	Home Roster Plyr 11-Status	1
+417	Home Roster Plyr 11-Number	2
+419	Home Roster Plyr 11-Fouls	2
+421	Home Roster Plyr 11-Points	2
+423	Home Roster Plyr 12-Status	1
+424	Home Roster Plyr 12-Number	2
+426	Home Roster Plyr 12-Fouls	2
+428	Home Roster Plyr 12-Points	2
+430	Home Roster Plyr 13-Status	1
+431	Home Roster Plyr 13-Number	2
+433	Home Roster Plyr 13-Fouls	2
+435	Home Roster Plyr 13-Points	2
+437	Home Roster Plyr 14-Status	1
+438	Home Roster Plyr 14-Number	2
+440	Home Roster Plyr 14-Fouls	2
+442	Home Roster Plyr 14-Points	2
+444	Home Roster Plyr 15-Status	1
+445	Home Roster Plyr 15-Number	2
+447	Home Roster Plyr 15-Fouls	2
+449	Home Roster Plyr 15-Points	2
+451	Home Assists	4
+455	Home Rebounds	4
+459	Home Blocked Shots	4
+463	Home Steals	4
+467	Home Total Hustle (A,R,B,S)	4
+471	Home Total Hustle (R,B,S)	4
+475	Guest In-game Plyr 1-Status	1
+476	Guest In-game Plyr 1-Number	2
+478	Guest In-game Plyr 1-Fouls	2
+480	Guest In-game Plyr 1-Points	2
+482	Guest In-game Plyr 2-Status	1
+483	Guest In-game Plyr 2-Number	2
+485	Guest In-game Plyr 2-Fouls	2
+487	Guest In-game Plyr 2-Points	2
+489	Guest In-game Plyr 3-Status	1
+490	Guest In-game Plyr 3-Number	2
+492	Guest In-game Plyr 3-Fouls	2
+494	Guest In-game Plyr 3-Points	2
+496	Guest In-game Plyr 4-Status	1
+497	Guest In-game Plyr 4-Number	2
+499	Guest In-game Plyr 4-Fouls	2
+501	Guest In-game Plyr 4-Points	2
+503	Guest In-game Plyr 5-Status	1
+504	Guest In-game Plyr 5-Number	2
+506	Guest In-game Plyr 5-Fouls	2
+508	Guest In-game Plyr 5-Points	2
+510	Reserved - Guest In-game Plyr 6	7
+517	Guest Roster Plyr 1-Status	1
+518	Guest Roster Plyr 1-Number	2
+520	Guest Roster Plyr 1-Fouls	2
+522	Guest Roster Plyr 1-Points	2
+524	Guest Roster Plyr 2-Status	1
+525	Guest Roster Plyr 2-Number	2
+527	Guest Roster Plyr 2-Fouls	2
+529	Guest Roster Plyr 2-Points	2
+531	Guest Roster Plyr 3-Status	1
+532	Guest Roster Plyr 3-Number	2
+534	Guest Roster Plyr 3-Fouls	2
+536	Guest Roster Plyr 3-Points	2
+538	Guest Roster Plyr 4-Status	1
+539	Guest Roster Plyr 4-Number	2
+541	Guest Roster Plyr 4-Fouls	2
+543	Guest Roster Plyr 4-Points	2
+545	Guest Roster Plyr 5-Status	1
+546	Guest Roster Plyr 5-Number	2
+548	Guest Roster Plyr 5-Fouls	2
+550	Guest Roster Plyr 5-Points	2
+552	Guest Roster Plyr 6-Status	1
+553	Guest Roster Plyr 6-Number	2
+555	Guest Roster Plyr 6-Fouls	2
+557	Guest Roster Plyr 6-Points	2
+559	Guest Roster Plyr 7-Status	1
+560	Guest Roster Plyr 7-Number	2
+562	Guest Roster Plyr 7-Fouls	2
+564	Guest Roster Plyr 7-Points	2
+566	Guest Roster Plyr 8-Status	1
+567	Guest Roster Plyr 8-Number	2
+569	Guest Roster Plyr 8-Fouls	2
+571	Guest Roster Plyr 8-Points	2
+573	Guest Roster Plyr 9-Status	1
+574	Guest Roster Plyr 9-Number	2
+576	Guest Roster Plyr 9-Fouls	2
+578	Guest Roster Plyr 9-Points	2
+580	Guest Roster Plyr 10-Status	1
+581	Guest Roster Plyr 10-Number	2
+583	Guest Roster Plyr 10-Fouls	2
+585	Guest Roster Plyr 10-Points	2
+587	Guest Roster Plyr 11-Status	1
+588	Guest Roster Plyr 11-Number	2
+590	Guest Roster Plyr 11-Fouls	2
+592	Guest Roster Plyr 11-Points	2
+594	Guest Roster Plyr 12-Status	1
+595	Guest Roster Plyr 12-Number	2
+597	Guest Roster Plyr 12-Fouls	2
+599	Guest Roster Plyr 12-Points	2
+601	Guest Roster Plyr 13-Status	1
+602	Guest Roster Plyr 13-Number	2
+604	Guest Roster Plyr 13-Fouls	2
+606	Guest Roster Plyr 13-Points	2
+608	Guest Roster Plyr 14-Status	1
+609	Guest Roster Plyr 14-Number	2
+611	Guest Roster Plyr 14-Fouls	2
+613	Guest Roster Plyr 14-Points	2
+615	Guest Roster Plyr 15-Status	1
+616	Guest Roster Plyr 15-Number	2
+618	Guest Roster Plyr 15-Fouls	2
+620	Guest Roster Plyr 15-Points	2
+622	Guest Assists	4
+626	Guest Rebounds	4
+630	Guest Blocked Shots	4
+634	Guest Steals	4
+638	Guest Total Hustle (A,R,B,S)	4
+642 Guest Total Hustle (R,B,S)  4
+
+Football    295
+1	Main Clock Time [mm:ss/ss.t]	5
+6	Main Clock Time [mm:ss.t]	8
+14	Main Clock/Time Out/TOD [mm:ss/ss.t]	5
+19	Main Clock/Time Out/TOD [mm:ss.t]	8
+27	Main Clock =0	1
+28	Main Clock Stopped	1
+29	Main Clock/Time Out Horn	1
+30	Main Clock Horn	1
+31	Time Out Horn	1
+32	Time Out Time	8
+40	Time of Day	8
+48	Home Team Name	20
+68	Guest Team Name	20
+88	Home Team Abbreviation	10
+98	Guest Team Abbreviation	10
+108	Home Team Score	4
+112	Guest Team Score	4
+116	Home Time Outs Left - Full	2
+118	Home Time Outs Left - Partial	2
+120	Home Time Outs Left - Television	2
+122	Home Time Outs Left - Total	2
+124	Guest Time Outs Left - Full	2
+126	Guest Time Outs Left - Partial	2
+128	Guest Time Outs Left - Television	2
+130	Guest Time Outs Left - Total	2
+132	Home Time Out Indicator	1
+133	Home Time Out Text	4
+137	Guest Time Out Indicator	1
+138	Guest Time Out Text	4
+142	Quarter	2
+144	Quarter Text	4
+148	Quarter Description	12
+160	Internal Relay	1
+161	Ad Panel / Caption Power	1
+162	Ad Panel / Caption #1	1
+163	Ad Panel / Caption #2 	1
+164	Ad Panel / Caption #3	1
+165	Ad Panel / Caption #4	1
+166	Reserved for Future Use	35
+201	Play Clock Time	8
+209	Play Clock Horn	1
+210	Home Possession Indicator	1
+211	Home Possession Text	4
+215	Guest Possession Indicator	1
+216	Guest Possession Text	4
+220	Ball On	2
+222	Down	3
+225	To Go	2
+227	Home Score - Period 1	2
+229	Home Score - Period 2	2
+231	Home Score - Period 3	2
+233	Home Score - Period 4	2
+235	Home Score - Period 5	2
+237	Home Score - Period 6	2
+239	Home Score - Period 7	2
+241	Home Score - Period 8	2
+243	Home Score - Period 9	2
+245	Home Score - Current Period	2
+247	Guest Score - Period 1	2
+249	Guest Score - Period 2	2
+251	Guest Score - Period 3	2
+253	Guest Score - Period 4	2
+255	Guest Score - Period 5	2
+257	Guest Score - Period 6	2
+259	Guest Score - Period 7	2
+261	Guest Score - Period 8	2
+263	Guest Score - Period 9	2
+265	Guest Score - Current Period	2
+267	Home Rushing Yards	4
+271	Home Passing Yards	4
+275	Home Total Yards	4
+279	Guest Rushing Yards	4
+283	Guest Passing Yards	4
+287	Guest Total Yards	4
+291	Home First Downs	2
+293 Guest First Downs   2
+
+Hockey/Lacrosse 493
+1	Main Clock Time (mm:ss/ss.t )	5
+6	Main Clock Time (mm:ss.t )	8
+14	Main Clock/Time Out/TOD (mm:ss/ss.t )	5
+19	Main Clock/Time Out/TOD (mm:ss.t )	8
+27	Main Clock 0	1
+28	Main Clock Stopped	1
+29	Main Clock/Time Out Horn	1
+30	Main Clock Horn	1
+31	Time Out Horn	1
+32	Time Out Time (mm:ss)	8
+40	Time of Day (hh:mm:ss)	8
+48	Home Team Name	20
+68	Guest Team Name	20
+88	Home Team Abbreviation	10
+98	Guest Team Abbreviation	10
+108	Home Team Score	4
+112	Guest Team Score	4
+116	Home Time Outs Left - Full	2
+118	Home Time Outs Left - Partial	2
+120	Home Time Outs Left - Television	2
+122	Home Time Outs Left - Total	2
+124	Guest Time Outs Left - Full	2
+126	Guest Time Outs Left - Partial	2
+128	Guest Time Outs Left - Television	2
+130	Guest Time Outs Left - Total	2
+132	Home Time Out Indicator	1
+133	Home Time Out Text	4
+137	Guest Time Out Indicator	1
+138	Guest Time Out Text	4
+142	Period	2
+144	Period Text	4
+148	Period Description	12
+160	Internal Relay	1
+161	Ad Panel / Caption Power	1
+162	Ad Panel / Caption #1	1
+163	Ad Panel / Caption #2	1
+164	Ad Panel / Caption #3	1
+165	Ad Panel / Caption #4	1
+166	Reserved for Future Use	35
+201	Shot Clock Time (mm:ss)	8
+209	Shot Clock Horn	1
+210	Inverse Time Clock (mm:ss)	8
+218	Inverse/Main/Time Out/TOD (mm:ss)	8
+226	Home Player #1-Number	2
+228	Home Player #1-Penalty Time (mm:ss)	8
+236	Home Player #2-Number	2
+238	Home Player #2-Penalty Time (mm:ss)	8
+246	Home Player #3-Number	2
+248	Home Player #3-Penalty Time (mm:ss)	8
+256	Home Player #4-Number	2
+258	Home Player #4-Penalty Time (mm:ss)	8
+266	Home Player #5-Number	2
+268	Home Player #5-Penalty Time (mm:ss)	8
+276	Home Player #6-Number	2
+278	Home Player #6-Penalty Time (mm:ss)	8
+286	Guest Player #1-Number	2
+288	Guest Player #1-Penalty Time (mm:ss)	8
+296	Guest Player #2-Number	2
+298	Guest Player #2-Penalty Time (mm:ss)	8
+306	Guest Player #3-Number	2
+308	Guest Player #3-Penalty Time (mm:ss)	8
+316	Guest Player #4-Number	2
+318	Guest Player #4-Penalty Time (mm:ss)	8
+326	Guest Player #5-Number	2
+328	Guest Player #5-Penalty Time (mm:ss)	8
+336	Guest Player #6-Number	2
+338	Guest Player #6-Penalty Time (mm:ss)	8
+346	Home Penalty Indicator	1
+347	Home Penalty Text	7
+354	Guest Penalty Indicator	1
+355	Guest Penalty Text	7
+362	Home Score - Period 1	2
+364	Home Score - Period 2	2
+366	Home Score - Period 3	2
+368	Home Score - Period 4	2
+370	Home Score - Period 5	2
+372	Home Score - Period 6	2
+374	Home Score - Period 7	2
+376	Home Score - Period 8	2
+378	Home Score - Period 9	2
+380	Home Score - Current Period	2
+382	Guest Score - Period 1	2
+384	Guest Score - Period 2	2
+386	Guest Score - Period 3	2
+388	Guest Score - Period 4	2
+390	Guest Score - Period 5	2
+392	Guest Score - Period 6	2
+394	Guest Score - Period 7	2
+396	Guest Score - Period 8	2
+398	Guest Score - Period 9	2
+400	Guest Score - Current Period	2
+402	Home Shots On Goal - Period 1	2
+404	Home Shots On Goal - Period 2	2
+406	Home Shots On Goal - Period 3	2
+408	Home Shots On Goal - Period 4	2
+410	Home Shots On Goal - Period 5	2
+412	Home Shots On Goal - Period 6	2
+414	Home Shots On Goal - Period 7	2
+416	Home Shots On Goal - Period 8	2
+418	Home Shots On Goal - Period 9	2
+420	Home Shots On Goal - Current	2
+422	Home Shots On Goal - Total	3
+425	Home Saves - Period 1	2
+427	Home Saves - Period 2	2
+429	Home Saves - Period 3	2
+431	Home Saves - Period 4	2
+433	Home Saves - Period 5	2
+435	Home Saves - Period 6	2
+437	Home Saves - Period 7	2
+439	Home Saves - Period 8	2
+441	Home Saves - Period 9	2
+443	Home Saves - Current	2
+445	Home Saves - Total	3
+448	Guest Shots On Goal - Period 1	2
+450	Guest Shots On Goal - Period 2	2
+452	Guest Shots On Goal - Period 3	2
+454	Guest Shots On Goal - Period 4	2
+456	Guest Shots On Goal - Period 5	2
+458	Guest Shots On Goal - Period 6	2
+460	Guest Shots On Goal - Period 7	2
+462	Guest Shots On Goal - Period 8	2
+464	Guest Shots On Goal - Period 9	2
+466	Guest Shots On Goal - Current	2
+468	Guest Shots On Goal - Total	3
+471	Guest Saves - Period 1	2
+473	Guest Saves - Period 2	2
+475	Guest Saves - Period 3	2
+477	Guest Saves - Period 4	2
+479	Guest Saves - Period 5	2
+481	Guest Saves - Period 6	2
+483	Guest Saves - Period 7	2
+485	Guest Saves - Period 8	2
+487	Guest Saves - Period 9	2
+489	Guest Saves - Current	2
+491 Guest Saves - Total 3
+
+Volleyball  596
+1	Main Clock Time (mm:ss/ss.t)	5
+6	Main Clock Time (mm:ss.t)	8
+14	Main Clock/Time Out/TOD (mm:ss/ss.t)	5
+19	Main Clock/Time Out/TOD (mm:ss.t)	8
+27	Main Clock =0	1
+28	Main Clock Stopped	1
+29	Main Clock/Time Out Horn	1
+30	Main Clock Horn	1
+31	Time Out Horn	1
+32	Time Out Time (mm:ss)	8
+40	Time of Day (hh:mm:ss)	8
+48	Home Team Name	20
+68	Guest Team Name	20
+88	Home Team Abbreviation	10
+98	Guest Team Abbreviation	10
+108	Home Team Score	4
+112	Guest Team Score	4
+116	Home Time Outs Left - Full	2
+118	Home Time Outs Left - Partial	2
+120	Home Time Outs Left - Television	2
+122	Home Time Outs Left - Total	2
+124	Guest Time Outs Left - Full	2
+126	Guest Time Outs Left - Partial	2
+128	Guest Time Outs Left - Television	2
+130	Guest Time Outs Left - Total	2
+132	Home Time Out Indicator	1
+133	Home Time Out Text	4
+137	Guest Time Out Indicator	1
+138	Guest Time Out Text	4
+142	Game	2
+144	Game Text	4
+148	Game Description	12
+160	Internal Relay	1
+161	Ad Panel / Caption Power	1
+162	Ad Panel / Caption #1	1
+163	Ad Panel / Caption #2	1
+164	Ad Panel / Caption #3	1
+165	Ad Panel / Caption #4	1
+166	Reserved for Future Use	35
+201	Home Serve Indicator	1
+202	Home Serve Arrow	1
+203	Home Serve Text	5
+208	Guest Serve Indicator	1
+209	Guest Serve Arrow	1
+210	Guest Serve Text	5
+215	Home Games Won	2
+217	Guest Games Won	2
+219	Match Number	3
+222	Home Score - Game 1	2
+224	Home Score - Game 2	2
+226	Home Score - Game 3	2
+228	Home Score - Game 4	2
+230	Home Score - Game 5	2
+232	Home Score - Game 6	2
+234	Home Score - Game 7	2
+236	Home Score - Game 8	2
+238	Home Score - Game 9	2
+240	Home Score - Current Game	2
+242	Guest Score - Game 1	2
+244	Guest Score - Game 2	2
+246	Guest Score - Game 3	2
+248	Guest Score - Game 4	2
+250	Guest Score - Game 5	2
+252	Guest Score - Game 6	2
+254	Guest Score - Game 7	2
+256	Guest Score - Game 8	2
+258	Guest Score - Game 9	2
+260	Guest Score - Current Game	2
+262	Home In-game Plyr 1-Status	1
+263	Home In-game Plyr 1-Number	2
+265	Home In-game Plyr 1-User Defined 1	2
+267	Home In-game Plyr 1-User Defined 2	2
+269	Home In-game Plyr 2-Status	1
+270	Home In-game Plyr 2-Number	2
+272	Home In-game Plyr 2-User Defined 1	2
+274	Home In-game Plyr 2-User Defined 2	2
+276	Home In-game Plyr 3-Status	1
+277	Home In-game Plyr 3-Number	2
+279	Home In-game Plyr 3-User Defined 1	2
+281	Home In-game Plyr 3-User Defined 2	2
+283	Home In-game Plyr 4-Status	1
+284	Home In-game Plyr 4-Number	2
+286	Home In-game Plyr 4-User Defined 1	2
+288	Home In-game Plyr 4-User Defined 2	2
+290	Home In-game Plyr 5-Status	1
+291	Home In-game Plyr 5-Number	2
+293	Home In-game Plyr 5-User Defined 1	2
+295	Home In-game Plyr 5-User Defined 2	2
+297	Home In-game Plyr 6-Status	1
+298	Home In-game Plyr 6-Number	2
+300	Home In-game Plyr 6-User Defined 1	2
+302	Home In-game Plyr 6-User Defined 2	2
+304	Home Roster Plyr 1-Status	1
+305	Home Roster Plyr 1-Number	2
+307	Home Roster Plyr 1-User Defined 1	2
+309	Home Roster Plyr 1-User Defined 2	2
+311	Home Roster Plyr 2-Status	1
+312	Home Roster Plyr 2-Number	2
+314	Home Roster Plyr 2-User Defined 1	2
+316	Home Roster Plyr 2-User Defined 2	2
+318	Home Roster Plyr 3-Status	1
+319	Home Roster Plyr 3-Number	2
+321	Home Roster Plyr 3-User Defined 1	2
+323	Home Roster Plyr 3-User Defined 2	2
+325	Home Roster Plyr 4-Status	1
+326	Home Roster Plyr 4-Number	2
+328	Home Roster Plyr 4-User Defined 1	2
+330	Home Roster Plyr 4-User Defined 2	2
+332	Home Roster Plyr 5-Status	1
+333	Home Roster Plyr 5-Number	2
+335	Home Roster Plyr 5-User Defined 1	2
+337	Home Roster Plyr 5-User Defined 2	2
+339	Home Roster Plyr 6-Status	1
+340	Home Roster Plyr 6-Number	2
+342	Home Roster Plyr 6-User Defined 1	2
+344	Home Roster Plyr 6-User Defined 2	2
+346	Home Roster Plyr 7-Status	1
+347	Home Roster Plyr 7-Number	2
+349	Home Roster Plyr 7-User Defined 1	2
+351	Home Roster Plyr 7-User Defined 2	2
+353	Home Roster Plyr 8-Status	1
+354	Home Roster Plyr 8-Number	2
+356	Home Roster Plyr 8-User Defined 1	2
+358	Home Roster Plyr 8-User Defined 2	2
+360	Home Roster Plyr 9-Status	1
+361	Home Roster Plyr 9-Number	2
+363	Home Roster Plyr 9-User Defined 1	2
+365	Home Roster Plyr 9-User Defined 2	2
+367	Home Roster Plyr 10-Status	1
+368	Home Roster Plyr 10-Number	2
+370	Home Roster Plyr 10-User Defined 1	2
+372	Home Roster Plyr 10-User Defined 2	2
+374	Home Roster Plyr 11-Status	1
+375	Home Roster Plyr 11-Number	2
+377	Home Roster Plyr 11-User Defined 1	2
+379	Home Roster Plyr 11-User Defined 2	2
+381	Home Roster Plyr 12-Status	1
+382	Home Roster Plyr 12-Number	2
+384	Home Roster Plyr 12-User Defined 1	2
+386	Home Roster Plyr 12-User Defined 2	2
+388	Home Roster Plyr 13-Status	1
+389	Home Roster Plyr 13-Number	2
+391	Home Roster Plyr 13-User Defined 1	2
+393	Home Roster Plyr 13-User Defined 2	2
+395	Home Roster Plyr 14-Status	1
+396	Home Roster Plyr 14-Number	2
+398	Home Roster Plyr 14-User Defined 1	2
+400	Home Roster Plyr 14-User Defined 2	2
+402	Home Roster Plyr 15-Status	1
+403	Home Roster Plyr 15-Number	2
+405	Home Roster Plyr 15-User Defined 1	2
+407	Home Roster Plyr 15-User Defined 2	2
+409	Home Aces	4
+413	Home Kills	4
+417	Home Blocks	4
+421	Home Digs	4
+425	Home Total Hustle	4
+429	Guest In-game Plyr 1-Status	1
+430	Guest In-game Plyr 1-Number	2
+432	Guest In-game Plyr 1-User Defined 1	2
+434	Guest In-game Plyr 1-User Defined 2	2
+436	Guest In-game Plyr 2-Status	1
+437	Guest In-game Plyr 2-Number	2
+439	Guest In-game Plyr 2-User Defined 1	2
+441	Guest In-game Plyr 2-User Defined 2	2
+443	Guest In-game Plyr 3-Status	1
+444	Guest In-game Plyr 3-Number	2
+446	Guest In-game Plyr 3-User Defined 1	2
+448	Guest In-game Plyr 3-User Defined 2	2
+450	Guest In-game Plyr 4-Status	1
+451	Guest In-game Plyr 4-Number	2
+453	Guest In-game Plyr 4-User Defined 1	2
+455	Guest In-game Plyr 4-User Defined 2	2
+457	Guest In-game Plyr 5-Status	1
+458	Guest In-game Plyr 5-Number	2
+460	Guest In-game Plyr 5-User Defined 1	2
+462	Guest In-game Plyr 5-User Defined 2	2
+464	Guest In-game Plyr 6-Status	1
+465	Guest In-game Plyr 6-Number	2
+467	Guest In-game Plyr 6-User Defined 1	2
+469	Guest In-game Plyr 6-User Defined 2	2
+471	Guest Roster Plyr 1-Status	1
+472	Guest Roster Plyr 1-Number	2
+474	Guest Roster Plyr 1-User Defined 1	2
+476	Guest Roster Plyr 1-User Defined 2	2
+478	Guest Roster Plyr 2-Status	1
+479	Guest Roster Plyr 2-Number	2
+481	Guest Roster Plyr 2-User Defined 1	2
+483	Guest Roster Plyr 2-User Defined 2	2
+485	Guest Roster Plyr 3-Status	1
+486	Guest Roster Plyr 3-Number	2
+488	Guest Roster Plyr 3-User Defined 1	2
+490	Guest Roster Plyr 3-User Defined 2	2
+492	Guest Roster Plyr 4-Status	1
+493	Guest Roster Plyr 4-Number	2
+495	Guest Roster Plyr 4-User Defined 1	2
+497	Guest Roster Plyr 4-User Defined 2	2
+499	Guest Roster Plyr 5-Status	1
+500	Guest Roster Plyr 5-Number	2
+502	Guest Roster Plyr 5-User Defined 1	2
+504	Guest Roster Plyr 5-User Defined 2	2
+506	Guest Roster Plyr 6-Status	1
+507	Guest Roster Plyr 6-Number	2
+509	Guest Roster Plyr 6-User Defined 1	2
+511	Guest Roster Plyr 6-User Defined 2	2
+513	Guest Roster Plyr 7-Status	1
+514	Guest Roster Plyr 7-Number	2
+516	Guest Roster Plyr 7-User Defined 1	2
+518	Guest Roster Plyr 7-User Defined 2	2
+520	Guest Roster Plyr 8-Status	1
+521	Guest Roster Plyr 8-Number	2
+523	Guest Roster Plyr 8-User Defined 1	2
+525	Guest Roster Plyr 8-User Defined 2	2
+527	Guest Roster Plyr 9-Status	1
+528	Guest Roster Plyr 9-Number	2
+530	Guest Roster Plyr 9-User Defined 1	2
+532	Guest Roster Plyr 9-User Defined 2	2
+534	Guest Roster Plyr 10-Status	1
+535	Guest Roster Plyr 10-Number	2
+537	Guest Roster Plyr 10-User Defined 1	2
+539	Guest Roster Plyr 10-User Defined 2	2
+541	Guest Roster Plyr 11-Status	1
+542	Guest Roster Plyr 11-Number	2
+544	Guest Roster Plyr 11-User Defined 1	2
+546	Guest Roster Plyr 11-User Defined 2	2
+548	Guest Roster Plyr 12-Status	1
+549	Guest Roster Plyr 12-Number	2
+551	Guest Roster Plyr 12-User Defined 1	2
+553	Guest Roster Plyr 12-User Defined 2	2
+555	Guest Roster Plyr 13-Status	1
+556	Guest Roster Plyr 13-Number	2
+558	Guest Roster Plyr 13-User Defined 1	2
+560	Guest Roster Plyr 13-User Defined 2	2
+562	Guest Roster Plyr 14-Status	1
+563	Guest Roster Plyr 14-Number	2
+565	Guest Roster Plyr 14-User Defined 1	2
+567	Guest Roster Plyr 14-User Defined 2	2
+569	Guest Roster Plyr 15-Status	1
+570	Guest Roster Plyr 15-Number	2
+572	Guest Roster Plyr 15-User Defined 1	2
+574	Guest Roster Plyr 15-User Defined 2	2
+576	Guest Aces	4
+580	Guest Kills	4
+584	Guest Blocks	4
+588	Guest Digs	4
+592 Guest Total Hustle  4
