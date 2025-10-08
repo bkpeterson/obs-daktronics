@@ -121,10 +121,9 @@ jobs:
       #  run: echo "LIBRARY_PATH=/opt/homebrew/lib" >> $GITHUB_ENV
       #  if: runner.os == 'macOS' && runner.arch == 'ARM64' # For Apple Silicon
 
-      - name: Set Homebrew Library Path (Intel)
-        if: runner.os == 'macOS' && runner.arch == 'X64' # For Intel Macs
+      - name: Set Homebrew Library Path
         run: |
-          echo "LIBRARY_PATH=/usr/local/lib" >> $GITHUB_ENV
+          echo "LIBRARY_PATH=/opt/homebrew/Cellar/pango/1.57.0/lib" >> $GITHUB_ENV
   
       - uses: actions/cache/restore@v4
         id: ccache-cache
