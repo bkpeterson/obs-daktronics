@@ -4,6 +4,9 @@ include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/common/bootstrap.cmake" NO_POLICY_SCO
 
 project(${_name} VERSION ${_version})
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED On)
+
 option(ENABLE_FRONTEND_API "Use obs-frontend-api for UI functionality" OFF)
 option(ENABLE_QT "Use Qt functionality" OFF)
 
@@ -25,8 +28,6 @@ endif()
 
 if(WIN32)
   find_package(Win32GTKBundle)
-  set(CMAKE_CXX_STANDARD 20)
-  set(CMAKE_CXX_STANDARD_REQUIRED ON)
 endif(WIN32)
 
 include_directories(${PANGO_INCLUDE_DIRS} ${CAIRO_INCLUDE_DIRS} ${PANGOCAIRO_INCLUDE_DIRS})
