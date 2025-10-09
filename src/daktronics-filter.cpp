@@ -134,3 +134,20 @@ bool DAKFilter::DAKSportChanged(obs_properties_t *props, obs_property_t *propert
 
 	return true;
 }
+
+obs_source_info* DAKFilter::create_daktronics_filter_info() {
+    daktronics_filter_info = {};
+    daktronics_filter_info.id = "daktronics_filter";
+    daktronics_filter_info.type = OBS_SOURCE_TYPE_FILTER;
+    daktronics_filter_info.output_flags = OBS_SOURCE_VIDEO;
+    daktronics_filter_info.get_name = DAKFilter::GetName;
+    daktronics_filter_info.create = DAKFilter::Create;
+    daktronics_filter_info.destroy = DAKFilter::Destroy;
+    daktronics_filter_info.video_render = DAKFilter::Render;
+    daktronics_filter_info.get_defaults = DAKFilter::GetDefaults;
+    daktronics_filter_info.get_properties = DAKFilter::GetProperties;
+    daktronics_filter_info.update = DAKFilter::Update;
+    daktronics_filter_info.icon_type = OBS_ICON_TYPE_IMAGE;
+    
+    return &daktronics_filter_info;
+}
