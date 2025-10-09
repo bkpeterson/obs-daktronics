@@ -25,7 +25,6 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE("daktronics-realtime-data", "en-US")
 
-
 bool obs_module_load(void)
 {
 	obs_register_source(DAKSource::create_daktronics_source_info());

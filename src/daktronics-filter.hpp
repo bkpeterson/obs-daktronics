@@ -24,8 +24,8 @@ public:
 
 	void _DoRender();
 	static bool DAKSportChanged(obs_properties_t *props, obs_property_t *property, obs_data_t *settings);
-    
-    static obs_source_info* create_daktronics_filter_info();
+
+	static obs_source_info *create_daktronics_filter_info();
 
 private:
 	obs_source_t *_source;
@@ -33,6 +33,6 @@ private:
 	std::string _sport;
 	uint32_t _index;
 	bool _visible;
-    
-    static obs_source_info daktronics_filter_info;
+
+	static obs_source_info daktronics_filter_info;
 };

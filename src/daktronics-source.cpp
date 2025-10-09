@@ -155,7 +155,7 @@ void DAKSource::Update(obs_data_t *settings)
 		 obs_data_get_int(font_obj, "size"));
 	obs_data_release(font_obj);
 
-	int align = obs_data_get_int(settings, "dak_text_align");
+	int align = static_cast<int>(obs_data_get_int(settings, "dak_text_align"));
 	switch (align) {
 	case 1:
 		_align = PANGO_ALIGN_LEFT;
@@ -168,9 +168,9 @@ void DAKSource::Update(obs_data_t *settings)
 		break;
 	}
 
-	vec4_from_rgba(&_bg, obs_data_get_int(settings, "bg"));
-	vec4_from_rgba(&_fg, obs_data_get_int(settings, "fg"));
-	vec4_from_rgba(&_outline, obs_data_get_int(settings, "outline"));
+	vec4_from_rgba(&_bg, static_cast<uint32_t>(obs_data_get_int(settings, "bg")));
+	vec4_from_rgba(&_fg, static_cast<uint32_t>(obs_data_get_int(settings, "fg")));
+	vec4_from_rgba(&_outline, static_cast<uint32_t>(obs_data_get_int(settings, "outline")));
 	_outlinew = obs_data_get_double(settings, "outlinew");
 
 	_DoRender();
@@ -262,22 +262,21 @@ bool DAKSource::DAKSportChanged(obs_properties_t *props, obs_property_t *propert
 	return true;
 }
 
-obs_source_info* DAKSource::create_daktronics_source_info()
+obs_source_info *DAKSource::create_daktronics_source_info()
 {
-    daktronics_source_info = {};
-    daktronics_source_info.id = "daktronics_source";
-    daktronics_source_info.type = OBS_SOURCE_TYPE_INPUT;
-    daktronics_source_info.output_flags = OBS_SOURCE_VIDEO;
-    daktronics_source_info.get_name = DAKSource::GetName;
-    daktronics_source_info.create = DAKSource::Create;
-    daktronics_source_info.destroy = DAKSource::Destroy;
-    daktronics_source_info.get_width = DAKSource::GetWidth;
-    daktronics_source_info.get_height = DAKSource::GetHeight;
-    daktronics_source_info.video_render = DAKSource::Render;
-    daktronics_source_info.get_defaults = DAKSource::GetDefaults;
-    daktronics_source_info.get_properties = DAKSource::GetProperties;
-    daktronics_source_info.update = DAKSource::Update;
-    daktronics_source_info.icon_type = OBS_ICON_TYPE_TEXT;
-    
-    return &daktronics_source_info;
+	daktronics_source_info.id = "daktronics_source";
+	daktronics_source_info.type = OBS_SOURCE_TYPE_INPUT;
+	daktronics_source_info.output_flags = OBS_SOURCE_VIDEO;
+	daktronics_source_info.get_name = DAKSource::GetName;
+	daktronics_source_info.create = DAKSource::Create;
+	daktronics_source_info.destroy = DAKSource::Destroy;
+	daktronics_source_info.get_width = DAKSource::GetWidth;
+	daktronics_source_info.get_height = DAKSource::GetHeight;
+	daktronics_source_info.video_render = DAKSource::Render;
+	daktronics_source_info.get_defaults = DAKSource::GetDefaults;
+	daktronics_source_info.get_properties = DAKSource::GetProperties;
+	daktronics_source_info.update = DAKSource::Update;
+	daktronics_source_info.icon_type = OBS_ICON_TYPE_TEXT;
+
+	return &daktronics_source_info;
 }

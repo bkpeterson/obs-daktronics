@@ -30,8 +30,8 @@ public:
 
 	void _DoRender();
 	static bool DAKSportChanged(obs_properties_t *props, obs_property_t *property, obs_data_t *settings);
-    
-    static obs_source_info* create_daktronics_source_info();
+
+	static obs_source_info *create_daktronics_source_info();
 
 private:
 	obs_source_t *_source;
@@ -52,6 +52,6 @@ private:
 
 	double _outlinew;
 	char _font[FONT_MAXLEN + 1];
-    
-    static obs_source_info daktronics_source_info;
+
+	static obs_source_info daktronics_source_info;
 };
