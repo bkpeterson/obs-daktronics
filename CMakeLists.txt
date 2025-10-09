@@ -23,9 +23,9 @@ if(PKG_CONFIG_FOUND)
   pkg_check_modules(PANGOCAIRO pangocairo)
 endif()
 
-if(WIN32)
-  find_package(Win32GTKBundle)
-endif(WIN32)
+#if(WIN32)
+#  find_package(Win32GTKBundle)
+#endif(WIN32)
 
 include_directories(${PANGO_INCLUDE_DIRS} ${CAIRO_INCLUDE_DIRS} ${PANGOCAIRO_INCLUDE_DIRS})
 
