@@ -290,8 +290,18 @@ jobs:
           "pluginName=${ProductName}" >> $env:GITHUB_OUTPUT
           "pluginVersion=${ProductVersion}" >> $env:GITHUB_OUTPUT
 
-      - name: Setup GTK
-        uses: tschoonj/GTK-for-Windows-Runtime-Environment-Installer@v1
+      - name: Download and Install GTK
+        run: |
+          # Replace with the actual download URL for a GTK runtime zip
+          $gtk_url = "https://github.com/wingtk/gvsbuild/releases/download/2025.9.0/GTK3_Gvsbuild_2025.9.0_x64.zip" 
+          $gtk_zip = "gtk-runtime.zip"
+          $gtk_dir = "C:\gtk"
+
+          Invoke-WebRequest -Uri $gtk_url -OutFile $gtk_zip
+          Expand-Archive -Path $gtk_zip -DestinationPath $gtk_dir
+
+          # Add GTK bin directory to PATH for easy execution
+          echo "C:\gtk\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Build Plugin 🧱
         uses: ./.github/actions/build-plugin
