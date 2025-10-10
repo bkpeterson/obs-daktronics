@@ -308,6 +308,7 @@ jobs:
       - name: Download and Install Pango
         run: |
           vcpkg update
+          vcpkg integrate install
           vcpkg install cairo
           vcpkg install --recurse pango
 
