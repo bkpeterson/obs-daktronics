@@ -107,7 +107,7 @@ void DAKDataUtils::AddSource(DAKSource *newSource)
 
 void DAKDataUtils::RemoveSource(DAKSource *oldSource)
 {
-    UNUSED_PARAMETER(oldSource);
+	UNUSED_PARAMETER(oldSource);
 	//uint32_t index = oldSource->GetIndex();
 	//std::vector<DAKSource *> &sources = _sources[index];
 
@@ -123,7 +123,7 @@ void DAKDataUtils::AddFilter(DAKFilter *newFilter)
 
 void DAKDataUtils::RemoveFilter(DAKFilter *oldFilter)
 {
-    UNUSED_PARAMETER(oldFilter);
+	UNUSED_PARAMETER(oldFilter);
 	//uint32_t index = oldFilter->GetIndex();
 	//std::vector<DAKFilter *> &filters = _filters[index];
 
