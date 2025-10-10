@@ -25,9 +25,9 @@ endif()
 
 find_package(PANGOCAIRO)
 
-#if(WIN32)
-#  find_package(Win32GTKBundle)
-#endif(WIN32)
+if(WIN32)
+  include_directories("/vcpkg/installed/x64-windows/include")
+endif(WIN32)
 
 include_directories(${PANGO_INCLUDE_DIRS} ${CAIRO_INCLUDE_DIRS} ${PANGOCAIRO_INCLUDE_DIRS})
 
