@@ -108,10 +108,10 @@ void DAKDataUtils::AddSource(DAKSource *newSource)
 void DAKDataUtils::RemoveSource(DAKSource *oldSource)
 {
 	uint32_t index = oldSource->GetIndex();
-
-	auto delPtr = std::find(_sources[index].begin(), _sources[index].end(), oldSource);
-	if (delPtr != _sources[index].end())
-		_sources[index].erase(delPtr);
+    std::vector<DAKSource *> &sources = _sources[index];
+    
+    auto tmpVector = std::remove(sources.begin(), sources.end(), oldSource);
+    sources.erase(tmpVector, sources.end());
 }
 
 void DAKDataUtils::AddFilter(DAKFilter *newFilter)
@@ -123,10 +123,10 @@ void DAKDataUtils::AddFilter(DAKFilter *newFilter)
 void DAKDataUtils::RemoveFilter(DAKFilter *oldFilter)
 {
 	uint32_t index = oldFilter->GetIndex();
+    std::vector<DAKFilter *> &filters = _filters[index];
 
-	auto delPtr = std::find(_filters[index].begin(), _filters[index].end(), oldFilter);
-	if (delPtr != _filters[index].end())
-		_filters[index].erase(delPtr);
+    auto tmpVector = std::remove(filters.begin(), filters.end(), oldFilter);
+    filters.erase(tmpVector, filters.end());
 }
 
 void DAKDataUtils::UpdateField(uint32_t index, std::string value)
