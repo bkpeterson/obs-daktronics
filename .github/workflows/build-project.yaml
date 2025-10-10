@@ -204,6 +204,12 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
+      - name: Clone SIMDe
+        run: git clone https://github.com/simd-everywhere/simde.git
+
+      - name: Set SIMDe include directory environment variable
+        run: echo "SIMDe_include_dir=$(pwd)/simde/simde" >> $GITHUB_ENV
+
       - name: Set Up Environment 🔧
         id: setup
         run: |
@@ -293,7 +299,7 @@ jobs:
       - name: Download and Install GTK
         run: |
           vcpkg install pango
-          
+
           # Replace with the actual download URL for a GTK runtime zip
           #$gtk_url = "https://github.com/wingtk/gvsbuild/releases/download/2025.9.0/GTK3_Gvsbuild_2025.9.0_x64.zip" 
           #$gtk_zip = "gtk-runtime.zip"
