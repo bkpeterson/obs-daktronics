@@ -23,6 +23,8 @@ if(PKG_CONFIG_FOUND)
   pkg_check_modules(PANGOCAIRO pangocairo)
 endif()
 
+find_package(PANGOCAIRO);
+
 #if(WIN32)
 #  find_package(Win32GTKBundle)
 #endif(WIN32)
