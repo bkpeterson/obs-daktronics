@@ -107,12 +107,11 @@ void DAKDataUtils::AddSource(DAKSource *newSource)
 
 void DAKDataUtils::RemoveSource(DAKSource *oldSource)
 {
-	UNUSED_PARAMETER(oldSource);
-	//uint32_t index = oldSource->GetIndex();
-	//std::vector<DAKSource *> &sources = _sources[index];
+	uint32_t index = oldSource->GetIndex();
+	std::vector<DAKSource *> &sources = _sources[index].second;
 
-	//auto tmpVector = std::remove(sources.begin(), sources.end(), oldSource);
-	//sources.erase(tmpVector, sources.end());
+	auto tmpVector = std::remove(sources.begin(), sources.end(), oldSource);
+	sources.erase(tmpVector, sources.end());
 }
 
 void DAKDataUtils::AddFilter(DAKFilter *newFilter)
@@ -123,12 +122,11 @@ void DAKDataUtils::AddFilter(DAKFilter *newFilter)
 
 void DAKDataUtils::RemoveFilter(DAKFilter *oldFilter)
 {
-	UNUSED_PARAMETER(oldFilter);
-	//uint32_t index = oldFilter->GetIndex();
-	//std::vector<DAKFilter *> &filters = _filters[index];
+	uint32_t index = oldFilter->GetIndex();
+	std::vector<DAKFilter *> &filters = _filters[index].second;
 
-	//auto tmpVector = std::remove(filters.begin(), filters.end(), oldFilter);
-	//filters.erase(tmpVector, filters.end());
+	auto tmpVector = std::remove(filters.begin(), filters.end(), oldFilter);
+	filters.erase(tmpVector, filters.end());
 }
 
 void DAKDataUtils::UpdateField(uint32_t index, std::string value)
