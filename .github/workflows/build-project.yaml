@@ -208,7 +208,7 @@ jobs:
         run: git clone https://github.com/simd-everywhere/simde.git
 
       - name: Set SIMDe include directory environment variable
-        run: echo "SIMDe_include_dir=$(pwd)/simde/simde" >> $GITHUB_ENV
+        run: echo "SIMDe_include_dir=$(pwd)/simde" >> $GITHUB_ENV
 
       - name: Set Up Environment 🔧
         id: setup

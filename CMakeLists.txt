@@ -26,10 +26,11 @@ endif()
 find_package(PANGOCAIRO)
 
 if(WIN32)
-  include_directories("/vcpkg/installed/x64-windows/include")
+  include_directories("/vcpkg/packages/pango_x64-windows/include")
+  target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARIES}
 endif(WIN32)
 
-include_directories(${PANGO_INCLUDE_DIRS} ${CAIRO_INCLUDE_DIRS} ${PANGOCAIRO_INCLUDE_DIRS})
+include_directories(${PANGO_INCLUDE_DIRS} ${CAIRO_INCLUDE_DIRS} "/vcpkg/packages/pango_x64-windows/lib")
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARIES} ${CAIRO_LIBRARIES} ${PANGOCAIRO_LIBRARIES})
 
