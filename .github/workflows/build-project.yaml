@@ -309,7 +309,7 @@ jobs:
         run: |
           vcpkg update
           vcpkg install cairo
-          vcpkg install pango
+          vcpkg install --recurse pango
 
       - name: Build Plugin 🧱
         uses: ./.github/actions/build-plugin
