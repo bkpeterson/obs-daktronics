@@ -222,6 +222,15 @@ jobs:
           echo "pluginName=${product_name}" >> $GITHUB_OUTPUT
           echo "pluginVersion=${product_version}" >> $GITHUB_OUTPUT
 
+      - name: Install Pango dependencies
+        run: |
+          sudo apt update
+          sudo apt install libpango1.0-dev
+
+      #- name: Set Homebrew Library Path
+        #run: |
+          #echo "LIBRARY_PATH=/opt/homebrew/lib" >> $GITHUB_ENV
+
       - uses: actions/cache/restore@v4
         id: ccache-cache
         with:
