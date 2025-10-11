@@ -4,7 +4,7 @@ include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/common/bootstrap.cmake" NO_POLICY_SCO
 
 if(WIN32)
   set(CMAKE_TOOLCHAIN_FILE "C:/vcpkg/scripts/buildsystems/vcpkg.cmake")
-  set(CMAKE_PREFIX_PATH, "C:/Program Files/OBS Studio")
+  set(CMAKE_PREFIX_PATH, "C:/Program Files/OBS Studio/libobs")
 endif()
 
 project(${_name} VERSION ${_version})
@@ -18,7 +18,7 @@ include(helpers)
 
 add_library(${CMAKE_PROJECT_NAME} MODULE)
 
-find_package(libobs REQUIRED)
+find_package(libobs REQUIRED CONFIG)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs)
 
 find_package(PkgConfig QUIET)
