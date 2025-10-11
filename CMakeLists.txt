@@ -11,6 +11,8 @@ include(compilerconfig)
 include(defaults)
 include(helpers)
 
+include("/vcpkg/scripts/buildsystems/vcpkg.cmake")
+
 add_library(${CMAKE_PROJECT_NAME} MODULE)
 
 find_package(libobs REQUIRED)
@@ -23,7 +25,6 @@ if(PKG_CONFIG_FOUND)
   pkg_check_modules(PANGOCAIRO pangocairo)
 endif()
 
-include_directories("C:/vcpkg/installed/x64-windows/include/pango")
 include_directories(${PANGO_INCLUDE_DIRS} ${CAIRO_INCLUDE_DIRS} ${PANGOCAIRO_INCLUDE_DIRS})
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARIES} ${CAIRO_LIBRARIES} ${PANGOCAIRO_LIBRARIES})
