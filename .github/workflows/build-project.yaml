@@ -116,7 +116,6 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew install pango
-          lipo -archs /opt/homebrew/lib/libpango-1.0.0.dylib
 
       - name: Set Homebrew Library Path
         run: |
@@ -136,7 +135,6 @@ jobs:
           # Install Pango and its dependencies using the x86_64 Homebrew.
           # The arch -x86_64 prefix forces the command to run via Rosetta.
           arch -x86_64 /usr/local/bin/brew install pango
-          lipo -archs /usr/local/lib/libpango-1.0.0.dylib
           
       - uses: actions/cache/restore@v4
         id: ccache-cache
