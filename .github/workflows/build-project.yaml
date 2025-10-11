@@ -313,7 +313,7 @@ jobs:
           "pluginVersion=${ProductVersion}" >> $env:GITHUB_OUTPUT
 
       - name: Bootstrap vcpkg
-        run: ${{ github.workspace }}/vcpkg/bootstrap-vcpkg.bat
+        run: ${{ github.workspace }}\vcpkg\bootstrap-vcpkg.bat
 
       - name: Add NuGet sources
         run: |
