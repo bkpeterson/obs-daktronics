@@ -18,6 +18,15 @@ include(helpers)
 add_library(${CMAKE_PROJECT_NAME} MODULE)
 
 find_package(libobs REQUIRED)
+
+if (LibObs_FOUND)
+    message(STATUS "LibObs found: ${LibObs_INCLUDE_DIR}")
+    include_directories(${LibObs_INCLUDE_DIR})
+    target_link_libraries(YourProjectName ${LibObs_LIBRARIES})
+else()
+    message(FATAL_ERROR "LibObs not found.")
+endif()
+
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs)
 
 find_package(PkgConfig QUIET)
