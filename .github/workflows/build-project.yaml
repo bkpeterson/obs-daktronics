@@ -116,6 +116,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew install pango
+          brew info pango
 
       - name: Set Homebrew Library Path
         run: |

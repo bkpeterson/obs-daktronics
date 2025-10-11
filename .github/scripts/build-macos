@@ -95,7 +95,7 @@ build() {
 
   pushd ${project_root}
 
-  local -a cmake_args=()
+  local -a cmake_args=("-DCMAKE_OSX_ARCHITECTURES=\"arm64;x86_64\"")
   local -a cmake_build_args=(--build)
   local -a cmake_install_args=(--install)
 
