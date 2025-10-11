@@ -135,7 +135,38 @@ jobs:
           # Install Pango and its dependencies using the x86_64 Homebrew.
           # The arch -x86_64 prefix forces the command to run via Rosetta.
           arch -x86_64 /usr/local/bin/brew install pango
-          
+
+      - name: Create Universal Pango Libraries
+        run: |
+          mv /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.dylib /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.arm64.dylib
+          lipo -create /usr/local/lib/libcairo.2.dylib /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.arm64.dylib -output /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.dylib
+          lipo -archs /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.dylib
+
+          # mv /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.dylib /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.arm64.dylib
+          # lipo -create /usr/local/lib/libpango-1.0.0.dylib /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.arm64.dylib -output /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.dylib
+
+          # mv /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.dylib /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.arm64.dylib
+          # lipo -create /usr/local/lib/libcairo.2.dylib /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.arm64.dylib -output /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.dylib
+
+          # mv /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.dylib /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.arm64.dylib
+          # lipo -create /usr/local/lib/libcairo.2.dylib /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.arm64.dylib -output /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.dylib
+
+          # mv /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.dylib /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.arm64.dylib
+          # lipo -create /usr/local/lib/libcairo.2.dylib /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.arm64.dylib -output /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.dylib
+
+          # mv /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.dylib /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.arm64.dylib
+          # lipo -create /usr/local/lib/libcairo.2.dylib /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.arm64.dylib -output /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.dylib
+
+          # mv /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.dylib /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.arm64.dylib
+          # lipo -create /usr/local/lib/libcairo.2.dylib /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.arm64.dylib -output /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.dylib
+
+          # ⚠️ ld: ignoring file '/opt/homebrew/Cellar/pango/1.57.0/lib/libpango-1.0.0.dylib': found architecture 'arm64', required architecture 'x86_64'
+          # ⚠️ ld: ignoring file '/opt/homebrew/Cellar/harfbuzz/11.5.1/lib/libharfbuzz.0.dylib': found architecture 'arm64', required architecture 'x86_64'
+          # ⚠️ ld: ignoring file '/opt/homebrew/Cellar/glib/2.86.0/lib/libgobject-2.0.0.dylib': found architecture 'arm64', required architecture 'x86_64'
+          # ⚠️ ld: ignoring file '/opt/homebrew/Cellar/glib/2.86.0/lib/libglib-2.0.0.dylib': found architecture 'arm64', required architecture 'x86_64'
+          # ⚠️ ld: ignoring file '/opt/homebrew/Cellar/gettext/0.26/lib/libintl.8.dylib': found architecture 'arm64', required architecture 'x86_64'
+          # ⚠️ ld: ignoring file '/opt/homebrew/Cellar/pango/1.57.0/lib/libpangocairo-1.0.0.dylib': found architecture 'arm64', required architecture 'x86_64'
+
       - uses: actions/cache/restore@v4
         id: ccache-cache
         with:
