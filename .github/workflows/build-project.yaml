@@ -309,7 +309,6 @@ jobs:
         run: |
           vcpkg update
           vcpkg integrate install
-          vcpkg install obs-studio
           vcpkg install pango
 
       - name: Build Plugin 🧱
