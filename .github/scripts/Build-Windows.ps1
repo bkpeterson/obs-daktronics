@@ -82,6 +82,5 @@ function Build {
     Pop-Location -Stack BuildTemp
     Log-Group
 }
-PWD
-dir c:/
+
 Build
