@@ -116,8 +116,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew install pango
-          arch -x86_64 brew install pango
-          brew info pango
+          lipo -archs /opt/homebrew/lib/libpango-1.0.0.dylib
 
       - name: Set Homebrew Library Path
         run: |
