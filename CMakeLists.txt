@@ -27,6 +27,10 @@ if(PKG_CONFIG_FOUND)
   pkg_check_modules(PANGOCAIRO pangocairo)
 endif()
 
+if(WIN32)
+  include_directories("c:/vcpkg/installed/x64-windows/include/pango-1.0/pango")
+endif()
+
 include_directories(${PANGO_INCLUDE_DIRS} ${CAIRO_INCLUDE_DIRS} ${PANGOCAIRO_INCLUDE_DIRS})
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARIES} ${CAIRO_LIBRARIES} ${PANGOCAIRO_LIBRARIES})
