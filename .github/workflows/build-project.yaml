@@ -333,7 +333,7 @@ jobs:
           vcpkg update
           vcpkg integrate install
           vcpkg install pango
-          dir "c:/vcpkg/installed/x64-windows/lib/glib-2.0"
+          dir "c:/vcpkg/installed/x64-windows/lib/glib-2.0/include"
 
       - name: Build Plugin 🧱
         uses: ./.github/actions/build-plugin
