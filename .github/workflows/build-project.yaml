@@ -333,8 +333,7 @@ jobs:
           vcpkg update
           vcpkg integrate install
           vcpkg install pango
-          pwd
-          dir c:/vcpkg/installed/x64-windows/include/pango-1.0/pango
+          dir "c:/vcpkg/installed/x64-windows/include/glib-2.0"
 
       - name: Build Plugin 🧱
         uses: ./.github/actions/build-plugin
