@@ -58,7 +58,6 @@ function Build {
     }
 
     $CmakeBuildArgs += @(
-        '-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake'
         '--preset', "windows-${Target}"
         '--config', $Configuration
         '--parallel'

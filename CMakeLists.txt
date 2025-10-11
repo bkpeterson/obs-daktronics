@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.28...3.30)
 
 include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/common/bootstrap.cmake" NO_POLICY_SCOPE)
+set(CMAKE_TOOLCHAIN_FILE "C:/vcpkg/scripts/buildsystems/vcpkg.cmake")
 
 project(${_name} VERSION ${_version})
 
@@ -10,10 +11,6 @@ option(ENABLE_QT "Use Qt functionality" OFF)
 include(compilerconfig)
 include(defaults)
 include(helpers)
-
-if(WIN32)
-  include("C:/vcpkg/scripts/buildsystems/vcpkg.cmake")
-endif()
 
 add_library(${CMAKE_PROJECT_NAME} MODULE)
 
