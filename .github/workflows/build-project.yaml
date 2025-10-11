@@ -285,7 +285,7 @@ jobs:
     needs: check-event
     env: 
       USERNAME: bkpeterson
-      VCPKG_EXE: ${{ github.workspace }}/vcpkg/vcpkg
+      VCPKG_EXE: C:/vcpkg/vcpkg
       FEED_URL: https://nuget.pkg.github.com/bkpeterson/index.json
       VCPKG_BINARY_SOURCES: "clear;nuget,https://nuget.pkg.github.com/bkpeterson/index.json,readwrite"
     defaults:
