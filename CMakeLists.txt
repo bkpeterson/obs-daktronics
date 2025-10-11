@@ -28,7 +28,7 @@ if(PKG_CONFIG_FOUND)
 endif()
 
 if(WIN32)
-  include_directories("c:/vcpkg/installed/x64-windows/include/pango-1.0")
+  include_directories("c:/vcpkg/installed/x64-windows/include/pango-1.0" "c:/vcpkg/installed/x64-windows/include/glib-2.0" "c:/vcpkg/installed/x64-windows/include/harfbuzz" "c:/vcpkg/installed/x64-windows/include/freetype" "c:/vcpkg/installed/x64-windows/include/cairo")
 endif()
 
 include_directories(${PANGO_INCLUDE_DIRS} ${CAIRO_INCLUDE_DIRS} ${PANGOCAIRO_INCLUDE_DIRS})
