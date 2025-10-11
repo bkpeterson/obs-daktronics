@@ -334,7 +334,10 @@ jobs:
           vcpkg integrate install
           vcpkg install pango
           pwd
-          dir c:/vcpkg/installed/x64-windows
+          dir c:/vcpkg/installed/x64-windows/bin
+          dir c:/vcpkg/installed/x64-windows/debug
+          dir c:/vcpkg/installed/x64-windows/include
+          dir c:/vcpkg/installed/x64-windows/lib
 
       - name: Build Plugin 🧱
         uses: ./.github/actions/build-plugin
