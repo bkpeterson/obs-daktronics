@@ -30,7 +30,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          : Check Event Data ☑️
           if [[ "${RUNNER_DEBUG}" ]]; then set -x; fi
 
           case "${GITHUB_EVENT_NAME}" in
@@ -89,7 +88,6 @@ jobs:
       - name: Set Up Environment 🔧
         id: setup
         run: |
-          : Set Up Environment 🔧
           if (( ${+RUNNER_DEBUG} )) setopt XTRACE
 
           print '::group::Enable Xcode 16.1'
@@ -215,7 +213,6 @@ jobs:
       - name: Set Up Environment 🔧
         id: setup
         run: |
-          : Set Up Environment 🔧
           if [[ "${RUNNER_DEBUG}" ]]; then set -x; fi
 
           read -r product_name product_version <<< \
@@ -300,7 +297,6 @@ jobs:
       - name: Set Up Environment 🔧
         id: setup
         run: |
-          # Set Up Environment 🔧
           if ( $Env:RUNNER_DEBUG -ne $null ) {
             Set-PSDebug -Trace 1
           }
