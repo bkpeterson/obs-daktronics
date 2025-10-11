@@ -4,6 +4,7 @@ include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/common/bootstrap.cmake" NO_POLICY_SCO
 
 if(WIN32)
   set(CMAKE_TOOLCHAIN_FILE "C:/vcpkg/scripts/buildsystems/vcpkg.cmake")
+  set(CMAKE_PREFIX_PATH, "C:/Program Files/OBS Studio")
 endif()
 
 project(${_name} VERSION ${_version})
