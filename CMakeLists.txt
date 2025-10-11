@@ -11,7 +11,9 @@ include(compilerconfig)
 include(defaults)
 include(helpers)
 
-include("/vcpkg/scripts/buildsystems/vcpkg.cmake")
+if(WIN32)
+  include("C:/vcpkg/scripts/buildsystems/vcpkg.cmake")
+endif()
 
 add_library(${CMAKE_PROJECT_NAME} MODULE)
 
