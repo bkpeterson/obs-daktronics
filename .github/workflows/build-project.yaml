@@ -87,15 +87,15 @@ jobs:
 
       - name: Set Up VCPKG 🔧
         run: |
-          git clone https://github.com/microsoft/vcpkg.git
-          cd vcpkg
-          ./bootstrap-vcpkg.sh
+          #git clone https://github.com/microsoft/vcpkg.git
+          #cd vcpkg
+          #./bootstrap-vcpkg.sh
 
-          echo "VCPKG_ROOT=$(pwd)/vcpkg" >> $GITHUB_ENV
+          #echo "VCPKG_ROOT=$(pwd)/vcpkg" >> $GITHUB_ENV
 
           brew install autoconf autoconf-archive automake libtool
-          
-          vcpkg install pango
+          vcpkg integrate install
+          vcpkg install pango:x64-osx pango:arm64-osx
 
 #      - name: Set Up Environment 🔧
 #        id: setup
