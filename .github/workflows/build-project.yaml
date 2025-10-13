@@ -91,8 +91,10 @@ jobs:
           cd vcpkg
           ./bootstrap-vcpkg.sh
 
-          export VCPKG_ROOT="$HOME/vcpkg" # Adjust path as needed
+          echo "VCPKG_ROOT=$(pwd)/vcpkg" >> $GITHUB_ENV
 
+          brew install autoconf autoconf-archive automake libtool
+          
           vcpkg install pango
 
 #      - name: Set Up Environment 🔧
