@@ -76,6 +76,11 @@ jobs:
     name: Build for macOS 🍏
     runs-on: macos-15
     needs: check-event
+    env: 
+      USERNAME: bkpeterson
+      VCPKG_EXE: /usr/local/share/vcpkg/vcpkg
+      FEED_URL: https://nuget.pkg.github.com/bkpeterson/index.json
+      VCPKG_BINARY_SOURCES: "clear;nuget,https://nuget.pkg.github.com/bkpeterson/index.json,readwrite"
     defaults:
       run:
         shell: zsh --no-rcs --errexit --pipefail {0}
@@ -84,6 +89,11 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
+
+      - name: Add NuGet sources
+        run: |
+          vcpkg fetch nuget sources add -Source "${{ env.FEED_URL }}" -StorePasswordInClearText -Name GitHubPackages -UserName "${{ env.USERNAME }}" -Password "${{ secrets.GITHUB_TOKEN }}"
+          vcpkg fetch nuget setapikey "${{ secrets.GITHUB_TOKEN }}" -Source "${{ env.FEED_URL }}"
 
       - name: Set Up VCPKG 🔧
         run: |
