@@ -93,6 +93,8 @@ jobs:
 
           export VCPKG_ROOT="$HOME/vcpkg" # Adjust path as needed
 
+          vcpkg install pango
+
 #      - name: Set Up Environment 🔧
 #        id: setup
 #        run: |
