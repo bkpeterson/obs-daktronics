@@ -91,7 +91,7 @@ jobs:
           #cd vcpkg
           #./bootstrap-vcpkg.sh
 
-          #echo "VCPKG_ROOT=$(pwd)/vcpkg" >> $GITHUB_ENV
+          echo "VCPKG_ROOT=/usr/local/share/vcpkg" >> $GITHUB_ENV
 
           brew install autoconf autoconf-archive automake libtool
           vcpkg integrate install
