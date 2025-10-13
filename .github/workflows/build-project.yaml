@@ -90,21 +90,20 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
-      - name: Add NuGet sources
-        run: |
-          vcpkg fetch nuget
-          nuget sources add -Source "${{ env.FEED_URL }}" -StorePasswordInClearText -Name GitHubPackages -UserName "${{ env.USERNAME }}" -Password "${{ secrets.GITHUB_TOKEN }}"
-          nuget setapikey "${{ secrets.GITHUB_TOKEN }}" -Source "${{ env.FEED_URL }}"
-
       - name: Set Up VCPKG 🔧
         run: |
           #git clone https://github.com/microsoft/vcpkg.git
           #cd vcpkg
-          #./bootstrap-vcpkg.sh
+
+          /usr/local/share/vcpkg/bootstrap-vcpkg.sh
 
           echo "VCPKG_ROOT=/usr/local/share/vcpkg" >> $GITHUB_ENV
 
-          brew install autoconf autoconf-archive automake libtool
+          brew install autoconf autoconf-archive automake libtool mono
+          vcpkg fetch nuget
+          nuget sources add -Source "${{ env.FEED_URL }}" -StorePasswordInClearText -Name GitHubPackages -UserName "${{ env.USERNAME }}" -Password "${{ secrets.GITHUB_TOKEN }}"
+          nuget setapikey "${{ secrets.GITHUB_TOKEN }}" -Source "${{ env.FEED_URL }}"
+
           vcpkg integrate install
           vcpkg install pango:x64-osx pango:arm64-osx
 
