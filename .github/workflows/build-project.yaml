@@ -99,10 +99,10 @@ jobs:
 
           echo "VCPKG_ROOT=/usr/local/share/vcpkg" >> $GITHUB_ENV
 
-          brew install autoconf autoconf-archive automake libtool mono
-          vcpkg fetch nuget
-          /usr/local/share/vcpkg/downloads/tools/nuget-6.10.0-osx/nuget.exe sources add -Source "${{ env.FEED_URL }}" -StorePasswordInClearText -Name GitHubPackages -UserName "${{ env.USERNAME }}" -Password "${{ secrets.GITHUB_TOKEN }}"
-          /usr/local/share/vcpkg/downloads/tools/nuget-6.10.0-osx/nuget.exe setapikey "${{ secrets.GITHUB_TOKEN }}" -Source "${{ env.FEED_URL }}"
+          brew install autoconf autoconf-archive automake libtool mono nuget
+          #vcpkg fetch nuget
+          nuget sources add -Source "${{ env.FEED_URL }}" -StorePasswordInClearText -Name GitHubPackages -UserName "${{ env.USERNAME }}" -Password "${{ secrets.GITHUB_TOKEN }}"
+          nuget setapikey "${{ secrets.GITHUB_TOKEN }}" -Source "${{ env.FEED_URL }}"
 
           vcpkg integrate install
           vcpkg install pango:x64-osx pango:arm64-osx
