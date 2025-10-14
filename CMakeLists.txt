@@ -30,7 +30,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs)
 #  pkg_check_modules(PANGOCAIRO pangocairo)
 #endif()
 
-find_path(PANGO_INCLUDE_DIR pango/pango.h)
+#find_path(PANGO_INCLUDE_DIR pango/pango.h)
 
 #target_include_directories(project_name_here PRIVATE ${PANGO_INCLUDE_DIR})
 
@@ -41,7 +41,7 @@ if(WIN32)
   include_directories("c:/vcpkg/installed/x64-windows/include/pango-1.0" "c:/vcpkg/installed/x64-windows/include/glib-2.0" "c:/vcpkg/installed/x64-windows/lib/glib-2.0/include" "c:/vcpkg/installed/x64-windows/include/harfbuzz" "c:/vcpkg/installed/x64-windows/include/freetype" "c:/vcpkg/installed/x64-windows/include/cairo")
 endif()
 
-include_directories(${PANGO_INCLUDE_DIR})
+include_directories("/usr/local/share/vcpkg/installed/arm64-osx/include/pango-1.0")
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARY} ${PANGOCAIRO_LIBRARY})
 
