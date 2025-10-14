@@ -102,9 +102,15 @@ jobs:
           nuget sources add -Source "${{ env.FEED_URL }}" -StorePasswordInClearText -Name GitHubPackages -UserName "${{ env.USERNAME }}" -Password "${{ secrets.GITHUB_TOKEN }}"
           nuget setapikey "${{ secrets.GITHUB_TOKEN }}" -Source "${{ env.FEED_URL }}"
 
-          vcpkg install pango
+          vcpkg install pango:arm64-osx pango:x86_64-osx
 
-          ls /usr/local/share/vcpkg/installed/arm64-osx/include
+      - name: Create Universal Pango Libraries
+        run: |
+          mv /usr/local/share/vcpkg/installed/arm64_osx/debug/lib/libpango-1.0.a /usr/local/share/vcpkg/installed/arm64_osx/debug/lib/libpango-1.0.arm64.a
+          lipo -create /usr/local/share/vcpkg/installed/x86_64_osx/debug/lib/libpango-1.0.a /usr/local/share/vcpkg/installed/arm64_osx/debug/lib/libpango-1.0.arm64.a -output /usr/local/share/vcpkg/installed/arm64_osx/debug/lib/libpango-1.0.a
+
+          mv /usr/local/share/vcpkg/installed/arm64_osx/debug/lib/libpangocairo-1.0.a /usr/local/share/vcpkg/installed/arm64_osx/debug/lib/libpangocairo-1.0.arm64.a
+          lipo -create /usr/local/share/vcpkg/installed/x86_64_osx/debug/lib/libpangocairo-1.0.a /usr/local/share/vcpkg/installed/arm64_osx/debug/lib/libpangocairo-1.0.arm64.a -output /usr/local/share/vcpkg/installed/arm64_osx/debug/lib/libpangocairo-1.0.a
 
 #      - name: Set Up Environment 🔧
 #        id: setup
@@ -205,7 +211,7 @@ jobs:
       - name: Build Plugin 🧱
         uses: ./.github/actions/build-plugin
         with:
-          target: macos-15
+          target: macos-universal
           config: ${{ needs.check-event.outputs.config }}
           codesign: ${{ fromJSON(needs.check-event.outputs.codesign) }}
           codesignIdent: ${{ steps.codesign.outputs.codesignIdent }}
@@ -213,7 +219,7 @@ jobs:
       - name: Package Plugin 📀
         uses: ./.github/actions/package-plugin
         with:
-          target: macos-15
+          target: macos-universal
           config: ${{ needs.check-event.outputs.config }}
           package: ${{ fromJSON(needs.check-event.outputs.package) }}
           codesign: ${{ fromJSON(needs.check-event.outputs.codesign) && fromJSON(steps.codesign.outputs.haveCodesignIdent) }}
