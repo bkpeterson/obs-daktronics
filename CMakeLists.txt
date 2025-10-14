@@ -38,9 +38,12 @@ find_package(libobs REQUIRED)
 
 if(WIN32)
   include_directories("c:/vcpkg/installed/x64-windows/include/pango-1.0" "c:/vcpkg/installed/x64-windows/include/glib-2.0" "c:/vcpkg/installed/x64-windows/lib/glib-2.0/include" "c:/vcpkg/installed/x64-windows/include/harfbuzz" "c:/vcpkg/installed/x64-windows/include/freetype" "c:/vcpkg/installed/x64-windows/include/cairo")
-else()
+elseif(OS_MACOS)
   include_directories("/usr/local/share/vcpkg/installed/arm64-osx/include/pango-1.0" "/usr/local/share/vcpkg/installed/arm64-osx/include/glib-2.0" "/usr/local/share/vcpkg/installed/arm64-osx/lib/glib-2.0/include" "/usr/local/share/vcpkg/installed/arm64-osx/include/harfbuzz" "/usr/local/share/vcpkg/installed/arm64-osx/include/freetype" "/usr/local/share/vcpkg/installed/arm64-osx/include/cairo")
+else()
+  include_directories("/usr/local/share/vcpkg/installed/x64-linux/include/pango-1.0" "/usr/local/share/vcpkg/installed/x64-linux/include/glib-2.0" "/usr/local/share/vcpkg/installed/x64-linux/lib/glib-2.0/include" "/usr/local/share/vcpkg/installed/x64-linux/include/harfbuzz" "/usr/local/share/vcpkg/installed/x64-linux/include/freetype" "/usr/local/share/vcpkg/installed/x64-linux/include/cairo")
 endif()
+
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs)
 
