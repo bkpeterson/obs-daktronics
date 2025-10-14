@@ -104,7 +104,11 @@ jobs:
 
           vcpkg install pango
 
-          ls /usr/local/share/vcpkg/installed
+          ls /usr/local/share/vcpkg/installed/arm64-osx
+
+          echo "**************"
+
+          ls /usr/local/share/vcpkg/installed/vcpkg
 
 #      - name: Set Up Environment 🔧
 #        id: setup
