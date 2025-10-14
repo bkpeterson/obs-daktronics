@@ -92,10 +92,8 @@ jobs:
 
       - name: Set Up VCPKG 🔧
         run: |
-          #git clone https://github.com/microsoft/vcpkg.git
-          #cd vcpkg
-
           /usr/local/share/vcpkg/bootstrap-vcpkg.sh
+          vcpkg integrate install
 
           echo "VCPKG_ROOT=/usr/local/share/vcpkg" >> $GITHUB_ENV
 
@@ -104,7 +102,6 @@ jobs:
           nuget sources add -Source "${{ env.FEED_URL }}" -StorePasswordInClearText -Name GitHubPackages -UserName "${{ env.USERNAME }}" -Password "${{ secrets.GITHUB_TOKEN }}"
           nuget setapikey "${{ secrets.GITHUB_TOKEN }}" -Source "${{ env.FEED_URL }}"
 
-          vcpkg integrate install
           vcpkg install pango
 
 #      - name: Set Up Environment 🔧

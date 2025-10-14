@@ -21,11 +21,11 @@ find_package(libobs REQUIRED)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs)
 
 find_package(PkgConfig QUIET)
-if(PKG_CONFIG_FOUND)
+#if(PKG_CONFIG_FOUND)
   pkg_check_modules(PANGO pango)
   pkg_check_modules(CAIRO cairo)
   pkg_check_modules(PANGOCAIRO pangocairo)
-endif()
+#endif()
 
 if(WIN32)
   include_directories("c:/vcpkg/installed/x64-windows/include/pango-1.0" "c:/vcpkg/installed/x64-windows/include/glib-2.0" "c:/vcpkg/installed/x64-windows/lib/glib-2.0/include" "c:/vcpkg/installed/x64-windows/include/harfbuzz" "c:/vcpkg/installed/x64-windows/include/freetype" "c:/vcpkg/installed/x64-windows/include/cairo")
