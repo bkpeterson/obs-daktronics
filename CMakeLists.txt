@@ -20,9 +20,9 @@ add_library(${CMAKE_PROJECT_NAME} MODULE)
 find_package(libobs REQUIRED)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs)
 
-find_package(pango REQUIRED)
-find_package(cairo REQUIRED)
-find_package(pangocairo REQUIRED)
+#find_package(pango REQUIRED)
+#find_package(cairo REQUIRED)
+#find_package(pangocairo REQUIRED)
 #find_package(PkgConfig QUIET)
 #if(PKG_CONFIG_FOUND)
 #  pkg_check_modules(PANGO pango)
@@ -30,16 +30,19 @@ find_package(pangocairo REQUIRED)
 #  pkg_check_modules(PANGOCAIRO pangocairo)
 #endif()
 
+find_library(PANGO_LIBRARY pango-1.0)
+find_library(PANGOCAIRO_LIBRARY pangocairo-1.0)
+
 if(WIN32)
   include_directories("c:/vcpkg/installed/x64-windows/include/pango-1.0" "c:/vcpkg/installed/x64-windows/include/glib-2.0" "c:/vcpkg/installed/x64-windows/lib/glib-2.0/include" "c:/vcpkg/installed/x64-windows/include/harfbuzz" "c:/vcpkg/installed/x64-windows/include/freetype" "c:/vcpkg/installed/x64-windows/include/cairo")
 endif()
 
 include_directories(${PANGO_INCLUDE_DIRS} ${CAIRO_INCLUDE_DIRS} ${PANGOCAIRO_INCLUDE_DIRS})
 
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARIES} ${CAIRO_LIBRARIES} ${PANGOCAIRO_LIBRARIES})
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARY} ${PANGOCAIRO_LIBRARY})
 
-include_directories("/usr/local/share/vcpkg/installed/arm64-osx/include")
-target_link_libraries("/usr/local/share/vcpkg/installed/arm64-osx/lib")
+#include_directories("/usr/local/share/vcpkg/installed/arm64-osx/include")
+#target_link_libraries("/usr/local/share/vcpkg/installed/arm64-osx/lib")
 
 if(ENABLE_FRONTEND_API)
   find_package(obs-frontend-api REQUIRED)
