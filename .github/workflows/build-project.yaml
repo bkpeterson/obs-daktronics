@@ -100,12 +100,12 @@ jobs:
           echo "VCPKG_ROOT=/usr/local/share/vcpkg" >> $GITHUB_ENV
 
           brew install autoconf autoconf-archive automake libtool mono nuget
-          #vcpkg fetch nuget
+
           nuget sources add -Source "${{ env.FEED_URL }}" -StorePasswordInClearText -Name GitHubPackages -UserName "${{ env.USERNAME }}" -Password "${{ secrets.GITHUB_TOKEN }}"
           nuget setapikey "${{ secrets.GITHUB_TOKEN }}" -Source "${{ env.FEED_URL }}"
 
           vcpkg integrate install
-          vcpkg install pango:x64-osx pango:arm64-osx
+          vcpkg install pango
 
 #      - name: Set Up Environment 🔧
 #        id: setup
