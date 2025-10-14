@@ -18,7 +18,6 @@ include(helpers)
 add_library(${CMAKE_PROJECT_NAME} MODULE)
 
 find_package(libobs REQUIRED)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs)
 
 #find_package(pango REQUIRED)
 #find_package(cairo REQUIRED)
@@ -34,8 +33,8 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs)
 
 #target_include_directories(project_name_here PRIVATE ${PANGO_INCLUDE_DIR})
 
-find_library(PANGO_LIBRARY pango-1.0)
-find_library(PANGOCAIRO_LIBRARY pangocairo-1.0)
+#find_library(PANGO_LIBRARY pango-1.0)
+#find_library(PANGOCAIRO_LIBRARY pangocairo-1.0)
 
 if(WIN32)
   include_directories("c:/vcpkg/installed/x64-windows/include/pango-1.0" "c:/vcpkg/installed/x64-windows/include/glib-2.0" "c:/vcpkg/installed/x64-windows/lib/glib-2.0/include" "c:/vcpkg/installed/x64-windows/include/harfbuzz" "c:/vcpkg/installed/x64-windows/include/freetype" "c:/vcpkg/installed/x64-windows/include/cairo")
@@ -43,8 +42,7 @@ else()
   include_directories("/usr/local/share/vcpkg/installed/arm64-osx/include/pango-1.0" "/usr/local/share/vcpkg/installed/arm64-osx/include/glib-2.0" "/usr/local/share/vcpkg/installed/arm64-osx/lib/glib-2.0/include" "/usr/local/share/vcpkg/installed/arm64-osx/include/harfbuzz" "/usr/local/share/vcpkg/installed/arm64-osx/include/freetype" "/usr/local/share/vcpkg/installed/arm64-osx/include/cairo")
 endif()
 
-
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARY} ${PANGOCAIRO_LIBRARY})
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs)
 
 #include_directories("/usr/local/share/vcpkg/installed/arm64-osx/include")
 #target_link_libraries("/usr/local/share/vcpkg/installed/arm64-osx/lib")
