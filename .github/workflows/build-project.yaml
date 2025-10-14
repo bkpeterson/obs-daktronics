@@ -104,7 +104,7 @@ jobs:
 
           vcpkg install pango
 
-          ls /usr/local/share/vcpkg
+          ls /usr/local/share/vcpkg/installed
 
 #      - name: Set Up Environment 🔧
 #        id: setup
