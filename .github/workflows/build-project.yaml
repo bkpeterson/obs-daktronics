@@ -102,15 +102,15 @@ jobs:
           nuget sources add -Source "${{ env.FEED_URL }}" -StorePasswordInClearText -Name GitHubPackages -UserName "${{ env.USERNAME }}" -Password "${{ secrets.GITHUB_TOKEN }}"
           nuget setapikey "${{ secrets.GITHUB_TOKEN }}" -Source "${{ env.FEED_URL }}"
 
-          vcpkg install pango:arm64-osx pango:x86_64-osx
+          vcpkg install pango:arm64-osx pango:x64-osx
 
       - name: Create Universal Pango Libraries
         run: |
           mv /usr/local/share/vcpkg/installed/arm64_osx/debug/lib/libpango-1.0.a /usr/local/share/vcpkg/installed/arm64_osx/debug/lib/libpango-1.0.arm64.a
-          lipo -create /usr/local/share/vcpkg/installed/x86_64_osx/debug/lib/libpango-1.0.a /usr/local/share/vcpkg/installed/arm64_osx/debug/lib/libpango-1.0.arm64.a -output /usr/local/share/vcpkg/installed/arm64_osx/debug/lib/libpango-1.0.a
+          lipo -create /usr/local/share/vcpkg/installed/x64_osx/debug/lib/libpango-1.0.a /usr/local/share/vcpkg/installed/arm64_osx/debug/lib/libpango-1.0.arm64.a -output /usr/local/share/vcpkg/installed/arm64_osx/debug/lib/libpango-1.0.a
 
           mv /usr/local/share/vcpkg/installed/arm64_osx/debug/lib/libpangocairo-1.0.a /usr/local/share/vcpkg/installed/arm64_osx/debug/lib/libpangocairo-1.0.arm64.a
-          lipo -create /usr/local/share/vcpkg/installed/x86_64_osx/debug/lib/libpangocairo-1.0.a /usr/local/share/vcpkg/installed/arm64_osx/debug/lib/libpangocairo-1.0.arm64.a -output /usr/local/share/vcpkg/installed/arm64_osx/debug/lib/libpangocairo-1.0.a
+          lipo -create /usr/local/share/vcpkg/installed/x64_osx/debug/lib/libpangocairo-1.0.a /usr/local/share/vcpkg/installed/arm64_osx/debug/lib/libpangocairo-1.0.arm64.a -output /usr/local/share/vcpkg/installed/arm64_osx/debug/lib/libpangocairo-1.0.a
 
 #      - name: Set Up Environment 🔧
 #        id: setup
