@@ -34,6 +34,16 @@ if(ENABLE_QT)
   )
 endif()
 
-target_sources(${CMAKE_PROJECT_NAME} PRIVATE src/plugin-main.c)
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE src)
+target_sources(
+  ${CMAKE_PROJECT_NAME}
+  PRIVATE
+    src/plugin-main.cpp
+    src/dak-data-utils.cpp
+    src/dak-sport-data.cpp
+    src/daktronics-filter.cpp
+    src/daktronics-source.cpp
+    src/dak-source-support.c
+)
 
 set_target_properties_plugin(${CMAKE_PROJECT_NAME} PROPERTIES OUTPUT_NAME ${_name})
