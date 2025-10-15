@@ -5,8 +5,6 @@ on:
       pluginName:
         description: Project name detected by parsing build spec file
         value: ${{ jobs.check-event.outputs.pluginName }}
-permissions:
-  packages: write
 jobs:
   check-event:
     name: Check GitHub Event Data 🔎
@@ -30,6 +28,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          : Check Event Data ☑️
           if [[ "${RUNNER_DEBUG}" ]]; then set -x; fi
 
           case "${GITHUB_EVENT_NAME}" in
@@ -76,11 +75,6 @@ jobs:
     name: Build for macOS 🍏
     runs-on: macos-15
     needs: check-event
-    env: 
-      USERNAME: bkpeterson
-      VCPKG_EXE: /usr/local/share/vcpkg/vcpkg
-      FEED_URL: https://nuget.pkg.github.com/bkpeterson/index.json
-      VCPKG_BINARY_SOURCES: "clear;nuget,https://nuget.pkg.github.com/bkpeterson/index.json,readwrite"
     defaults:
       run:
         shell: zsh --no-rcs --errexit --pipefail {0}
@@ -90,101 +84,33 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
-      - name: Set Up VCPKG 🔧
+      - name: Set Up Environment 🔧
+        id: setup
         run: |
-          /usr/local/share/vcpkg/bootstrap-vcpkg.sh
-          vcpkg integrate install
+          : Set Up Environment 🔧
+          if (( ${+RUNNER_DEBUG} )) setopt XTRACE
 
-          echo "VCPKG_ROOT=/usr/local/share/vcpkg" >> $GITHUB_ENV
+          print '::group::Enable Xcode 16.1'
+          sudo xcode-select --switch /Applications/Xcode_16.1.0.app/Contents/Developer
+          print '::endgroup::'
 
-          brew install autoconf autoconf-archive automake libtool mono nuget
+          print '::group::Clean Homebrew Environment'
+          local -a unwanted_formulas=()
+          local -a remove_formulas=()
+          for formula (${unwanted_formulas}) {
+            if [[ -d ${HOMEBREW_PREFIX}/Cellar/${formula} ]] remove_formulas+=(${formula})
+          }
 
-          nuget sources add -Source "${{ env.FEED_URL }}" -StorePasswordInClearText -Name GitHubPackages -UserName "${{ env.USERNAME }}" -Password "${{ secrets.GITHUB_TOKEN }}"
-          nuget setapikey "${{ secrets.GITHUB_TOKEN }}" -Source "${{ env.FEED_URL }}"
+          if (( #remove_formulas )) brew uninstall --ignore-dependencies ${remove_formulas}
+          print '::endgroup::'
 
-          vcpkg install pango:arm64-osx pango:x64-osx
+          local product_name
+          local product_version
+          read -r product_name product_version <<< \
+            "$(jq -r '. | {name, version} | join(" ")' buildspec.json)"
 
-      - name: Create Universal Pango Libraries
-        run: |
-          mv /usr/local/share/vcpkg/installed/arm64-osx/lib/libpango-1.0.a /usr/local/share/vcpkg/installed/arm64-osx/lib/libpango-1.0.arm64.a
-          lipo -create /usr/local/share/vcpkg/installed/x64-osx/lib/libpango-1.0.a /usr/local/share/vcpkg/installed/arm64-osx/lib/libpango-1.0.arm64.a -output /usr/local/share/vcpkg/installed/arm64-osx/lib/libpango-1.0.a
-
-          mv /usr/local/share/vcpkg/installed/arm64-osx/lib/libpangocairo-1.0.a /usr/local/share/vcpkg/installed/arm64-osx/lib/libpangocairo-1.0.arm64.a
-          lipo -create /usr/local/share/vcpkg/installed/x64-osx/lib/libpangocairo-1.0.a /usr/local/share/vcpkg/installed/arm64-osx/lib/libpangocairo-1.0.arm64.a -output /usr/local/share/vcpkg/installed/arm64-osx/lib/libpangocairo-1.0.a
-
-#      - name: Set Up Environment 🔧
-#        id: setup
-#        run: |
-#          if (( ${+RUNNER_DEBUG} )) setopt XTRACE
-#
-#          print '::group::Enable Xcode 16.1'
-#          sudo xcode-select --switch /Applications/Xcode_16.1.0.app/Contents/Developer
-#          print '::endgroup::'
-#
-#          print '::group::Clean Homebrew Environment'
-#          local -a unwanted_formulas=()
-#          local -a remove_formulas=()
-#          for formula (${unwanted_formulas}) {
-#            if [[ -d ${HOMEBREW_PREFIX}/Cellar/${formula} ]] remove_formulas+=(${formula})
-#          }
-#
-#          if (( #remove_formulas )) brew uninstall --ignore-dependencies ${remove_formulas}
-#          print '::endgroup::'
-#
-#          local product_name
-#          local product_version
-#          read -r product_name product_version <<< \
-#            "$(jq -r '. | {name, version} | join(" ")' buildspec.json)"
-#
-#          print "pluginName=${product_name}" >> $GITHUB_OUTPUT
-#          print "pluginVersion=${product_version}" >> $GITHUB_OUTPUT
-#
-#      - name: Install Pango dependencies
-#        if: runner.os == 'macOS'
-#        run: |
-#          brew install pango
-#
-#      - name: Set Homebrew Library Path
-#        run: |
-#          echo "LIBRARY_PATH=/opt/homebrew/lib" >> $GITHUB_ENV
-#  
-#      - name: Install Rosetta 2 
-#        run: |
-#          softwareupdate --install-rosetta --agree-to-license
-#
-#      - name: Install x86 Homebrew and Pango
-#        run: |
-#          # The system's default Homebrew (/opt/homebrew) is for ARM64.
-#          # We must install a separate, dedicated version for x86_64.
-#          # This command installs x86_64 Homebrew to /usr/local.
-#          arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-#
-#          # Install Pango and its dependencies using the x86_64 Homebrew.
-#          # The arch -x86_64 prefix forces the command to run via Rosetta.
-#          arch -x86_64 /usr/local/bin/brew install pango
-#
-#      - name: Create Universal Pango Libraries
-#        run: |
-#          mv /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.dylib /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.arm64.dylib
-#          lipo -create /usr/local/lib/libcairo.2.dylib /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.arm64.dylib -output /opt/homebrew/Cellar/cairo/1.18.4/lib/libcairo.2.dylib
-#
-#          mv /opt/homebrew/Cellar/pango/1.57.0/lib/libpango-1.0.0.dylib /opt/homebrew/Cellar/pango/1.57.0/lib/libpango-1.0.0.arm64.dylib
-#          lipo -create /usr/local/lib/libpango-1.0.0.dylib /opt/homebrew/Cellar/pango/1.57.0/lib/libpango-1.0.0.arm64.dylib -output /opt/homebrew/Cellar/pango/1.57.0/lib/libpango-1.0.0.dylib
-#
-#          mv /opt/homebrew/Cellar/harfbuzz/11.5.1/lib/libharfbuzz.0.dylib /opt/homebrew/Cellar/harfbuzz/11.5.1/lib/libharfbuzz.0.arm64.dylib
-#          lipo -create /usr/local/lib/libharfbuzz.0.dylib /opt/homebrew/Cellar/harfbuzz/11.5.1/lib/libharfbuzz.0.arm64.dylib -output /opt/homebrew/Cellar/harfbuzz/11.5.1/lib/libharfbuzz.0.dylib
-#
-#          mv /opt/homebrew/Cellar/glib/2.86.0/lib/libgobject-2.0.0.dylib /opt/homebrew/Cellar/glib/2.86.0/lib/libgobject-2.0.0.arm64.dylib
-#          lipo -create /usr/local/lib/libgobject-2.0.0.dylib /opt/homebrew/Cellar/glib/2.86.0/lib/libgobject-2.0.0.arm64.dylib -output /opt/homebrew/Cellar/glib/2.86.0/lib/libgobject-2.0.0.dylib
-#
-#          mv /opt/homebrew/Cellar/glib/2.86.0/lib/libglib-2.0.0.dylib /opt/homebrew/Cellar/glib/2.86.0/lib/libglib-2.0.0.arm64.dylib
-#          lipo -create /usr/local/lib/libglib-2.0.0.dylib /opt/homebrew/Cellar/glib/2.86.0/lib/libglib-2.0.0.arm64.dylib -output /opt/homebrew/Cellar/glib/2.86.0/lib/libglib-2.0.0.dylib
-#
-#          mv /opt/homebrew/Cellar/gettext/0.26/lib/libintl.8.dylib /opt/homebrew/Cellar/gettext/0.26/lib/libintl.8.arm64.dylib
-#          lipo -create /usr/local/lib/libintl.8.dylib /opt/homebrew/Cellar/gettext/0.26/lib/libintl.8.arm64.dylib -output /opt/homebrew/Cellar/gettext/0.26/lib/libintl.8.dylib
-#
-#          mv /opt/homebrew/Cellar/pango/1.57.0/lib/libpangocairo-1.0.0.dylib /opt/homebrew/Cellar/pango/1.57.0/lib/libpangocairo-1.0.0.arm64.dylib
-#          lipo -create /usr/local/lib/libpangocairo-1.0.0.dylib /opt/homebrew/Cellar/pango/1.57.0/lib/libpangocairo-1.0.0.arm64.dylib -output /opt/homebrew/Cellar/pango/1.57.0/lib/libpangocairo-1.0.0.dylib
+          print "pluginName=${product_name}" >> $GITHUB_OUTPUT
+          print "pluginVersion=${product_version}" >> $GITHUB_OUTPUT
 
       - uses: actions/cache/restore@v4
         id: ccache-cache
@@ -211,7 +137,7 @@ jobs:
       - name: Build Plugin 🧱
         uses: ./.github/actions/build-plugin
         with:
-          target: macos-arm64
+          target: macos-universal
           config: ${{ needs.check-event.outputs.config }}
           codesign: ${{ fromJSON(needs.check-event.outputs.codesign) }}
           codesignIdent: ${{ steps.codesign.outputs.codesignIdent }}
@@ -219,7 +145,7 @@ jobs:
       - name: Package Plugin 📀
         uses: ./.github/actions/package-plugin
         with:
-          target: macos-arm64
+          target: macos-universal
           config: ${{ needs.check-event.outputs.config }}
           package: ${{ fromJSON(needs.check-event.outputs.package) }}
           codesign: ${{ fromJSON(needs.check-event.outputs.codesign) && fromJSON(steps.codesign.outputs.haveCodesignIdent) }}
@@ -233,15 +159,15 @@ jobs:
       - name: Upload Artifacts 📡
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.setup.outputs.pluginName }}-${{ steps.setup.outputs.pluginVersion }}-macos-arm64-${{ needs.check-event.outputs.commitHash }}
-          path: ${{ github.workspace }}/release/${{ steps.setup.outputs.pluginName }}-${{ steps.setup.outputs.pluginVersion }}-macos-arm64.*
+          name: ${{ steps.setup.outputs.pluginName }}-${{ steps.setup.outputs.pluginVersion }}-macos-universal-${{ needs.check-event.outputs.commitHash }}
+          path: ${{ github.workspace }}/release/${{ steps.setup.outputs.pluginName }}-${{ steps.setup.outputs.pluginVersion }}-macos-universal.*
 
       - name: Upload Debug Symbol Artifacts 🪲
         uses: actions/upload-artifact@v4
         if: ${{ needs.check-event.outputs.config == 'Release' }}
         with:
-          name: ${{ steps.setup.outputs.pluginName }}-${{ steps.setup.outputs.pluginVersion }}-macos-arm64-${{ needs.check-event.outputs.commitHash }}-dSYMs
-          path: ${{ github.workspace }}/release/${{ steps.setup.outputs.pluginName }}-${{ steps.setup.outputs.pluginVersion }}-macos-arm64-dSYMs.*
+          name: ${{ steps.setup.outputs.pluginName }}-${{ steps.setup.outputs.pluginVersion }}-macos-universal-${{ needs.check-event.outputs.commitHash }}-dSYMs
+          path: ${{ github.workspace }}/release/${{ steps.setup.outputs.pluginName }}-${{ steps.setup.outputs.pluginVersion }}-macos-universal-dSYMs.*
 
       - uses: actions/cache/save@v4
         if: github.event_name != 'pull_request' && steps.ccache-cache.outputs.cache-hit != 'true'
@@ -265,15 +191,10 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
-      - name: Clone SIMDe
-        run: git clone https://github.com/simd-everywhere/simde.git
-
-      - name: Set SIMDe include directory environment variable
-        run: echo "SIMDe_include_dir=$(pwd)/simde" >> $GITHUB_ENV
-
       - name: Set Up Environment 🔧
         id: setup
         run: |
+          : Set Up Environment 🔧
           if [[ "${RUNNER_DEBUG}" ]]; then set -x; fi
 
           read -r product_name product_version <<< \
@@ -281,11 +202,6 @@ jobs:
 
           echo "pluginName=${product_name}" >> $GITHUB_OUTPUT
           echo "pluginVersion=${product_version}" >> $GITHUB_OUTPUT
-
-      - name: Install Pango dependencies
-        run: |
-          sudo apt update
-          sudo apt install libpango1.0-dev
 
       - uses: actions/cache/restore@v4
         id: ccache-cache
@@ -337,11 +253,6 @@ jobs:
     name: Build for Windows 🪟
     runs-on: windows-2022
     needs: check-event
-    env: 
-      USERNAME: bkpeterson
-      VCPKG_EXE: C:/vcpkg/vcpkg
-      FEED_URL: https://nuget.pkg.github.com/bkpeterson/index.json
-      VCPKG_BINARY_SOURCES: "clear;nuget,https://nuget.pkg.github.com/bkpeterson/index.json,readwrite"
     defaults:
       run:
         shell: pwsh
@@ -354,6 +265,7 @@ jobs:
       - name: Set Up Environment 🔧
         id: setup
         run: |
+          # Set Up Environment 🔧
           if ( $Env:RUNNER_DEBUG -ne $null ) {
             Set-PSDebug -Trace 1
           }
@@ -364,28 +276,6 @@ jobs:
 
           "pluginName=${ProductName}" >> $env:GITHUB_OUTPUT
           "pluginVersion=${ProductVersion}" >> $env:GITHUB_OUTPUT
-
-      - name: Bootstrap vcpkg
-        run: C:/vcpkg/bootstrap-vcpkg.bat
-
-      - name: Add NuGet sources
-        run: |
-          .$(${{ env.VCPKG_EXE }} fetch nuget) `
-            sources add `
-            -Source "${{ env.FEED_URL }}" `
-            -StorePasswordInClearText `
-            -Name GitHubPackages `
-            -UserName "${{ env.USERNAME }}" `
-            -Password "${{ secrets.GITHUB_TOKEN }}"
-          .$(${{ env.VCPKG_EXE }} fetch nuget) `
-            setapikey "${{ secrets.GITHUB_TOKEN }}" `
-            -Source "${{ env.FEED_URL }}"
-
-      - name: Download and Install Pango
-        run: |
-          vcpkg update
-          vcpkg integrate install
-          vcpkg install pango
 
       - name: Build Plugin 🧱
         uses: ./.github/actions/build-plugin

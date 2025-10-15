@@ -24,7 +24,6 @@ jobs:
     secrets: inherit
     permissions:
       contents: read
-      packages: write
 
   create-release:
     name: Create Release 🛫
@@ -38,6 +37,7 @@ jobs:
       - name: Check Release Tag ☑️
         id: check
         run: |
+          : Check Release Tag ☑️
           if [[ "${RUNNER_DEBUG}" ]]; then set -x; fi
           shopt -s extglob
 
@@ -63,6 +63,7 @@ jobs:
       - name: Rename Files 🏷️
         if: fromJSON(steps.check.outputs.validTag)
         run: |
+          : Rename Files 🏷️
           if [[ "${RUNNER_DEBUG}" ]]; then set -x; fi
           shopt -s extglob
           shopt -s nullglob
@@ -90,6 +91,7 @@ jobs:
       - name: Generate Checksums 🪪
         if: fromJSON(steps.check.outputs.validTag)
         run: |
+          : Generate Checksums 🪪
           if [[ "${RUNNER_DEBUG}" ]]; then set -x; fi
           shopt -s extglob
 

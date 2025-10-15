@@ -198,7 +198,6 @@ ${_usage_host:-}"
           -DQT_VERSION=${QT_VERSION:-6}
           -DCMAKE_BUILD_TYPE=${config}
           -DCMAKE_INSTALL_PREFIX=/usr
-          -DSIMDe_INCLUDE_DIR=${SIMDe_include_dir}
         )
 
         local cmake_version
