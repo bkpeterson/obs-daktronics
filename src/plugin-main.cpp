@@ -65,8 +65,11 @@ obs_source_info create_daktronics_filter_info()
 
 bool obs_module_load(void)
 {
-	obs_register_source(&create_daktronics_source_info());
-	obs_register_source(&create_daktronics_filter_info());
+	obs_source_info dakSource = create_daktronics_source_info();
+	obs_register_source(&dakSource);
+
+	obs_source_info dakFilter = create_daktronics_filter_info();
+	obs_register_source(&dakFilter);
 
 	DAKDataUtils::populateSportsData();
 
