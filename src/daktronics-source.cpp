@@ -54,7 +54,7 @@ void DAKSource::Destroy(void *data)
 const char *DAKSource::GetName(void *type_data)
 {
 	UNUSED_PARAMETER(type_data);
-	return obs_module_text("DaktronicsSource");
+	return "DAK Scoreboard Source";
 }
 
 void DAKSource::SetTextValue(std::string newValue)
@@ -201,26 +201,26 @@ obs_properties_t *DAKSource::GetProperties(void *data)
 	obs_properties_t *prop_dak_group = obs_properties_create();
 
 	obs_property_t *sport_type = obs_properties_add_list(prop_dak_group, "dak_sport_type",
-							     obs_module_text("DaktronicsSource.SportType"),
+							     "Sport",
 							     OBS_COMBO_TYPE_LIST, OBS_COMBO_FORMAT_STRING);
 
 	DAKDataUtils::PopulateSportProps(sport_type);
 
 	obs_property_set_modified_callback(sport_type, DAKSource::DAKSportChanged);
 
-	obs_properties_add_list(prop_dak_group, "dak_field_list", obs_module_text("DaktronicsSource.FieldList"),
+	obs_properties_add_list(prop_dak_group, "dak_field_list", "Scoreboard Data Field",
 				OBS_COMBO_TYPE_LIST, OBS_COMBO_FORMAT_INT);
 
 	obs_properties_add_text(prop_dak_group, "dak_field_default_val",
-				obs_module_text("DaktronicsSource.FieldDefaultVal"), OBS_TEXT_DEFAULT);
+				"00", OBS_TEXT_DEFAULT);
 
-	obs_properties_add_group(props, "sport_group", obs_module_text("DaktronicsSource.SportGroupLabel"),
+	obs_properties_add_group(props, "sport_group", "Sport Data",
 				 OBS_GROUP_NORMAL, prop_dak_group);
 
-	obs_properties_add_font(props, "font", obs_module_text("DaktronicsSource.Font"));
+	obs_properties_add_font(props, "font", "Font");
 
 	obs_property_t *align_type = obs_properties_add_list(props, "dak_text_align",
-							     obs_module_text("DaktronicsSource.AlignList"),
+							     "Text Align",
 							     OBS_COMBO_TYPE_LIST, OBS_COMBO_FORMAT_INT);
 
 	obs_property_list_add_int(align_type, "Left", 1);
@@ -229,13 +229,13 @@ obs_properties_t *DAKSource::GetProperties(void *data)
 
 	obs_property_list_add_int(align_type, "Right", 3);
 
-	obs_properties_add_color_alpha(props, "bg", obs_module_text("DaktronicsSource.BackgroundColor"));
+	obs_properties_add_color_alpha(props, "bg", "BG Color");
 
-	obs_properties_add_color_alpha(props, "fg", obs_module_text("DaktronicsSource.ForegroundColor"));
+	obs_properties_add_color_alpha(props, "fg", "Text Color");
 
-	obs_properties_add_color_alpha(props, "outline", obs_module_text("DaktronicsSource.OutlineColor"));
+	obs_properties_add_color_alpha(props, "outline", "Outline Color");
 
-	obs_properties_add_float(props, "outlinew", obs_module_text("DaktronicsSource.OutlineWidth"), 0.0, INFINITY,
+	obs_properties_add_float(props, "outlinew", "Outline Width", 0.0, INFINITY,
 				 1.0);
 
 	std::string info = "<a href=\"https://github.com/bkpeterson/obs-daktronics\">Daktronics Source</a> (";

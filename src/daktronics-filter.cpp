@@ -47,7 +47,7 @@ void DAKFilter::Destroy(void *data)
 const char *DAKFilter::GetName(void *type_data)
 {
 	UNUSED_PARAMETER(type_data);
-	return obs_module_text("DaktronicsFilter");
+	return "DAK Show/Hide";
 }
 
 void DAKFilter::SetVisible(bool visible)
@@ -101,14 +101,14 @@ obs_properties_t *DAKFilter::GetProperties(void *data)
 	obs_properties_t *props = obs_properties_create();
 
 	obs_property_t *sport_type = obs_properties_add_list(props, "dak_sport_type",
-							     obs_module_text("DaktronicsSource.SportType"),
+							     "Sport",
 							     OBS_COMBO_TYPE_LIST, OBS_COMBO_FORMAT_STRING);
 
 	DAKDataUtils::PopulateSportProps(sport_type);
 
 	obs_property_set_modified_callback(sport_type, DAKFilter::DAKSportChanged);
 
-	obs_properties_add_list(props, "dak_field_list", obs_module_text("DaktronicsSource.FieldList"),
+	obs_properties_add_list(props, "dak_field_list", "Scoreboard Data Field",
 				OBS_COMBO_TYPE_LIST, OBS_COMBO_FORMAT_INT);
 
 	std::string info = "<a href=\"https://github.com/bkpeterson/obs-daktronics\">Daktronics Source</a> (";
