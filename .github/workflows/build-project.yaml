@@ -292,6 +292,11 @@ jobs:
     name: Build for Windows 🪟
     runs-on: windows-2022
     needs: check-event
+    env: 
+      USERNAME: bkpeterson
+      VCPKG_EXE: C:/vcpkg/vcpkg
+      FEED_URL: https://nuget.pkg.github.com/bkpeterson/index.json
+      VCPKG_BINARY_SOURCES: "clear;nuget,https://nuget.pkg.github.com/bkpeterson/index.json,readwrite"
     defaults:
       run:
         shell: pwsh
@@ -315,6 +320,28 @@ jobs:
 
           "pluginName=${ProductName}" >> $env:GITHUB_OUTPUT
           "pluginVersion=${ProductVersion}" >> $env:GITHUB_OUTPUT
+
+      - name: Bootstrap vcpkg
+        run: C:/vcpkg/bootstrap-vcpkg.bat
+
+      - name: Add NuGet sources
+        run: |
+          .$(${{ env.VCPKG_EXE }} fetch nuget) `
+            sources add `
+            -Source "${{ env.FEED_URL }}" `
+            -StorePasswordInClearText `
+            -Name GitHubPackages `
+            -UserName "${{ env.USERNAME }}" `
+            -Password "${{ secrets.GITHUB_TOKEN }}"
+          .$(${{ env.VCPKG_EXE }} fetch nuget) `
+            setapikey "${{ secrets.GITHUB_TOKEN }}" `
+            -Source "${{ env.FEED_URL }}"
+
+      - name: Download and Install Pango
+        run: |
+          vcpkg update
+          vcpkg integrate install
+          vcpkg install pango
 
       - name: Build Plugin 🧱
         uses: ./.github/actions/build-plugin
