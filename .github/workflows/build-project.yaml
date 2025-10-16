@@ -219,6 +219,12 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
+      - name: Clone SIMDe
+        run: git clone https://github.com/simd-everywhere/simde.git
+
+      - name: Set SIMDe include directory environment variable
+        run: echo "SIMDe_include_dir=$(pwd)/simde" >> $GITHUB_ENV
+
       - name: Set Up Environment 🔧
         id: setup
         run: |
@@ -230,6 +236,11 @@ jobs:
 
           echo "pluginName=${product_name}" >> $GITHUB_OUTPUT
           echo "pluginVersion=${product_version}" >> $GITHUB_OUTPUT
+
+      - name: Install Pango dependencies
+        run: |
+          sudo apt update
+          sudo apt install libpango1.0-dev
 
       - uses: actions/cache/restore@v4
         id: ccache-cache
