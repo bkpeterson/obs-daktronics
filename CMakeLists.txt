@@ -18,7 +18,7 @@ if(WIN32)
 elseif(OS_MACOS)
   include_directories("/usr/local/share/vcpkg/installed/arm64-osx/include/pango-1.0" "/usr/local/share/vcpkg/installed/arm64-osx/include/glib-2.0" "/usr/local/share/vcpkg/installed/arm64-osx/lib/glib-2.0/include" "/usr/local/share/vcpkg/installed/arm64-osx/include/harfbuzz" "/usr/local/share/vcpkg/installed/arm64-osx/include/freetype" "/usr/local/share/vcpkg/installed/arm64-osx/include/cairo")
 else()
-  include_directories("/usr/include/pango-1.0" "/usr/include/glib-2.0" "/usr/lib/glib-2.0/include" "/usr/include/harfbuzz" "/usr/include/freetype" "/usr/include/cairo")
+  include_directories("/usr/include/pango-1.0" "/usr/include/glib-2.0" "/usr/lib/x86_64-linux-gnu/glib-2.0/include" "/usr/include/harfbuzz" "/usr/include/freetype" "/usr/include/cairo")
 endif()
 
 find_package(libobs REQUIRED)
