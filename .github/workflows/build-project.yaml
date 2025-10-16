@@ -146,8 +146,7 @@ jobs:
 
           echo "VCPKG_ROOT=/usr/local/share/vcpkg" >> $GITHUB_ENV
 
-          vcpkg install nuget
-
+          brew install nuget
           #brew install autoconf autoconf-archive automake libtool mono nuget
 
           nuget sources add -Source "${{ env.FEED_URL }}" -StorePasswordInClearText -Name GitHubPackages -UserName "${{ env.USERNAME }}" -Password "${{ secrets.GITHUB_TOKEN }}"
