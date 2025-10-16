@@ -29,6 +29,8 @@ if(PKG_CONFIG_FOUND)
   pkg_check_modules(PANGO pango)
   pkg_check_modules(CAIRO cairo)
   pkg_check_modules(PANGOCAIRO pangocairo)
+
+  target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Pango::Pango Pango::pangocairo Cairo::cairo)
 endif()
 
 if(ENABLE_FRONTEND_API)
