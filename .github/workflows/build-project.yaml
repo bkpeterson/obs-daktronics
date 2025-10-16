@@ -75,6 +75,11 @@ jobs:
     name: Build for macOS 🍏
     runs-on: macos-15
     needs: check-event
+    env: 
+      USERNAME: bkpeterson
+      VCPKG_EXE: /usr/local/share/vcpkg/vcpkg
+      FEED_URL: https://nuget.pkg.github.com/bkpeterson/index.json
+      VCPKG_BINARY_SOURCES: "clear;nuget,https://nuget.pkg.github.com/bkpeterson/index.json,readwrite"
     defaults:
       run:
         shell: zsh --no-rcs --errexit --pipefail {0}
@@ -133,6 +138,28 @@ jobs:
           provisioningProfile: ${{ secrets.MACOS_SIGNING_PROVISIONING_PROFILE }}
           notarizationUser: ${{ secrets.MACOS_NOTARIZATION_USERNAME }}
           notarizationPassword: ${{ secrets.MACOS_NOTARIZATION_PASSWORD }}
+
+      - name: Set Up VCPKG 🔧
+        run: |
+          /usr/local/share/vcpkg/bootstrap-vcpkg.sh
+          vcpkg integrate install
+
+          echo "VCPKG_ROOT=/usr/local/share/vcpkg" >> $GITHUB_ENV
+
+          #brew install autoconf autoconf-archive automake libtool mono nuget
+
+          nuget sources add -Source "${{ env.FEED_URL }}" -StorePasswordInClearText -Name GitHubPackages -UserName "${{ env.USERNAME }}" -Password "${{ secrets.GITHUB_TOKEN }}"
+          nuget setapikey "${{ secrets.GITHUB_TOKEN }}" -Source "${{ env.FEED_URL }}"
+
+          vcpkg install pango:arm64-osx pango:x64-osx
+
+      - name: Create Universal Pango Libraries
+        run: |
+          mv /usr/local/share/vcpkg/installed/arm64-osx/lib/libpango-1.0.a /usr/local/share/vcpkg/installed/arm64-osx/lib/libpango-1.0.arm64.a
+          lipo -create /usr/local/share/vcpkg/installed/x64-osx/lib/libpango-1.0.a /usr/local/share/vcpkg/installed/arm64-osx/lib/libpango-1.0.arm64.a -output /usr/local/share/vcpkg/installed/arm64-osx/lib/libpango-1.0.a
+
+          mv /usr/local/share/vcpkg/installed/arm64-osx/lib/libpangocairo-1.0.a /usr/local/share/vcpkg/installed/arm64-osx/lib/libpangocairo-1.0.arm64.a
+          lipo -create /usr/local/share/vcpkg/installed/x64-osx/lib/libpangocairo-1.0.a /usr/local/share/vcpkg/installed/arm64-osx/lib/libpangocairo-1.0.arm64.a -output /usr/local/share/vcpkg/installed/arm64-osx/lib/libpangocairo-1.0.a
 
       - name: Build Plugin 🧱
         uses: ./.github/actions/build-plugin
