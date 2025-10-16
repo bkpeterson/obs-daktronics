@@ -242,8 +242,6 @@ jobs:
           sudo apt update
           sudo apt install libpango1.0-dev
 
-          locate glibconfig.h
-
       - uses: actions/cache/restore@v4
         id: ccache-cache
         with:
