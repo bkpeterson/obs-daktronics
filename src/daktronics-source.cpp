@@ -200,28 +200,24 @@ obs_properties_t *DAKSource::GetProperties(void *data)
 	obs_properties_t *props = obs_properties_create();
 	obs_properties_t *prop_dak_group = obs_properties_create();
 
-	obs_property_t *sport_type = obs_properties_add_list(prop_dak_group, "dak_sport_type",
-							     "Sport",
+	obs_property_t *sport_type = obs_properties_add_list(prop_dak_group, "dak_sport_type", "Sport",
 							     OBS_COMBO_TYPE_LIST, OBS_COMBO_FORMAT_STRING);
 
 	DAKDataUtils::PopulateSportProps(sport_type);
 
 	obs_property_set_modified_callback(sport_type, DAKSource::DAKSportChanged);
 
-	obs_properties_add_list(prop_dak_group, "dak_field_list", "Scoreboard Data Field",
-				OBS_COMBO_TYPE_LIST, OBS_COMBO_FORMAT_INT);
+	obs_properties_add_list(prop_dak_group, "dak_field_list", "Scoreboard Data Field", OBS_COMBO_TYPE_LIST,
+				OBS_COMBO_FORMAT_INT);
 
-	obs_properties_add_text(prop_dak_group, "dak_field_default_val",
-				"00", OBS_TEXT_DEFAULT);
+	obs_properties_add_text(prop_dak_group, "dak_field_default_val", "00", OBS_TEXT_DEFAULT);
 
-	obs_properties_add_group(props, "sport_group", "Sport Data",
-				 OBS_GROUP_NORMAL, prop_dak_group);
+	obs_properties_add_group(props, "sport_group", "Sport Data", OBS_GROUP_NORMAL, prop_dak_group);
 
 	obs_properties_add_font(props, "font", "Font");
 
-	obs_property_t *align_type = obs_properties_add_list(props, "dak_text_align",
-							     "Text Align",
-							     OBS_COMBO_TYPE_LIST, OBS_COMBO_FORMAT_INT);
+	obs_property_t *align_type = obs_properties_add_list(props, "dak_text_align", "Text Align", OBS_COMBO_TYPE_LIST,
+							     OBS_COMBO_FORMAT_INT);
 
 	obs_property_list_add_int(align_type, "Left", 1);
 
@@ -235,8 +231,7 @@ obs_properties_t *DAKSource::GetProperties(void *data)
 
 	obs_properties_add_color_alpha(props, "outline", "Outline Color");
 
-	obs_properties_add_float(props, "outlinew", "Outline Width", 0.0, INFINITY,
-				 1.0);
+	obs_properties_add_float(props, "outlinew", "Outline Width", 0.0, INFINITY, 1.0);
 
 	std::string info = "<a href=\"https://github.com/bkpeterson/obs-daktronics\">Daktronics Source</a> (";
 	info += PLUGIN_VERSION;

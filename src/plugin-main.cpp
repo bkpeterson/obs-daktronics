@@ -25,48 +25,48 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE("daktronics-realtime-data", "en-US")
 
-obs_source_info *create_daktronics_source_info()
+obs_source_info create_daktronics_source_info()
 {
-	obs_source_info *daktronics_source_info = {};
-	daktronics_source_info->id = "daktronics_source";
-	daktronics_source_info->type = OBS_SOURCE_TYPE_INPUT;
-	daktronics_source_info->output_flags = OBS_SOURCE_VIDEO;
-	daktronics_source_info->get_name = DAKSource::GetName;
-	daktronics_source_info->create = DAKSource::Create;
-	daktronics_source_info->destroy = DAKSource::Destroy;
-	daktronics_source_info->get_width = DAKSource::GetWidth;
-	daktronics_source_info->get_height = DAKSource::GetHeight;
-	daktronics_source_info->video_render = DAKSource::Render;
-	daktronics_source_info->get_defaults = DAKSource::GetDefaults;
-	daktronics_source_info->get_properties = DAKSource::GetProperties;
-	daktronics_source_info->update = DAKSource::Update;
-	daktronics_source_info->icon_type = OBS_ICON_TYPE_TEXT;
+	obs_source_info daktronics_source_info = {};
+	daktronics_source_info.id = "daktronics_source";
+	daktronics_source_info.type = OBS_SOURCE_TYPE_INPUT;
+	daktronics_source_info.output_flags = OBS_SOURCE_VIDEO;
+	daktronics_source_info.get_name = DAKSource::GetName;
+	daktronics_source_info.create = DAKSource::Create;
+	daktronics_source_info.destroy = DAKSource::Destroy;
+	daktronics_source_info.get_width = DAKSource::GetWidth;
+	daktronics_source_info.get_height = DAKSource::GetHeight;
+	daktronics_source_info.video_render = DAKSource::Render;
+	daktronics_source_info.get_defaults = DAKSource::GetDefaults;
+	daktronics_source_info.get_properties = DAKSource::GetProperties;
+	daktronics_source_info.update = DAKSource::Update;
+	daktronics_source_info.icon_type = OBS_ICON_TYPE_TEXT;
 
 	return daktronics_source_info;
 }
 
-obs_source_info *create_daktronics_filter_info()
+obs_source_info create_daktronics_filter_info()
 {
-	obs_source_info *daktronics_filter_info = {};
-	daktronics_filter_info->id = "daktronics_filter";
-	daktronics_filter_info->type = OBS_SOURCE_TYPE_FILTER;
-	daktronics_filter_info->output_flags = OBS_SOURCE_VIDEO;
-	daktronics_filter_info->get_name = DAKFilter::GetName;
-	daktronics_filter_info->create = DAKFilter::Create;
-	daktronics_filter_info->destroy = DAKFilter::Destroy;
-	daktronics_filter_info->video_render = DAKFilter::Render;
-	daktronics_filter_info->get_defaults = DAKFilter::GetDefaults;
-	daktronics_filter_info->get_properties = DAKFilter::GetProperties;
-	daktronics_filter_info->update = DAKFilter::Update;
-	daktronics_filter_info->icon_type = OBS_ICON_TYPE_IMAGE;
+	obs_source_info daktronics_filter_info = {};
+	daktronics_filter_info.id = "daktronics_filter";
+	daktronics_filter_info.type = OBS_SOURCE_TYPE_FILTER;
+	daktronics_filter_info.output_flags = OBS_SOURCE_VIDEO;
+	daktronics_filter_info.get_name = DAKFilter::GetName;
+	daktronics_filter_info.create = DAKFilter::Create;
+	daktronics_filter_info.destroy = DAKFilter::Destroy;
+	daktronics_filter_info.video_render = DAKFilter::Render;
+	daktronics_filter_info.get_defaults = DAKFilter::GetDefaults;
+	daktronics_filter_info.get_properties = DAKFilter::GetProperties;
+	daktronics_filter_info.update = DAKFilter::Update;
+	daktronics_filter_info.icon_type = OBS_ICON_TYPE_IMAGE;
 
 	return daktronics_filter_info;
 }
 
 bool obs_module_load(void)
 {
-	obs_register_source(create_daktronics_source_info());
-	obs_register_source(create_daktronics_filter_info());
+	obs_register_source(&create_daktronics_source_info());
+	obs_register_source(&create_daktronics_filter_info());
 
 	DAKDataUtils::populateSportsData();
 
