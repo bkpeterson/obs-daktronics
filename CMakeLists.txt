@@ -27,14 +27,10 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs)
 
 find_package(PkgConfig QUIET)
 if(PKG_CONFIG_FOUND)
-  pkg_check_modules(PANGO REQUIRED IMPORTED_TARGET pango)
-  pkg_check_modules(CAIRO REQUIRED IMPORTED_TARGET cairo)
-  pkg_check_modules(PANGOCAIRO REQUIRED IMPORTED_TARGET pangocairo)
-
-#find_package(pango REQUIRED)
-#find_package(pangocairo REQUIRED)
-#find_package(cairo REQUIRED)
-  target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE PkgConfig::PANGO PkgConfig::CAIRO PkgConfig::PANGOCAIRO)
+  pkg_check_modules(PANGO REQUIRED pango)
+  pkg_check_modules(CAIRO REQUIRED cairo)
+  pkg_check_modules(PANGOCAIRO REQUIRED pangocairo)
+  target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARIES} ${CAIRO_LIBRARIES} ${PANGOCAIRO_LIBRARIES})
 endif()
 
 if(ENABLE_FRONTEND_API)
