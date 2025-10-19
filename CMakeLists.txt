@@ -33,7 +33,7 @@ if(PKG_CONFIG_FOUND)
   pkg_check_modules(CAIRO REQUIRED cairo)
   pkg_check_modules(PANGOCAIRO REQUIRED pangocairo)
   target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_INCLUDE_DIRS} ${CAIRO_INCLUDE_DIRS} ${PANGOCAIRO_INCLUDE_DIRS})
-#  target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE "/opt/homebrew/lib/libpango-1.0.a")
+  target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE "/opt/homebrew/lib/libpango-1.0.a" "/opt/homebrew/lib/libcairo.a")
 endif()
 
 if(ENABLE_FRONTEND_API)
