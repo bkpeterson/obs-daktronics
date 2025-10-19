@@ -27,7 +27,7 @@ add_library(${CMAKE_PROJECT_NAME} MODULE)
 find_package(libobs REQUIRED)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs)
 
-find_package(PkgConfig QUIET)
+find_package(PkgConfig REQUIRED)
 if(PKG_CONFIG_FOUND)
   pkg_check_modules(PANGO REQUIRED pango)
   pkg_check_modules(CAIRO REQUIRED cairo)
