@@ -150,12 +150,12 @@ jobs:
         run: |
           echo "LIBRARY_PATH=/opt/homebrew/lib" >> $GITHUB_ENV
   
-#      - name: Install Rosetta 2 
-#        run: |
-#          softwareupdate --install-rosetta --agree-to-license
-#
-#      - name: Install x86 Homebrew and Pango
-#        run: |
+      - name: Install Rosetta 2 
+        run: |
+          softwareupdate --install-rosetta --agree-to-license
+
+      - name: Install x86 Homebrew and Pango
+        run: |
           # The system's default Homebrew (/opt/homebrew) is for ARM64.
           # We must install a separate, dedicated version for x86_64.
           # This command installs x86_64 Homebrew to /usr/local.
@@ -165,16 +165,16 @@ jobs:
           # The arch -x86_64 prefix forces the command to run via Rosetta.
           #arch -x86_64 /usr/local/bin/brew install pango
 
-#      - name: Create Universal Pango Libraries
-#        run: |
-#          mv /opt/homebrew/lib/libcairo.a /opt/homebrew/lib/libcairo.arm64.a
-#          lipo -create /usr/local/lib/libcairo.a /opt/homebrew/lib/libcairo.arm64.a -output /opt/homebrew/lib/libcairo.a
-#
-#          mv /opt/homebrew/lib/libpango-1.0.a /opt/homebrew/lib/libpango-1.0.arm64.a
-#          lipo -create /usr/local/lib/libpango-1.0.a /opt/homebrew/lib/libpango-1.0.arm64.a -output /opt/homebrew/lib/libpango-1.0.a
-#
-#          mv /opt/homebrew/lib/libpangocairo-1.0.a /opt/homebrew/lib/libpangocairo-1.0.arm64.a
-#          lipo -create /usr/local/lib/libpangocairo-1.0.a /opt/homebrew/lib/libpangocairo-1.0.arm64.a -output /opt/homebrew/lib/libpangocairo-1.0.a
+      - name: Create Universal Pango Libraries
+        run: |
+          mv /opt/homebrew/lib/libcairo.a /opt/homebrew/lib/libcairo.arm64.a
+          lipo -create /usr/local/lib/libcairo.a /opt/homebrew/lib/libcairo.arm64.a -output /opt/homebrew/lib/libcairo.a
+
+          mv /opt/homebrew/lib/libpango-1.0.a /opt/homebrew/lib/libpango-1.0.arm64.a
+          lipo -create /usr/local/lib/libpango-1.0.a /opt/homebrew/lib/libpango-1.0.arm64.a -output /opt/homebrew/lib/libpango-1.0.a
+
+          mv /opt/homebrew/lib/libpangocairo-1.0.a /opt/homebrew/lib/libpangocairo-1.0.arm64.a
+          lipo -create /usr/local/lib/libpangocairo-1.0.a /opt/homebrew/lib/libpangocairo-1.0.arm64.a -output /opt/homebrew/lib/libpangocairo-1.0.a
 #          mv /opt/homebrew/lib/libharfbuzz.0.a /opt/homebrew/lib/libharfbuzz.0.arm64.a
 #          lipo -create /usr/local/lib/libharfbuzz.0.a /opt/homebrew/Cellar/harfbuzz/11.5.1/lib/libharfbuzz.0.arm64.a -output /opt/homebrew/Cellar/harfbuzz/11.5.1/lib/libharfbuzz.0.a
 #
