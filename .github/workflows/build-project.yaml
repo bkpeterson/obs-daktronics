@@ -144,7 +144,7 @@ jobs:
       - name: Set Up VCPKG 🔧
         run: |
           brew install pango
-          ls /opt/homebrew/
+          ls /opt/homebrew/lib
         #  /usr/local/share/vcpkg/bootstrap-vcpkg.sh
         #  vcpkg integrate install
 
