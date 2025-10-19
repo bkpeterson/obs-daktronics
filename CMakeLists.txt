@@ -33,7 +33,7 @@ if(PKG_CONFIG_FOUND)
   pkg_check_modules(CAIRO REQUIRED cairo)
   pkg_check_modules(PANGOCAIRO REQUIRED pangocairo)
   target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_INCLUDE_DIRS} ${CAIRO_INCLUDE_DIRS} ${PANGOCAIRO_INCLUDE_DIRS})
-#  link_directories("/opt/homebrew/lib" "/usr/local/lib")
+  link_directories("/opt/homebrew/lib")
 #  target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE pango cairo pangocairo)
 endif()
 
