@@ -167,14 +167,14 @@ jobs:
 
       - name: Create Universal Pango Libraries
         run: |
-          mv /opt/homebrew/lib/libcairo.2.a /opt/homebrew/lib/libcairo.2.arm64.a
-          lipo -create /usr/local/lib/libcairo.2.a /opt/homebrew/lib/libcairo.2.arm64.a -output /opt/homebrew/lib/libcairo.2.a
+          mv /opt/homebrew/lib/libcairo.a /opt/homebrew/lib/libcairo.arm64.a
+          lipo -create /usr/local/lib/libcairo.a /opt/homebrew/lib/libcairo.arm64.a -output /opt/homebrew/lib/libcairo.a
 
           mv /opt/homebrew/lib/libpango-1.0.a /opt/homebrew/lib/libpango-1.0.arm64.a
           lipo -create /usr/local/lib/libpango-1.0.a /opt/homebrew/lib/libpango-1.0.arm64.a -output /opt/homebrew/lib/libpango-1.0.a
 
-          mv /opt/homebrew/lib/libpangocairo-1.0.0.a /opt/homebrew/lib/libpangocairo-1.0.0.arm64.a
-          lipo -create /usr/local/lib/libpangocairo-1.0.0.a /opt/homebrew/lib/libpangocairo-1.0.0.arm64.a -output /opt/homebrew/lib/libpangocairo-1.0.0.a
+          mv /opt/homebrew/lib/libpangocairo-1.0.a /opt/homebrew/lib/libpangocairo-1.0.arm64.a
+          lipo -create /usr/local/lib/libpangocairo-1.0.a /opt/homebrew/lib/libpangocairo-1.0.arm64.a -output /opt/homebrew/lib/libpangocairo-1.0.a
 #          mv /opt/homebrew/lib/libharfbuzz.0.a /opt/homebrew/lib/libharfbuzz.0.arm64.a
 #          lipo -create /usr/local/lib/libharfbuzz.0.a /opt/homebrew/Cellar/harfbuzz/11.5.1/lib/libharfbuzz.0.arm64.a -output /opt/homebrew/Cellar/harfbuzz/11.5.1/lib/libharfbuzz.0.a
 #
