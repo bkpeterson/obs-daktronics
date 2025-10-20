@@ -138,22 +138,22 @@ jobs:
 
       - name: Install Pango 🔧
         run: |
-          brew install pango
+#          brew install pango
 
 #      - name: Install Rosetta 2 
 #        run: |
-#          softwareupdate --install-rosetta --agree-to-license
+          softwareupdate --install-rosetta --agree-to-license
 #
 #      - name: Install x86 Homebrew and Pango
 #        run: |
           # The system's default Homebrew (/opt/homebrew) is for ARM64.
           # We must install a separate, dedicated version for x86_64.
           # This command installs x86_64 Homebrew to /usr/local.
-#          arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+          arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
           # Install Pango and its dependencies using the x86_64 Homebrew.
           # The arch -x86_64 prefix forces the command to run via Rosetta.
-#          arch -x86_64 /usr/local/bin/brew install pango
+          arch -x86_64 /usr/local/bin/brew install pango
 
 #      - name: Create Universal Pango Libraries
 #        run: |
