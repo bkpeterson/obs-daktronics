@@ -28,10 +28,8 @@ find_package(libobs REQUIRED)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs)
 
 find_path(PANGO_INCLUDE_DIR NAMES pango/pango.h)
-target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC ${PANGO_INCLUDE_DIR})
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "/opt/homebrew/include/pango")
         
-find_library(PANGO_LIBRARY NAMES pango-1.0)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARY})
 
 #find_package(PkgConfig REQUIRED)
 #if(PKG_CONFIG_FOUND)
@@ -39,6 +37,10 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARY})
 #  pkg_check_modules(CAIRO REQUIRED cairo)
 #  pkg_check_modules(PANGOCAIRO REQUIRED pangocairo)
 #  target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_INCLUDE_DIRS} ${CAIRO_INCLUDE_DIRS} ${PANGOCAIRO_INCLUDE_DIRS})
+
+find_library(PANGO_LIBRARY NAMES pango-1.0)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARY})
+
 #  link_directories("/opt/homebrew/lib")
 #  target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARIES} ${CAIRO_LIBRARIES} ${PANGOCAIRO_LIBRARIES})
 #  target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE "/opt/homebrew/lib/libpango-1.0.a" "/opt/homebrew/lib/libcairo.a" "/opt/homebrew/lib/libpangocairo-1.0.a" "/opt/homebrew/lib/libharfbuzz.a" "/opt/homebrew/lib/libgobject-2.0.a" "/opt/homebrew/lib/libglib-2.0.a" "/opt/homebrew/lib/libintl.a")
