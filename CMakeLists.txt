@@ -34,7 +34,20 @@ if(NOT OS_WINDOWS)
 #    find_library(GLIB_LIBRARY NAMES glib-2.0)
 #    find_library(GOBJECT_LIBRARY NAMES gobject-2.0)
 #    target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARY} ${CAIRO_LIBRARY} ${PANGOCAIRO_LIBRARY} ${GLIB_LIBRARY} ${GOBJECT_LIBRARY})
-    target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE "/opt/homebrew/lib/libpango-1.0.a" "/opt/homebrew/lib/libcairo.a" "/opt/homebrew/lib/libpangocairo-1.0.a" "/opt/homebrew/lib/libglib-2.0.a" "/opt/homebrew/lib/libgobject-2.0.a")
+    target_link_libraries(
+      ${CMAKE_PROJECT_NAME} 
+      PRIVATE 
+        $<$<AND:$<CXX_COMPILER_ID:AppleClang>,$<CMAKE_OSX_ARCHITECTURES:arm64>>:/opt/homebrew/lib/libpango-1.0.a
+        $<$<AND:$<CXX_COMPILER_ID:AppleClang>,$<CMAKE_OSX_ARCHITECTURES:arm64>>:/opt/homebrew/lib/libcairo.a
+        $<$<AND:$<CXX_COMPILER_ID:AppleClang>,$<CMAKE_OSX_ARCHITECTURES:arm64>>:/opt/homebrew/lib/libpangocairo-1.0.a
+        $<$<AND:$<CXX_COMPILER_ID:AppleClang>,$<CMAKE_OSX_ARCHITECTURES:arm64>>:/opt/homebrew/lib/libglib-2.0.a
+        $<$<AND:$<CXX_COMPILER_ID:AppleClang>,$<CMAKE_OSX_ARCHITECTURES:arm64>>:/opt/homebrew/lib/libgobject-2.0.a
+        $<$<AND:$<CXX_COMPILER_ID:AppleClang>,$<NOT:$<CMAKE_OSX_ARCHITECTURES:arm64>>>:/usr/local/lib/libpango-1.0.a
+        $<$<AND:$<CXX_COMPILER_ID:AppleClang>,$<NOT:$<CMAKE_OSX_ARCHITECTURES:arm64>>>:/usr/local/lib/libcairo.a
+        $<$<AND:$<CXX_COMPILER_ID:AppleClang>,$<NOT:$<CMAKE_OSX_ARCHITECTURES:arm64>>>:/usr/local/lib/libpangocairo-1.0.a
+        $<$<AND:$<CXX_COMPILER_ID:AppleClang>,$<NOT:$<CMAKE_OSX_ARCHITECTURES:arm64>>>:/usr/local/lib/libglib-2.0.a
+        $<$<AND:$<CXX_COMPILER_ID:AppleClang>,$<NOT:$<CMAKE_OSX_ARCHITECTURES:arm64>>>:/usr/local/lib/libgobject-2.0.a
+    )
    endif()
 endif()
 

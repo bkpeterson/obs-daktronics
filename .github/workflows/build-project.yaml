@@ -155,28 +155,28 @@ jobs:
           # The arch -x86_64 prefix forces the command to run via Rosetta.
           arch -x86_64 /usr/local/bin/brew install pango
 
-      - name: Create Universal Pango Libraries
-        run: |
-          mv /opt/homebrew/lib/libcairo.a /opt/homebrew/lib/libcairo.arm64.a
-          lipo -create /usr/local/lib/libcairo.a /opt/homebrew/lib/libcairo.arm64.a -output /opt/homebrew/lib/libcairo.a
-
-          mv /opt/homebrew/lib/libpango-1.0.a /opt/homebrew/lib/libpango-1.0.arm64.a
-          lipo -create /usr/local/lib/libpango-1.0.a /opt/homebrew/lib/libpango-1.0.arm64.a -output /opt/homebrew/lib/libpango-1.0.a
-
-          mv /opt/homebrew/lib/libpangocairo-1.0.a /opt/homebrew/lib/libpangocairo-1.0.arm64.a
-          lipo -create /usr/local/lib/libpangocairo-1.0.a /opt/homebrew/lib/libpangocairo-1.0.arm64.a -output /opt/homebrew/lib/libpangocairo-1.0.a
-
-          mv /opt/homebrew/lib/libharfbuzz.a /opt/homebrew/lib/libharfbuzz.arm64.a
-          lipo -create /usr/local/lib/libharfbuzz.a /opt/homebrew/lib/libharfbuzz.arm64.a -output /opt/homebrew/lib/libharfbuzz.a
-
-          mv /opt/homebrew/lib/libgobject-2.0.a /opt/homebrew/lib/libgobject-2.0.arm64.a
-          lipo -create /usr/local/lib/libgobject-2.0.a /opt/homebrew/lib/libgobject-2.0.arm64.a -output /opt/homebrew/lib/libgobject-2.0.a
-
-          mv /opt/homebrew/lib/libglib-2.0.a /opt/homebrew/lib/libglib-2.0.arm64.a
-          lipo -create /usr/local/lib/libglib-2.0.a /opt/homebrew/lib/libglib-2.0.arm64.a -output /opt/homebrew/lib/libglib-2.0.a
-
-          mv /opt/homebrew/lib/libintl.a /opt/homebrew/lib/libintl.arm64.a
-          lipo -create /usr/local/lib/libintl.a /opt/homebrew/lib/libintl.arm64.a -output /opt/homebrew/lib/libintl.a
+#      - name: Create Universal Pango Libraries
+#        run: |
+#          mv /opt/homebrew/lib/libcairo.a /opt/homebrew/lib/libcairo.arm64.a
+#          lipo -create /usr/local/lib/libcairo.a /opt/homebrew/lib/libcairo.arm64.a -output /opt/homebrew/lib/libcairo.a
+#
+#          mv /opt/homebrew/lib/libpango-1.0.a /opt/homebrew/lib/libpango-1.0.arm64.a
+#          lipo -create /usr/local/lib/libpango-1.0.a /opt/homebrew/lib/libpango-1.0.arm64.a -output /opt/homebrew/lib/libpango-1.0.a
+#
+#          mv /opt/homebrew/lib/libpangocairo-1.0.a /opt/homebrew/lib/libpangocairo-1.0.arm64.a
+#          lipo -create /usr/local/lib/libpangocairo-1.0.a /opt/homebrew/lib/libpangocairo-1.0.arm64.a -output /opt/homebrew/lib/libpangocairo-1.0.a
+#
+#          mv /opt/homebrew/lib/libharfbuzz.a /opt/homebrew/lib/libharfbuzz.arm64.a
+#          lipo -create /usr/local/lib/libharfbuzz.a /opt/homebrew/lib/libharfbuzz.arm64.a -output /opt/homebrew/lib/libharfbuzz.a
+#
+#          mv /opt/homebrew/lib/libgobject-2.0.a /opt/homebrew/lib/libgobject-2.0.arm64.a
+#          lipo -create /usr/local/lib/libgobject-2.0.a /opt/homebrew/lib/libgobject-2.0.arm64.a -output /opt/homebrew/lib/libgobject-2.0.a
+#
+#          mv /opt/homebrew/lib/libglib-2.0.a /opt/homebrew/lib/libglib-2.0.arm64.a
+#          lipo -create /usr/local/lib/libglib-2.0.a /opt/homebrew/lib/libglib-2.0.arm64.a -output /opt/homebrew/lib/libglib-2.0.a
+#
+#          mv /opt/homebrew/lib/libintl.a /opt/homebrew/lib/libintl.arm64.a
+#          lipo -create /usr/local/lib/libintl.a /opt/homebrew/lib/libintl.arm64.a -output /opt/homebrew/lib/libintl.a
 
         #  /usr/local/share/vcpkg/bootstrap-vcpkg.sh
         #  vcpkg integrate install
