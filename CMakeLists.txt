@@ -15,6 +15,7 @@ add_library(${CMAKE_PROJECT_NAME} MODULE)
 
 if(OS_WINDOWS)
   set(PKG_CONFIG_EXECUTABLE "C:/vcpkg/installed/x64-windows/tools/pkgconf/pkgconf.exe")
+  set(CMAKE_TOOLCHAIN_FILE "C:/vcpkg/scripts/buildsystems/vcpkg.cmake")
 endif()
 
 find_package(libobs REQUIRED)
