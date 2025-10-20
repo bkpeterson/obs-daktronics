@@ -33,14 +33,14 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs)
 
 find_package(PkgConfig REQUIRED)
 if(PKG_CONFIG_FOUND)
-  pkg_check_modules(PANGO REQUIRED pango)
+  pkg_check_modules(PANGO REQUIRED pango-1.0)
   pkg_check_modules(CAIRO REQUIRED cairo)
-  pkg_check_modules(PANGOCAIRO REQUIRED pangocairo)
+  pkg_check_modules(PANGOCAIRO REQUIRED pangocairo-1.0)
   target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_INCLUDE_DIRS} ${CAIRO_INCLUDE_DIRS} ${PANGOCAIRO_INCLUDE_DIRS})
 
   find_library(PANGO_LIBRARY NAMES pango-1.0)
   find_library(CAIRO_LIBRARY NAMES cairo)
-  find_library(PANGOCAIRO_LIBRARY NAMES pangocairo)
+  find_library(PANGOCAIRO_LIBRARY NAMES pangocairo-1.0)
   target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARY} ${CAIRO_LIBRARY} ${PANGOCAIRO_LIBRARY})
 
 #  link_directories("/opt/homebrew/lib")
