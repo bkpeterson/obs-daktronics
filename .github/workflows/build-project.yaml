@@ -378,7 +378,7 @@ jobs:
         run: |
           vcpkg update
           vcpkg integrate install
-          vcpkg install pango pkgconf
+          vcpkg install pango
 
       - name: Build Plugin 🧱
         uses: ./.github/actions/build-plugin
