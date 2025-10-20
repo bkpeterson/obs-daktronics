@@ -39,7 +39,9 @@ if(PKG_CONFIG_FOUND)
   target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_INCLUDE_DIRS} ${CAIRO_INCLUDE_DIRS} ${PANGOCAIRO_INCLUDE_DIRS})
 
   find_library(PANGO_LIBRARY NAMES pango-1.0)
-  target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARY})
+  find_library(CAIRO_LIBRARY NAMES cairo)
+  find_library(PANGOCAIRO_LIBRARY NAMES pangocairo)
+  target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARY} ${CAIRO_LIBRARY} ${PANGOCAIRO_LIBRARY})
 
 #  link_directories("/opt/homebrew/lib")
 #  target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARIES} ${CAIRO_LIBRARIES} ${PANGOCAIRO_LIBRARIES})
