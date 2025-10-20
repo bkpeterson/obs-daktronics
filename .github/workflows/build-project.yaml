@@ -175,18 +175,19 @@ jobs:
 
           mv /opt/homebrew/lib/libpangocairo-1.0.a /opt/homebrew/lib/libpangocairo-1.0.arm64.a
           lipo -create /usr/local/lib/libpangocairo-1.0.a /opt/homebrew/lib/libpangocairo-1.0.arm64.a -output /opt/homebrew/lib/libpangocairo-1.0.a
-#          mv /opt/homebrew/lib/libharfbuzz.0.a /opt/homebrew/lib/libharfbuzz.0.arm64.a
-#          lipo -create /usr/local/lib/libharfbuzz.0.a /opt/homebrew/Cellar/harfbuzz/11.5.1/lib/libharfbuzz.0.arm64.a -output /opt/homebrew/Cellar/harfbuzz/11.5.1/lib/libharfbuzz.0.a
-#
-#          mv /opt/homebrew/Cellar/glib/2.86.0/lib/libgobject-2.0.0.a /opt/homebrew/Cellar/glib/2.86.0/lib/libgobject-2.0.0.arm64.a
-#          lipo -create /usr/local/lib/libgobject-2.0.0.a /opt/homebrew/Cellar/glib/2.86.0/lib/libgobject-2.0.0.arm64.a -output /opt/homebrew/Cellar/glib/2.86.0/lib/libgobject-2.0.0.a
-#
-#          mv /opt/homebrew/Cellar/glib/2.86.0/lib/libglib-2.0.0.a /opt/homebrew/Cellar/glib/2.86.0/lib/libglib-2.0.0.arm64.a
-#          lipo -create /usr/local/lib/libglib-2.0.0.a /opt/homebrew/Cellar/glib/2.86.0/lib/libglib-2.0.0.arm64.a -output /opt/homebrew/Cellar/glib/2.86.0/lib/libglib-2.0.0.a
-#
-#          mv /opt/homebrew/Cellar/gettext/0.26/lib/libintl.8.a /opt/homebrew/Cellar/gettext/0.26/lib/libintl.8.arm64.a
-#          lipo -create /usr/local/lib/libintl.8.a /opt/homebrew/Cellar/gettext/0.26/lib/libintl.8.arm64.a -output /opt/homebrew/Cellar/gettext/0.26/lib/libintl.8.a
-#
+
+          mv /opt/homebrew/lib/libharfbuzz.a /opt/homebrew/lib/libharfbuzz.arm64.a
+          lipo -create /usr/local/lib/libharfbuzz.a /opt/homebrew/lib/libharfbuzz.arm64.a -output /opt/homebrew/lib/libharfbuzz.a
+
+          mv /opt/homebrew/lib/libgobject-2.0.a /opt/homebrew/lib/libgobject-2.0.arm64.a
+          lipo -create /usr/local/lib/libgobject-2.0.a /opt/homebrew/lib/libgobject-2.0.arm64.a -output /opt/homebrew/lib/libgobject-2.0.a
+
+          mv /opt/homebrew/lib/libglib-2.0.a /opt/homebrew/lib/libglib-2.0.arm64.a
+          lipo -create /usr/local/lib/libglib-2.0.a /opt/homebrew/lib/libglib-2.0.arm64.a -output /opt/homebrew/lib/libglib-2.0.a
+
+          mv /opt/homebrew/lib/libintl.a /opt/homebrew/lib/libintl.arm64.a
+          lipo -create /usr/local/lib/libintl.a /opt/homebrew/libintl.arm64.a -output /opt/homebrew/lib/libintl.a
+
         #  /usr/local/share/vcpkg/bootstrap-vcpkg.sh
         #  vcpkg integrate install
 
@@ -201,17 +202,6 @@ jobs:
         #  echo "*****************"
 
         #  ls /usr/local/share/vcpkg/installed/arm64-osx/lib
-
-      #- name: Create Universal Pango Libraries
-      #  run: |
-      #    mv /usr/local/share/vcpkg/installed/arm64-osx/lib/libpango-1.0.a /usr/local/share/vcpkg/installed/arm64-osx/lib/libpango-1.0.arm64.a
-      #    lipo -create /usr/local/share/vcpkg/installed/x64-osx/lib/libpango-1.0.a /usr/local/share/vcpkg/installed/arm64-osx/lib/libpango-1.0.arm64.a -output /usr/local/share/vcpkg/installed/arm64-osx/lib/libpango-1.0.a
-
-      #    mv /usr/local/share/vcpkg/installed/arm64-osx/lib/libpangocairo-1.0.a /usr/local/share/vcpkg/installed/arm64-osx/lib/libpangocairo-1.0.arm64.a
-      #    lipo -create /usr/local/share/vcpkg/installed/x64-osx/lib/libpangocairo-1.0.a /usr/local/share/vcpkg/installed/arm64-osx/lib/libpangocairo-1.0.arm64.a -output /usr/local/share/vcpkg/installed/arm64-osx/lib/libpangocairo-1.0.a
-
-      #    mv /usr/local/share/vcpkg/installed/arm64-osx/lib/libcairo.a /usr/local/share/vcpkg/installed/arm64-osx/lib/libcairo.arm64.a
-      #    lipo -create /usr/local/share/vcpkg/installed/x64-osx/lib/libcairo.a /usr/local/share/vcpkg/installed/arm64-osx/lib/libcairo.arm64.a -output /usr/local/share/vcpkg/installed/arm64-osx/lib/libcairo.a
 
       - name: Build Plugin 🧱
         uses: ./.github/actions/build-plugin
