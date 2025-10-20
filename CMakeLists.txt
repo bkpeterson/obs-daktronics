@@ -31,7 +31,7 @@ find_path(PANGO_INCLUDE_DIR NAMES pango/pango.h)
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC ${PANGO_INCLUDE_DIR})
         
 find_library(PANGO_LIBRARY NAMES pango-1.0)
-target_link_libraries(${CMAKE_PROJECT_NAME} ${PANGO_LIBRARY})
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARY})
 
 #find_package(PkgConfig REQUIRED)
 #if(PKG_CONFIG_FOUND)
