@@ -14,7 +14,7 @@ include(helpers)
 add_library(${CMAKE_PROJECT_NAME} MODULE)
 
 if(OS_WINDOWS)
-  set(CMAKE_TOOLCHAIN_FILE "C:/vcpkg/scripts/buildsystems/vcpkg.cmake")
+  #set(CMAKE_TOOLCHAIN_FILE "C:/vcpkg/scripts/buildsystems/vcpkg.cmake")
   find_package(pango REQUIRED)
   find_package(cairo REQUIRED)
   find_package(pangocairo REQUIRED)
