@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 #include <sstream>
 #include <string>
 #include <map>
@@ -41,8 +40,8 @@ private:
 	//static std::map<uint32_t, std::vector<DAKSource *>> _sources;
 	static std::map<uint32_t, std::vector<DAKFilter *>> _filters;
 
-	static void read_csv_field(std::istringstream &ss, std::string &field);
-	static void read_csv_field(std::istringstream &ss, uint32_t &field);
-	static uint32_t readDataLine(std::istream &is, DAKTSVData &data);
-	static uint32_t readHeaderLine(std::istream &is, DAKTSVHeader &data);
+	static void read_csv_field(std::stringstream &ss, std::string &field);
+	static void read_csv_field(std::stringstream &ss, uint32_t &field);
+	static uint32_t readDataLine(std::stringstream &is, DAKTSVData &data);
+	static uint32_t readHeaderLine(std::stringstream &is, DAKTSVHeader &data);
 };
