@@ -135,7 +135,7 @@ jobs:
           provisioningProfile: ${{ secrets.MACOS_SIGNING_PROVISIONING_PROFILE }}
           notarizationUser: ${{ secrets.MACOS_NOTARIZATION_USERNAME }}
           notarizationPassword: ${{ secrets.MACOS_NOTARIZATION_PASSWORD }}
-
+#          
 #      - name: Install Pango 🔧
 #        run: |
 #          brew install pango
