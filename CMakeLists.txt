@@ -28,26 +28,26 @@ if(NOT OS_WINDOWS)
     pkg_check_modules(PANGOCAIRO REQUIRED pangocairo)
     target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_INCLUDE_DIRS} ${CAIRO_INCLUDE_DIRS} ${PANGOCAIRO_INCLUDE_DIRS})
 
-#    find_library(PANGO_LIBRARY NAMES pango-1.0)
-#    find_library(CAIRO_LIBRARY NAMES cairo)
-#    find_library(PANGOCAIRO_LIBRARY NAMES pangocairo-1.0)
-#    find_library(GLIB_LIBRARY NAMES glib-2.0)
-#    find_library(GOBJECT_LIBRARY NAMES gobject-2.0)
-#    target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARY} ${CAIRO_LIBRARY} ${PANGOCAIRO_LIBRARY} ${GLIB_LIBRARY} ${GOBJECT_LIBRARY})
-    target_link_libraries(
-      ${CMAKE_PROJECT_NAME} 
-      PRIVATE 
-        /opt/homebrew/lib/libpango-1.0.a
-        /opt/homebrew/lib/libcairo.a
-        /opt/homebrew/lib/libpangocairo-1.0.a
-        /opt/homebrew/lib/libglib-2.0.a
-        /opt/homebrew/lib/libgobject-2.0.a
-        /usr/local/lib/libpango-1.0.a
-        /usr/local/lib/libcairo.a
-        /usr/local/lib/libpangocairo-1.0.a
-        /usr/local/lib/libglib-2.0.a
-        /usr/local/lib/libgobject-2.0.a
-    )
+    find_library(PANGO_LIBRARY NAMES pango-1.0)
+    find_library(CAIRO_LIBRARY NAMES cairo)
+    find_library(PANGOCAIRO_LIBRARY NAMES pangocairo-1.0)
+    find_library(GLIB_LIBRARY NAMES glib-2.0)
+    find_library(GOBJECT_LIBRARY NAMES gobject-2.0)
+    target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARY} ${CAIRO_LIBRARY} ${PANGOCAIRO_LIBRARY} ${GLIB_LIBRARY} ${GOBJECT_LIBRARY})
+#    target_link_libraries(
+#      ${CMAKE_PROJECT_NAME} 
+#      PRIVATE 
+#        /opt/homebrew/lib/libpango-1.0.a
+#        /opt/homebrew/lib/libcairo.a
+#        /opt/homebrew/lib/libpangocairo-1.0.a
+#        /opt/homebrew/lib/libglib-2.0.a
+#        /opt/homebrew/lib/libgobject-2.0.a
+#        /usr/local/lib/libpango-1.0.a
+#        /usr/local/lib/libcairo.a
+#        /usr/local/lib/libpangocairo-1.0.a
+#        /usr/local/lib/libglib-2.0.a
+#        /usr/local/lib/libgobject-2.0.a
+#    )
    endif()
 endif()
 
