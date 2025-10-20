@@ -77,11 +77,6 @@ jobs:
     name: Build for macOS 🍏
     runs-on: macos-15
     needs: check-event
-    #env: 
-    #  USERNAME: bkpeterson
-    #  VCPKG_EXE: /usr/local/share/vcpkg/vcpkg
-    #  FEED_URL: https://nuget.pkg.github.com/bkpeterson/index.json
-    #  VCPKG_BINARY_SOURCES: "clear;nuget,https://nuget.pkg.github.com/bkpeterson/index.json,readwrite"
     defaults:
       run:
         shell: zsh --no-rcs --errexit --pipefail {0}
@@ -144,8 +139,7 @@ jobs:
       - name: Install Pango 🔧
         run: |
           brew install pango
-#          ls /opt/homebrew/lib
-#
+
       - name: Install Rosetta 2 
         run: |
           softwareupdate --install-rosetta --agree-to-license
