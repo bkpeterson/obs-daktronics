@@ -37,16 +37,16 @@ if(NOT OS_WINDOWS)
     target_link_libraries(
       ${CMAKE_PROJECT_NAME} 
       PRIVATE 
-        $<$<AND:$<CXX_COMPILER_ID:AppleClang>,$<CMAKE_OSX_ARCHITECTURES:arm64>>:/opt/homebrew/lib/libpango-1.0.a
-        $<$<AND:$<CXX_COMPILER_ID:AppleClang>,$<CMAKE_OSX_ARCHITECTURES:arm64>>:/opt/homebrew/lib/libcairo.a
-        $<$<AND:$<CXX_COMPILER_ID:AppleClang>,$<CMAKE_OSX_ARCHITECTURES:arm64>>:/opt/homebrew/lib/libpangocairo-1.0.a
-        $<$<AND:$<CXX_COMPILER_ID:AppleClang>,$<CMAKE_OSX_ARCHITECTURES:arm64>>:/opt/homebrew/lib/libglib-2.0.a
-        $<$<AND:$<CXX_COMPILER_ID:AppleClang>,$<CMAKE_OSX_ARCHITECTURES:arm64>>:/opt/homebrew/lib/libgobject-2.0.a
-        $<$<AND:$<CXX_COMPILER_ID:AppleClang>,$<NOT:$<CMAKE_OSX_ARCHITECTURES:arm64>>>:/usr/local/lib/libpango-1.0.a
-        $<$<AND:$<CXX_COMPILER_ID:AppleClang>,$<NOT:$<CMAKE_OSX_ARCHITECTURES:arm64>>>:/usr/local/lib/libcairo.a
-        $<$<AND:$<CXX_COMPILER_ID:AppleClang>,$<NOT:$<CMAKE_OSX_ARCHITECTURES:arm64>>>:/usr/local/lib/libpangocairo-1.0.a
-        $<$<AND:$<CXX_COMPILER_ID:AppleClang>,$<NOT:$<CMAKE_OSX_ARCHITECTURES:arm64>>>:/usr/local/lib/libglib-2.0.a
-        $<$<AND:$<CXX_COMPILER_ID:AppleClang>,$<NOT:$<CMAKE_OSX_ARCHITECTURES:arm64>>>:/usr/local/lib/libgobject-2.0.a
+        /opt/homebrew/lib/libpango-1.0.a
+        /opt/homebrew/lib/libcairo.a
+        /opt/homebrew/lib/libpangocairo-1.0.a
+        /opt/homebrew/lib/libglib-2.0.a
+        /opt/homebrew/lib/libgobject-2.0.a
+        /usr/local/lib/libpango-1.0.a
+        /usr/local/lib/libcairo.a
+        /usr/local/lib/libpangocairo-1.0.a
+        /usr/local/lib/libglib-2.0.a
+        /usr/local/lib/libgobject-2.0.a
     )
    endif()
 endif()
