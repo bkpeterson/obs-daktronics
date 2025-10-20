@@ -28,7 +28,7 @@ find_package(libobs REQUIRED)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs)
 
 find_path(PANGO_INCLUDE_DIR NAMES pango/pango.h)
-target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "/opt/homebrew/include/pango")
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "/opt/homebrew/include" "/opt/homebrew/include/pango")
         
 
 #find_package(PkgConfig REQUIRED)
