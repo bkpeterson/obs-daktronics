@@ -186,7 +186,7 @@ jobs:
           lipo -create /usr/local/lib/libglib-2.0.a /opt/homebrew/lib/libglib-2.0.arm64.a -output /opt/homebrew/lib/libglib-2.0.a
 
           mv /opt/homebrew/lib/libintl.a /opt/homebrew/lib/libintl.arm64.a
-          lipo -create /usr/local/lib/libintl.a /opt/homebrew/libintl.arm64.a -output /opt/homebrew/lib/libintl.a
+          lipo -create /usr/local/lib/libintl.a /opt/homebrew/lib/libintl.arm64.a -output /opt/homebrew/lib/libintl.a
 
         #  /usr/local/share/vcpkg/bootstrap-vcpkg.sh
         #  vcpkg integrate install
