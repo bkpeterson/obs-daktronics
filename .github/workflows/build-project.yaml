@@ -146,9 +146,9 @@ jobs:
           brew install pango
           ls /opt/homebrew/lib
 
-      - name: Set Homebrew Library Path
-        run: |
-          echo "CMAKE_LIBRARY_PATH=/opt/homebrew/lib" >> $GITHUB_ENV
+#      - name: Set Homebrew Library Path
+#        run: |
+#          echo "CMAKE_LIBRARY_PATH=/opt/homebrew/lib" >> $GITHUB_ENV
   
 #      - name: Install Rosetta 2 
 #        run: |
