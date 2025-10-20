@@ -19,12 +19,13 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #include <obs-module.h>
 #include <dak-source-support.h>
 #include "dak-data-utils.hpp"
-#include "daktronics-source.hpp"
+//#include "daktronics-source.hpp"
 #include "daktronics-filter.hpp"
 
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE("daktronics-realtime-data", "en-US")
 
+/*
 obs_source_info create_daktronics_source_info()
 {
 	obs_source_info daktronics_source_info = {};
@@ -44,6 +45,7 @@ obs_source_info create_daktronics_source_info()
 
 	return daktronics_source_info;
 }
+*/
 
 obs_source_info create_daktronics_filter_info()
 {
@@ -65,8 +67,8 @@ obs_source_info create_daktronics_filter_info()
 
 bool obs_module_load(void)
 {
-	obs_source_info dakSource = create_daktronics_source_info();
-	obs_register_source(&dakSource);
+	//obs_source_info dakSource = create_daktronics_source_info();
+	//obs_register_source(&dakSource);
 
 	obs_source_info dakFilter = create_daktronics_filter_info();
 	obs_register_source(&dakFilter);

@@ -11,6 +11,7 @@ public:
 	~DAKFilter();
 
 	void SetVisible(bool visible);
+    void SetTextValue(std::string value);
 	uint32_t GetIndex();
 	void Update(obs_data_t *settings);
 
@@ -31,4 +32,5 @@ private:
 	std::string _sport;
 	uint32_t _index;
 	bool _visible;
+	const char *_textValue;
 };

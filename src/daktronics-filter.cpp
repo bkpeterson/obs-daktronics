@@ -55,6 +55,11 @@ void DAKFilter::SetVisible(bool visible)
 	_visible = visible;
 }
 
+void DAKFilter::SetTextValue(std::string newValue)
+{
+	_textValue = newValue.c_str();
+}
+
 uint32_t DAKFilter::GetIndex()
 {
 	return _index;

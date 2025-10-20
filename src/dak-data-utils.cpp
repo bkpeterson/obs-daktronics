@@ -9,7 +9,7 @@
 #include "dak-data-utils.hpp"
 
 std::map<std::string, DAKSportData *> DAKDataUtils::_allSportsData;
-std::map<uint32_t, std::vector<DAKSource *>> DAKDataUtils::_sources;
+//std::map<uint32_t, std::vector<DAKSource *>> DAKDataUtils::_sources;
 std::map<uint32_t, std::vector<DAKFilter *>> DAKDataUtils::_filters;
 
 void DAKDataUtils::read_csv_field(std::istringstream &ss, std::string &field)
@@ -100,6 +100,7 @@ void DAKDataUtils::PopulateSportProps(obs_property_t *sportList)
 	}
 }
 
+/*
 void DAKDataUtils::AddSource(DAKSource *newSource)
 {
 	uint32_t index = newSource->GetIndex();
@@ -115,6 +116,7 @@ void DAKDataUtils::RemoveSource(DAKSource *oldSource)
 	//auto tmpVector = std::remove(sources.begin(), sources.end(), oldSource);
 	//sources.erase(tmpVector, sources.end());
 }
+*/
 
 void DAKDataUtils::AddFilter(DAKFilter *newFilter)
 {
@@ -134,15 +136,16 @@ void DAKDataUtils::RemoveFilter(DAKFilter *oldFilter)
 
 void DAKDataUtils::UpdateField(uint32_t index, std::string value)
 {
-	std::vector<DAKSource *> sources = _sources[index];
+	//std::vector<DAKSource *> sources = _sources[index];
 
-	for (DAKSource *sourceData : sources) {
-		sourceData->SetTextValue(value);
-	}
+	//for (DAKSource *sourceData : sources) {
+	//	sourceData->SetTextValue(value);
+	//}
 
 	std::vector<DAKFilter *> filters = _filters[index];
 
 	for (DAKFilter *filterData : filters) {
+        filterData->SetTextValue(value);
 		filterData->SetVisible(value.length() > 0);
 	}
 }
