@@ -27,10 +27,6 @@ add_library(${CMAKE_PROJECT_NAME} MODULE)
 find_package(libobs REQUIRED)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs)
 
-#find_path(PANGO_INCLUDE_DIR NAMES pango/pango.h)
-#target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "/opt/homebrew/include" "/opt/homebrew/include/pango")
-        
-
 find_package(PkgConfig REQUIRED)
 if(PKG_CONFIG_FOUND)
   pkg_check_modules(PANGO REQUIRED pango)
@@ -44,11 +40,6 @@ if(PKG_CONFIG_FOUND)
   find_library(GLIB_LIBRARY NAMES glib-2.0)
   find_library(GOBJECT_LIBRARY NAMES gobject-2.0)
   target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARY} ${CAIRO_LIBRARY} ${PANGOCAIRO_LIBRARY} ${GLIB_LIBRARY} ${GOBJECT_LIBRARY})
-
-#  link_directories("/opt/homebrew/lib")
-#  target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${PANGO_LIBRARIES} ${CAIRO_LIBRARIES} ${PANGOCAIRO_LIBRARIES})
-#  target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE "/opt/homebrew/lib/libpango-1.0.a" "/opt/homebrew/lib/libcairo.a" "/opt/homebrew/lib/libpangocairo-1.0.a" "/opt/homebrew/lib/libharfbuzz.a" "/opt/homebrew/lib/libgobject-2.0.a" "/opt/homebrew/lib/libglib-2.0.a" "/opt/homebrew/lib/libintl.a")
-#  target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE "/opt/homebrew/lib/libpango-1.0.a" "/opt/homebrew/lib/libcairo.a" "/opt/homebrew/lib/libpangocairo-1.0.a")
 endif()
 
 if(ENABLE_FRONTEND_API)
