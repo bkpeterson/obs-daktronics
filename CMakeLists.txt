@@ -91,7 +91,7 @@ target_sources(
 )
 
 if(OS_MACOS)
-  install(TARGETS ${PANGO_LIBRARY} ${CAIRO_LIBRARY} ${PANGOCAIRO_LIBRARY} ${GLIB_LIBRARY} ${GOBJECT_LIBRARY} DESTINATION ${CMAKE_INSTALL_PREFIX}/daktronics-realtime-data.plugin/Contents/Frameworks)
+  install(FILES ${PANGO_LIBRARY} ${CAIRO_LIBRARY} ${PANGOCAIRO_LIBRARY} ${GLIB_LIBRARY} ${GOBJECT_LIBRARY} DESTINATION ${CMAKE_INSTALL_PREFIX}/daktronics-realtime-data.plugin/Contents/Frameworks)
 endif()
 
 set_target_properties_plugin(${CMAKE_PROJECT_NAME} PROPERTIES OUTPUT_NAME ${_name})
