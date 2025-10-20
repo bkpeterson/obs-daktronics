@@ -136,16 +136,16 @@ jobs:
           notarizationUser: ${{ secrets.MACOS_NOTARIZATION_USERNAME }}
           notarizationPassword: ${{ secrets.MACOS_NOTARIZATION_PASSWORD }}
 
-      - name: Install Pango 🔧
-        run: |
+#      - name: Install Pango 🔧
+#        run: |
 #          brew install pango
 
-#      - name: Install Rosetta 2 
-#        run: |
+      - name: Install Rosetta 2 
+        run: |
           softwareupdate --install-rosetta --agree-to-license
-#
-#      - name: Install x86 Homebrew and Pango
-#        run: |
+
+      - name: Install x86 Homebrew and Pango
+        run: |
           # The system's default Homebrew (/opt/homebrew) is for ARM64.
           # We must install a separate, dedicated version for x86_64.
           # This command installs x86_64 Homebrew to /usr/local.
