@@ -120,8 +120,8 @@ obs_properties_t *DAKFilter::GetProperties(void *data)
 
 	obs_property_set_modified_callback2(filter_type, DAKFilter::DAKFilterChanged, data);
 
-	obs_property_t *param_type = obs_properties_add_list(props, "dak_param_list", "Property to Modify",
-							     OBS_COMBO_TYPE_LIST, OBS_COMBO_FORMAT_STRING);
+	obs_properties_add_list(props, "dak_param_list", "Property to Modify", OBS_COMBO_TYPE_LIST,
+				OBS_COMBO_FORMAT_STRING);
 
 	obs_properties_add_color(props, "dak_color", "Color when data field is blank");
 	obs_properties_add_color_alpha(props, "dak_color_alpha", "Color when data field is blank");
@@ -164,6 +164,7 @@ bool DAKFilter::DAKSportChanged(obs_properties_t *props, obs_property_t *propert
 
 bool DAKFilter::DAKFilterChanged(void *data, obs_properties_t *props, obs_property_t *property, obs_data_t *settings)
 {
+	UNUSED_PARAMETER(property);
 	DAKFilter *instance = (DAKFilter *)data;
 
 	uint32_t filter_type = (uint32_t)obs_data_get_int(settings, "dak_filter_list");

@@ -168,7 +168,6 @@ void DAKDataUtils::UpdateField(uint32_t index, std::string value)
 	std::vector<DAKFilter *> filters = _filters[index];
 
 	for (DAKFilter *filterData : filters) {
-		filterData->SetTextValue(value);
-		filterData->SetVisible(value.length() > 0);
+		filterData->SetValue(value);
 	}
 }
