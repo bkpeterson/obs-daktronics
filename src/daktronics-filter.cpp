@@ -114,16 +114,16 @@ obs_properties_t *DAKFilter::GetProperties(void *data)
 	obs_properties_add_list(props, "dak_field_list", "Scoreboard Data Field", OBS_COMBO_TYPE_LIST,
 				OBS_COMBO_FORMAT_INT);
 
-	obs_property_t *filter_type = obs_properties_add_list(props, "dak_filter_list", "Filter Type", OBS_COMBO_TYPE_LIST,
-				OBS_COMBO_FORMAT_INT);
+	obs_property_t *filter_type = obs_properties_add_list(props, "dak_filter_list", "Filter Type",
+							      OBS_COMBO_TYPE_LIST, OBS_COMBO_FORMAT_INT);
 	obs_property_list_add_int(filter_type, "Show/Hide", DAKFilter::DAK_VISIBLE);
 	obs_property_list_add_int(filter_type, "Update Text", DAKFilter::DAK_TEXT);
 	obs_property_list_add_int(filter_type, "Change Color", DAKFilter::DAK_COLOR);
 
 	obs_property_set_modified_callback2(filter_type, DAKFilter::DAKFilterChanged, &instance);
 
-	obs_property_t *param_type = obs_properties_add_list(props, "dak_param_list", "Property to Modify", OBS_COMBO_TYPE_LIST,
-				OBS_COMBO_FORMAT_STRING);
+	obs_property_t *param_type = obs_properties_add_list(props, "dak_param_list", "Property to Modify",
+							     OBS_COMBO_TYPE_LIST, OBS_COMBO_FORMAT_STRING);
 
 	obs_properties_add_color(props, "dak_color", "Color when data field is blank");
 	obs_properties_add_color_alpha(props, "dak_color_alpha", "Color when data field is blank");
@@ -131,18 +131,20 @@ obs_properties_t *DAKFilter::GetProperties(void *data)
 	std::string info1 = "This filter will hide the source when the selected scoreboard field is blank.";
 	obs_properties_add_text(props, "plugin_info1", info1.c_str(), OBS_TEXT_INFO);
 
-	std::string info2 = "<a href=\"https://github.com/bkpeterson/obs-daktronics\">Daktronics Source</a> (1.0) by bkpeterson";
+	std::string info2 =
+		"<a href=\"https://github.com/bkpeterson/obs-daktronics\">Daktronics Source</a> (1.0) by bkpeterson";
 	obs_properties_add_text(props, "plugin_info2", info2.c_str(), OBS_TEXT_INFO);
 
 	return props;
 }
 
-void DAKFilter::populateParams(obs_property_t *list, obs_property_type paramType) {
+void DAKFilter::populateParams(obs_property_t *list, obs_property_type paramType)
+{
 	obs_properties_t *sourceProps = obs_source_properties(_source);
 
 	for (obs_property_t *prop = obs_properties_first(sourceProps); prop != NULL; obs_property_next(&prop)) {
 		const char *prop_name = obs_property_name(prop);
-		if(obs_property_get_type(prop) == paramType)
+		if (obs_property_get_type(prop) == paramType)
 			obs_property_list_add_string(list, prop_name, prop_name)
 	}
 }
@@ -172,36 +174,36 @@ bool DAKFilter::DAKFilterChanged(void *data, obs_properties_t *props, obs_proper
 	obs_property_t *color = obs_properties_get(props, "dak_color");
 	obs_property_t *color_alpha = obs_properties_get(props, "dak_color_alpha");
 
-	switch(filter_type) {
-		case DAKFilter::DAK_VISIBLE:
-			obs_property_set_visible(list, false);
-			obs_property_set_visible(color, false);
-			obs_property_set_visible(color_alpha, false);
-			break;
+	switch (filter_type) {
+	case DAKFilter::DAK_VISIBLE:
+		obs_property_set_visible(list, false);
+		obs_property_set_visible(color, false);
+		obs_property_set_visible(color_alpha, false);
+		break;
 
-		case DAKFilter::DAK_TEXT:
-			obs_property_list_clear(list);
-			instance.populateParams(list, OBS_PROPERTY_TEXT);
-			obs_property_set_visible(list, true);
-			obs_property_set_visible(color, false);
-			obs_property_set_visible(color_alpha, false);
-			break;
-		
-		case DAKFilter::DAK_COLOR:
-			obs_property_list_clear(list);
-			instance.populateParams(list, OBS_PROPERTY_COLOR);
-			obs_property_set_visible(list, true);
-			obs_property_set_visible(color, true);
-			obs_property_set_visible(color_alpha, false);
-			break;
-		
-		case DAKFilter::DAK_COLOR_ALPHA:
-			obs_property_list_clear(list);
-			instance.populateParams(list, OBS_PROPERTY_COLOR_ALPHA);
-			obs_property_set_visible(list, true);
-			obs_property_set_visible(color, false);
-			obs_property_set_visible(color_alpha, true);
-			break;
+	case DAKFilter::DAK_TEXT:
+		obs_property_list_clear(list);
+		instance.populateParams(list, OBS_PROPERTY_TEXT);
+		obs_property_set_visible(list, true);
+		obs_property_set_visible(color, false);
+		obs_property_set_visible(color_alpha, false);
+		break;
+
+	case DAKFilter::DAK_COLOR:
+		obs_property_list_clear(list);
+		instance.populateParams(list, OBS_PROPERTY_COLOR);
+		obs_property_set_visible(list, true);
+		obs_property_set_visible(color, true);
+		obs_property_set_visible(color_alpha, false);
+		break;
+
+	case DAKFilter::DAK_COLOR_ALPHA:
+		obs_property_list_clear(list);
+		instance.populateParams(list, OBS_PROPERTY_COLOR_ALPHA);
+		obs_property_set_visible(list, true);
+		obs_property_set_visible(color, false);
+		obs_property_set_visible(color_alpha, true);
+		break;
 	}
 
 	return true;

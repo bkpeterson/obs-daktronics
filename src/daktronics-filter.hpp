@@ -10,13 +10,13 @@ public:
 	DAKFilter(obs_data_t *settings, obs_source_t *obs_source);
 	~DAKFilter();
 
-	static uint32_t DAK_VISIBLE = 1;
-	static uint32_t DAK_TEXT = 2;
-	static uint32_t DAK_COLOR = 3;
-	static uint32_t DAK_COLOR_ALPHA = 4;
-	
-    void SetValue(std::string value);
-	
+	static const uint32_t DAK_VISIBLE = 1;
+	static const uint32_t DAK_TEXT = 2;
+	static const uint32_t DAK_COLOR = 3;
+	static const uint32_t DAK_COLOR_ALPHA = 4;
+
+	void SetValue(std::string value);
+
 	uint32_t GetFilterType();
 	uint32_t GetIndex();
 	void Update(obs_data_t *settings);
@@ -28,9 +28,10 @@ public:
 	static void Render(void *data, gs_effect_t *effect);
 	static obs_properties_t *GetProperties(void *data);
 	static void GetDefaults(obs_data_t *settings);
-	void DAKFilter::populateParams(obs_property_t *list, obs_property_type paramType);
 
+	void populateParams(obs_property_t *list, obs_property_type paramType);
 	void _DoRender();
+
 	static bool DAKSportChanged(obs_properties_t *props, obs_property_t *property, obs_data_t *settings);
 	static bool DAKFilterChanged(obs_properties_t *props, obs_property_t *property, obs_data_t *settings);
 
