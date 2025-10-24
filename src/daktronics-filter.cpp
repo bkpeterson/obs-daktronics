@@ -77,7 +77,7 @@ void DAKFilter::_DoRender()
 		return;
 
 	/*********************************** change this depending on filter type */
-	obs_source_set_enabled(_source, _visible);
+	//obs_source_set_enabled(_source, _visible);
 }
 
 void DAKFilter::Update(void *data, obs_data_t *settings)
@@ -120,7 +120,7 @@ obs_properties_t *DAKFilter::GetProperties(void *data)
 	obs_property_list_add_int(filter_type, "Update Text", DAKFilter::DAK_TEXT);
 	obs_property_list_add_int(filter_type, "Change Color", DAKFilter::DAK_COLOR);
 
-	obs_property_set_modified_callback2(filter_type, DAKFilter::DAKFilterChanged, &instance);
+	obs_property_set_modified_callback(filter_type, DAKFilter::DAKFilterChanged, &instance);
 
 	obs_property_t *param_type = obs_properties_add_list(props, "dak_param_list", "Property to Modify",
 							     OBS_COMBO_TYPE_LIST, OBS_COMBO_FORMAT_STRING);
@@ -145,7 +145,7 @@ void DAKFilter::populateParams(obs_property_t *list, obs_property_type paramType
 	for (obs_property_t *prop = obs_properties_first(sourceProps); prop != NULL; obs_property_next(&prop)) {
 		const char *prop_name = obs_property_name(prop);
 		if (obs_property_get_type(prop) == paramType)
-			obs_property_list_add_string(list, prop_name, prop_name)
+			obs_property_list_add_string(list, prop_name, prop_name);
 	}
 }
 
