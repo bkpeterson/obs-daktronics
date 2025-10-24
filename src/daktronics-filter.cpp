@@ -100,7 +100,7 @@ void DAKFilter::GetDefaults(obs_data_t *settings)
 
 obs_properties_t *DAKFilter::GetProperties(void *data)
 {
-	auto &instance = *static_cast<DAKFilter *>(data);
+	auto instance = *static_cast<DAKFilter *>(data);
 
 	obs_properties_t *props = obs_properties_create();
 
@@ -120,7 +120,7 @@ obs_properties_t *DAKFilter::GetProperties(void *data)
 	obs_property_list_add_int(filter_type, "Update Text", DAKFilter::DAK_TEXT);
 	obs_property_list_add_int(filter_type, "Change Color", DAKFilter::DAK_COLOR);
 
-	obs_property_set_modified_callback(filter_type, DAKFilter::DAKFilterChanged, &instance);
+	obs_property_set_modified_callback(filter_type, DAKFilter::DAKFilterChanged, instance);
 
 	obs_property_t *param_type = obs_properties_add_list(props, "dak_param_list", "Property to Modify",
 							     OBS_COMBO_TYPE_LIST, OBS_COMBO_FORMAT_STRING);
@@ -166,8 +166,7 @@ bool DAKFilter::DAKSportChanged(obs_properties_t *props, obs_property_t *propert
 
 bool DAKFilter::DAKFilterChanged(void *data, obs_properties_t *props, obs_property_t *property, obs_data_t *settings)
 {
-	UNUSED_PARAMETER(property);
-	auto &instance = *static_cast<DAKFilter *>(data);
+	DAKFilter *instance = (DAKFilter *)obs_property_get_data(property);
 
 	uint32_t filter_type = (uint32_t)obs_data_get_int(settings, "dak_filter_list");
 	obs_property_t *list = obs_properties_get(props, "dak_param_list");
@@ -183,7 +182,7 @@ bool DAKFilter::DAKFilterChanged(void *data, obs_properties_t *props, obs_proper
 
 	case DAKFilter::DAK_TEXT:
 		obs_property_list_clear(list);
-		instance.populateParams(list, OBS_PROPERTY_TEXT);
+		instance->populateParams(list, OBS_PROPERTY_TEXT);
 		obs_property_set_visible(list, true);
 		obs_property_set_visible(color, false);
 		obs_property_set_visible(color_alpha, false);
@@ -191,7 +190,7 @@ bool DAKFilter::DAKFilterChanged(void *data, obs_properties_t *props, obs_proper
 
 	case DAKFilter::DAK_COLOR:
 		obs_property_list_clear(list);
-		instance.populateParams(list, OBS_PROPERTY_COLOR);
+		instance->populateParams(list, OBS_PROPERTY_COLOR);
 		obs_property_set_visible(list, true);
 		obs_property_set_visible(color, true);
 		obs_property_set_visible(color_alpha, false);
@@ -199,7 +198,7 @@ bool DAKFilter::DAKFilterChanged(void *data, obs_properties_t *props, obs_proper
 
 	case DAKFilter::DAK_COLOR_ALPHA:
 		obs_property_list_clear(list);
-		instance.populateParams(list, OBS_PROPERTY_COLOR_ALPHA);
+		instance->populateParams(list, OBS_PROPERTY_COLOR_ALPHA);
 		obs_property_set_visible(list, true);
 		obs_property_set_visible(color, false);
 		obs_property_set_visible(color_alpha, true);
