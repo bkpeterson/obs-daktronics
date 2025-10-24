@@ -120,7 +120,7 @@ obs_properties_t *DAKFilter::GetProperties(void *data)
 	obs_property_list_add_int(filter_type, "Update Text", DAKFilter::DAK_TEXT);
 	obs_property_list_add_int(filter_type, "Change Color", DAKFilter::DAK_COLOR);
 
-	obs_property_set_modified_callback(filter_type, DAKFilter::DAKFilterChanged, instance);
+	obs_property_set_modified_callback2(filter_type, DAKFilter::DAKFilterChanged, instance);
 
 	obs_property_t *param_type = obs_properties_add_list(props, "dak_param_list", "Property to Modify",
 							     OBS_COMBO_TYPE_LIST, OBS_COMBO_FORMAT_STRING);
@@ -166,7 +166,7 @@ bool DAKFilter::DAKSportChanged(obs_properties_t *props, obs_property_t *propert
 
 bool DAKFilter::DAKFilterChanged(void *data, obs_properties_t *props, obs_property_t *property, obs_data_t *settings)
 {
-	DAKFilter *instance = (DAKFilter *)obs_property_get_data(property);
+	DAKFilter *instance = (DAKFilter *)data;
 
 	uint32_t filter_type = (uint32_t)obs_data_get_int(settings, "dak_filter_list");
 	obs_property_t *list = obs_properties_get(props, "dak_param_list");
