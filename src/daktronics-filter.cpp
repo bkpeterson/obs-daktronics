@@ -128,9 +128,6 @@ obs_properties_t *DAKFilter::GetProperties(void *data)
 	obs_properties_add_color(props, "dak_color", "Color when data field is blank");
 	obs_properties_add_color_alpha(props, "dak_color_alpha", "Color when data field is blank");
 
-	std::string info1 = "This filter will hide the source when the selected scoreboard field is blank.";
-	obs_properties_add_text(props, "plugin_info1", info1.c_str(), OBS_TEXT_INFO);
-
 	std::string info2 =
 		"<a href=\"https://github.com/bkpeterson/obs-daktronics\">Daktronics Source</a> (1.0) by bkpeterson";
 	obs_properties_add_text(props, "plugin_info2", info2.c_str(), OBS_TEXT_INFO);
@@ -218,8 +215,6 @@ bool DAKFilter::DAKFilterChanged(void *data, obs_properties_t *props, obs_proper
 		instance->populateParams(list, OBS_PROPERTY_COLOR);
 		instance->populateParams(list, OBS_PROPERTY_COLOR_ALPHA);
 		obs_property_set_visible(list, true);
-		obs_property_set_visible(color, true);
-		obs_property_set_visible(color_alpha, false);
 		break;
 	}
 
