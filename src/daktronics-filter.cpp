@@ -149,7 +149,10 @@ void DAKFilter::populateParams(obs_property_t *list, obs_property_type paramType
 
 void DAKFilter::doColorProps(obs_properties_t *props, std::string paramName)
 {
-	obs_property_t *targetProp = obs_properties_get(props, paramName.c_str());
+	obs_source_t *targetSource = obs_filter_get_parent(_source);
+	obs_properties_t *sourceProps = obs_source_properties(targetSource);
+
+	obs_property_t *targetProp = obs_properties_get(sourceProps, paramName.c_str());
 	obs_property_t *color = obs_properties_get(props, "dak_color");
 	obs_property_t *color_alpha = obs_properties_get(props, "dak_color_alpha");
 
