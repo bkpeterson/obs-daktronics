@@ -219,6 +219,7 @@ bool DAKFilter::DAKFilterChanged(void *data, obs_properties_t *props, obs_proper
 		instance->populateParams(list, OBS_PROPERTY_COLOR);
 		instance->populateParams(list, OBS_PROPERTY_COLOR_ALPHA);
 		obs_property_set_visible(list, true);
+		DAKFilter::DAKParamChanged(data, props, list, settings);
 		break;
 	}
 
