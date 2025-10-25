@@ -156,6 +156,7 @@ void DAKFilter::doColorProps(obs_properties_t *props, std::string paramName)
 	obs_property_t *color = obs_properties_get(props, "dak_color");
 	obs_property_t *color_alpha = obs_properties_get(props, "dak_color_alpha");
 
+	obs_log(LOG_WARNING, "Param Name: %s\nType: %d\n", paramName.c_str(), (int)obs_property_get_type(targetProp));
 	switch (obs_property_get_type(targetProp)) {
 	case OBS_PROPERTY_COLOR:
 		obs_property_set_visible(color, true);
