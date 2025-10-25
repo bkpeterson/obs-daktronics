@@ -138,7 +138,8 @@ obs_properties_t *DAKFilter::GetProperties(void *data)
 
 void DAKFilter::populateParams(obs_property_t *list, obs_property_type paramType)
 {
-	obs_properties_t *sourceProps = obs_source_properties(_source);
+	obs_source_t *targetSource = obs_filter_get_parent(_source);
+	obs_properties_t *sourceProps = obs_source_properties(targetSource);
 
 	for (obs_property_t *prop = obs_properties_first(sourceProps); prop != NULL; obs_property_next(&prop)) {
 		const char *prop_name = obs_property_name(prop);
