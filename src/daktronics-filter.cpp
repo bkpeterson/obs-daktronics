@@ -54,7 +54,39 @@ const char *DAKFilter::GetName(void *type_data)
 void DAKFilter::SetValue(std::string newValue)
 {
 	_internalValue = newValue;
-	/****************************  Update *source depending on filter type */
+
+	if (!_source)
+		return;
+
+	switch (_filterType) {
+	case DAKFilter::DAK_VISIBLE:
+		obs_source_set_enabled(_source, _internalValue.length() > 0);
+		break;
+
+	case DAKFilter::DAK_TEXT:
+		obs_source_t *targetSource = obs_filter_get_parent(_source);
+		obs_data_t *sourceData = obs_source_get_settings(targetSource);
+		obs_data_set_string(sourceData, _paramName.c_str(), _internalValue.c_str());
+		obs_source_update(targetSource, sourceData);
+
+		obs_data_release(sourceData);
+		break;
+
+	case DAKFilter::DAK_COLOR:
+		obs_source_t *targetSource = obs_filter_get_parent(_source);
+		obs_data_t *sourceData = obs_source_get_settings(targetSource);
+
+		if (_paramType == OBS_PROPERTY_COLOR) {
+			obs_data_set_int(sourceData, _paramName.c_str(), _color);
+			obs_source_update(targetSource, sourceData);
+		} else if (_paramType == OBS_PROPERTY_COLOR_ALPHA) {
+			obs_data_set_int(sourceData, _paramName.c_str(), _colorAlpha);
+			obs_source_update(targetSource, sourceData);
+		}
+
+		obs_data_release(sourceData);
+		break;
+	}
 }
 
 uint32_t DAKFilter::GetIndex()
@@ -67,17 +99,7 @@ void DAKFilter::Render(void *data, gs_effect_t *effect)
 	UNUSED_PARAMETER(effect);
 
 	auto instance = static_cast<DAKFilter *>(data);
-	instance->_DoRender();
-}
-
-void DAKFilter::_DoRender()
-{
-	// Get the source being filtered
-	if (!_source)
-		return;
-
-	/*********************************** change this depending on filter type */
-	//obs_source_set_enabled(_source, _visible);
+	obs_source_skip_video_filter(instance);
 }
 
 void DAKFilter::Update(void *data, obs_data_t *settings)
@@ -90,12 +112,25 @@ void DAKFilter::Update(obs_data_t *settings)
 {
 	_sport = (std::string)obs_data_get_string(settings, "dak_sport_type");
 	_index = (uint32_t)obs_data_get_int(settings, "dak_field_list");
+	_filterType = (uint32_t)obs_data_get_int(settings, "dak_filter_list");
+	_paramName = (std::string)obs_data_get_string(settings, "dak_param_list")
+
+		obs_source_t *targetSource = obs_filter_get_parent(_source);
+	obs_properties_t *sourceProps = obs_source_properties(targetSource);
+	obs_property_t *targetProp = obs_properties_get(sourceProps, _paramName.c_str());
+
+	_paramType = (uint32_t)obs_property_get_type(targetProp);
+	_color = obs_data_get_int(settings, "dak_color");
+	_colorAlpha = obs_data_get_int(settings, "dak_color_alpha");
+
+	obs_properties_destroy(sourceProps);
 }
 
 void DAKFilter::GetDefaults(obs_data_t *settings)
 {
 	obs_data_set_default_string(settings, "dak_sport_type", "Basketball");
 	obs_data_set_default_int(settings, "dak_field_list", 1);
+	obs_data_set_default_int(settings, "dak_filter_list", DAKFilter::DAK_TEXT);
 }
 
 obs_properties_t *DAKFilter::GetProperties(void *data)
@@ -145,6 +180,8 @@ void DAKFilter::populateParams(obs_property_t *list, obs_property_type paramType
 		if (obs_property_get_type(prop) == paramType)
 			obs_property_list_add_string(list, prop_name, prop_name);
 	}
+
+	obs_properties_destroy(sourceProps);
 }
 
 void DAKFilter::doColorProps(obs_properties_t *props, std::string paramName)
@@ -156,7 +193,6 @@ void DAKFilter::doColorProps(obs_properties_t *props, std::string paramName)
 	obs_property_t *color = obs_properties_get(props, "dak_color");
 	obs_property_t *color_alpha = obs_properties_get(props, "dak_color_alpha");
 
-	obs_log(LOG_WARNING, "Param Name: %s\nType: %d\n", paramName.c_str(), (int)obs_property_get_type(targetProp));
 	switch (obs_property_get_type(targetProp)) {
 	case OBS_PROPERTY_COLOR:
 		obs_property_set_visible(color, true);
@@ -172,6 +208,8 @@ void DAKFilter::doColorProps(obs_properties_t *props, std::string paramName)
 		obs_property_set_visible(color, false);
 		obs_property_set_visible(color_alpha, false);
 	}
+
+	obs_properties_destroy(sourceProps);
 }
 
 bool DAKFilter::DAKSportChanged(obs_properties_t *props, obs_property_t *property, obs_data_t *settings)

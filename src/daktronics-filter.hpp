@@ -13,7 +13,6 @@ public:
 	static const uint32_t DAK_VISIBLE = 1;
 	static const uint32_t DAK_TEXT = 2;
 	static const uint32_t DAK_COLOR = 3;
-	static const uint32_t DAK_COLOR_ALPHA = 4;
 
 	void SetValue(std::string value);
 
@@ -31,7 +30,6 @@ public:
 
 	void populateParams(obs_property_t *list, obs_property_type paramType);
 	void doColorProps(obs_properties_t *props, std::string paramName);
-	void _DoRender();
 
 	static bool DAKSportChanged(obs_properties_t *props, obs_property_t *property, obs_data_t *settings);
 	static bool DAKFilterChanged(void *data, obs_properties_t *props, obs_property_t *property,
@@ -46,4 +44,8 @@ private:
 	uint32_t _index;
 	std::string _internalValue;
 	uint32_t _filterType;
+	std::string _paramName;
+	uint32_t _paramType;
+	int _color;
+	int _colorAlpha;
 };

@@ -149,22 +149,20 @@ void DAKDataUtils::AddFilter(DAKFilter *newFilter)
 
 void DAKDataUtils::RemoveFilter(DAKFilter *oldFilter)
 {
-	UNUSED_PARAMETER(oldFilter);
-	//uint32_t index = oldFilter->GetIndex();
-	//std::vector<DAKFilter *> filters = _filters[index];
+	uint32_t index = oldFilter->GetIndex();
+	std::vector<DAKFilter *> filters = _filters[index];
 
-	//auto tmpVector = std::remove(filters.begin(), filters.end(), oldFilter);
-	//filters.erase(tmpVector, filters.end());
+	for (auto it = filters.begin(); it != filters.end(); it++) {
+		if (it == oldFilter) {
+			delete (*it);
+			filters.erase(it);
+			break;
+		}
+	}
 }
 
 void DAKDataUtils::UpdateField(uint32_t index, std::string value)
 {
-	//std::vector<DAKSource *> sources = _sources[index];
-
-	//for (DAKSource *sourceData : sources) {
-	//	sourceData->SetTextValue(value);
-	//}
-
 	std::vector<DAKFilter *> filters = _filters[index];
 
 	for (DAKFilter *filterData : filters) {
