@@ -58,24 +58,20 @@ void DAKFilter::SetValue(std::string newValue)
 	if (!_source)
 		return;
 
+	obs_source_t *targetSource = obs_filter_get_parent(_source);
+	obs_data_t *sourceData = obs_source_get_settings(targetSource);
+
 	switch (_filterType) {
 	case DAKFilter::DAK_VISIBLE:
 		obs_source_set_enabled(_source, _internalValue.length() > 0);
 		break;
 
 	case DAKFilter::DAK_TEXT:
-		obs_source_t *targetSource = obs_filter_get_parent(_source);
-		obs_data_t *sourceData = obs_source_get_settings(targetSource);
 		obs_data_set_string(sourceData, _paramName.c_str(), _internalValue.c_str());
 		obs_source_update(targetSource, sourceData);
-
-		obs_data_release(sourceData);
 		break;
 
 	case DAKFilter::DAK_COLOR:
-		obs_source_t *targetSource = obs_filter_get_parent(_source);
-		obs_data_t *sourceData = obs_source_get_settings(targetSource);
-
 		if (_paramType == OBS_PROPERTY_COLOR) {
 			obs_data_set_int(sourceData, _paramName.c_str(), _color);
 			obs_source_update(targetSource, sourceData);
@@ -84,9 +80,10 @@ void DAKFilter::SetValue(std::string newValue)
 			obs_source_update(targetSource, sourceData);
 		}
 
-		obs_data_release(sourceData);
 		break;
 	}
+
+	obs_data_release(sourceData);
 }
 
 uint32_t DAKFilter::GetIndex()
@@ -99,7 +96,12 @@ void DAKFilter::Render(void *data, gs_effect_t *effect)
 	UNUSED_PARAMETER(effect);
 
 	auto instance = static_cast<DAKFilter *>(data);
-	obs_source_skip_video_filter(instance);
+	instance->_render();
+}
+
+void DAKFilter::_render()
+{
+	obs_source_skip_video_filter(_source);
 }
 
 void DAKFilter::Update(void *data, obs_data_t *settings)
@@ -113,9 +115,9 @@ void DAKFilter::Update(obs_data_t *settings)
 	_sport = (std::string)obs_data_get_string(settings, "dak_sport_type");
 	_index = (uint32_t)obs_data_get_int(settings, "dak_field_list");
 	_filterType = (uint32_t)obs_data_get_int(settings, "dak_filter_list");
-	_paramName = (std::string)obs_data_get_string(settings, "dak_param_list")
+	_paramName = (std::string)obs_data_get_string(settings, "dak_param_list");
 
-		obs_source_t *targetSource = obs_filter_get_parent(_source);
+	obs_source_t *targetSource = obs_filter_get_parent(_source);
 	obs_properties_t *sourceProps = obs_source_properties(targetSource);
 	obs_property_t *targetProp = obs_properties_get(sourceProps, _paramName.c_str());
 

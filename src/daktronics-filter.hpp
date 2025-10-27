@@ -48,4 +48,6 @@ private:
 	uint32_t _paramType;
 	int _color;
 	int _colorAlpha;
+
+	void _render();
 };
