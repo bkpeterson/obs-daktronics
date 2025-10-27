@@ -153,7 +153,7 @@ void DAKDataUtils::RemoveFilter(DAKFilter *oldFilter)
 	std::vector<DAKFilter *> filters = _filters[index];
 
 	for (auto it = filters.begin(); it != filters.end(); it++) {
-		if (it == oldFilter) {
+		if (*it == oldFilter) {
 			delete (*it);
 			filters.erase(it);
 			break;
