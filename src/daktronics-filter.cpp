@@ -122,8 +122,8 @@ void DAKFilter::Update(obs_data_t *settings)
 	obs_property_t *targetProp = obs_properties_get(sourceProps, _paramName.c_str());
 
 	_paramType = (uint32_t)obs_property_get_type(targetProp);
-	_color = obs_data_get_int(settings, "dak_color");
-	_colorAlpha = obs_data_get_int(settings, "dak_color_alpha");
+	_color = (int)obs_data_get_int(settings, "dak_color");
+	_colorAlpha = (int)obs_data_get_int(settings, "dak_color_alpha");
 
 	obs_properties_destroy(sourceProps);
 }
