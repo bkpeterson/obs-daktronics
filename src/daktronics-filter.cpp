@@ -30,7 +30,7 @@ DAKFilter::DAKFilter(obs_data_t *settings, obs_source_t *source) : _source(sourc
 }
 
 DAKFilter::~DAKFilter() {
-	delete *_source;
+	obs_source_release(_source);
 	_source = nullptr;
 }
 
