@@ -45,7 +45,7 @@ void DAKFilter::Destroy(void *data)
 {
 	auto instance = static_cast<DAKFilter *>(data);
 	DAKDataUtils::RemoveFilter(instance);
-	obs_source_release(_source);
+
 	delete instance;
 }
 

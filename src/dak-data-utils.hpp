@@ -24,6 +24,7 @@ public:
 	static std::map<std::string, DAKSportData *> _allSportsData;
 
 	static void populateSportsData();
+	static void clearSportsData();
 	static DAKSportData *getSportData(std::string sport);
 
 	static void AddFilter(DAKFilter *newFilter);
