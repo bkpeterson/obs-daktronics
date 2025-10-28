@@ -124,7 +124,7 @@ void DAKDataUtils::populateSportsData()
 	}
 }
 
-void DAKDataUtils::clearSportData()
+void DAKDataUtils::clearSportsData()
 {
 	for (std::pair<std::string, DAKSportData *> sportData : _allSportsData) {
 		delete sportData.second;
