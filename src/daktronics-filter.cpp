@@ -45,8 +45,6 @@ void DAKFilter::Destroy(void *data)
 {
 	auto instance = static_cast<DAKFilter *>(data);
 	DAKDataUtils::RemoveFilter(instance);
-
-	delete instance;
 }
 
 const char *DAKFilter::GetName(void *type_data)
