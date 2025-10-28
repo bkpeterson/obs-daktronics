@@ -29,9 +29,9 @@ DAKFilter::DAKFilter(obs_data_t *settings, obs_source_t *source) : _source(sourc
 	Update(this, settings);
 }
 
-DAKFilter::~DAKFilter() {
-	obs_source_release(_source);
-	_source = nullptr;
+DAKFilter::~DAKFilter()
+{
+	// Nothing to do
 }
 
 void *DAKFilter::Create(obs_data_t *settings, obs_source_t *source)
@@ -45,6 +45,7 @@ void DAKFilter::Destroy(void *data)
 {
 	auto instance = static_cast<DAKFilter *>(data);
 	DAKDataUtils::RemoveFilter(instance);
+	obs_source_release(_source);
 	delete instance;
 }
 
