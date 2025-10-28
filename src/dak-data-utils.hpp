@@ -26,9 +26,6 @@ public:
 	static void populateSportsData();
 	static DAKSportData *getSportData(std::string sport);
 
-	//static void AddSource(DAKSource *newSource);
-	//static void RemoveSource(DAKSource *oldSource);
-
 	static void AddFilter(DAKFilter *newFilter);
 	static void RemoveFilter(DAKFilter *oldFilter);
 
@@ -37,7 +34,6 @@ public:
 	static void PopulateSportProps(obs_property_t *sportList);
 
 private:
-	//static std::map<uint32_t, std::vector<DAKSource *>> _sources;
 	static std::map<uint32_t, std::vector<DAKFilter *>> _filters;
 
 	static void read_csv_field(std::stringstream &ss, std::string &field);
