@@ -169,8 +169,12 @@ void DAKDataUtils::sync_destroy()
  * @brief This function contains the core logic that should run exactly once
  * per OBS video frame, regardless of the number of active plugin instances.
  */
-void DAKDataUtils::execute_global_tick_logic()
+void DAKDataUtils::execute_global_tick_logic(void *data, uint32_t width, uint32_t height)
 {
+	UNUSED_PARAMETER(data);
+	UNUSED_PARAMETER(width);
+	UNUSED_PARAMETER(height);
+	
     // --- CORE SINGLE-RUN LOGIC GOES HERE ---
     // This block will execute exactly once per global OBS frame tick.
 

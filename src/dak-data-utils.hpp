@@ -51,7 +51,7 @@ public:
 
 	static void sync_init();
 	static void sync_destroy();
-	static void execute_global_tick_logic();
+	static void execute_global_tick_logic(void *data, uint32_t width, uint32_t height);
 	static std::string getSerialPort();
 
 	static void startSerial(std::string port);

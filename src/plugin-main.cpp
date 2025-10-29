@@ -44,7 +44,6 @@ obs_source_info create_daktronics_filter_info()
 	daktronics_filter_info.create = DAKFilter::Create;
 	daktronics_filter_info.destroy = DAKFilter::Destroy;
 	daktronics_filter_info.video_render = DAKFilter::Render;
-	daktronics_filter_info.video_tick = DAKFilter::video_tick;
 	daktronics_filter_info.get_defaults = DAKFilter::GetDefaults;
 	daktronics_filter_info.get_properties = DAKFilter::GetProperties;
 	daktronics_filter_info.update = DAKFilter::Update;
@@ -67,6 +66,8 @@ bool obs_module_load(void)
         }
     }, nullptr);
 
+	obs_add_main_render_callback(DAKDataUtils::execute_global_tick_logic, NULL);
+
 	obs_log(LOG_INFO, "Daktronics plugin loaded successfully (version %s)", PLUGIN_VERSION);
 
 	return true;
@@ -76,6 +77,8 @@ void obs_module_unload(void)
 {
 	DAKDataUtils::sync_destroy();
 	DAKDataUtils::clearSportsData();
+
+	obs_remove_main_render_callback(DAKDataUtils::execute_global_tick_logic, NULL);
 
 	obs_log(LOG_INFO, "Daktronics plugin unloaded");
 }
