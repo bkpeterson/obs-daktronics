@@ -137,9 +137,8 @@ jobs:
           notarizationPassword: ${{ secrets.MACOS_NOTARIZATION_PASSWORD }}
           
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@v4
         with:
-          aqtversion: '==3.1.*'
           version: '6.8.3'
           host: 'mac'
           target: 'desktop'
@@ -230,9 +229,8 @@ jobs:
             ${{ runner.os }}-${{ matrix.os }}-ccache-x86_64-
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@v4
         with:
-          aqtversion: '==3.1.*'
           version: '6.8.3'
           host: 'linux'
           target: 'desktop'
@@ -306,13 +304,12 @@ jobs:
           "pluginVersion=${ProductVersion}" >> $env:GITHUB_OUTPUT
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@v4
         with:
-          aqtversion: '==3.1.*'
           version: '6.8.3'
           host: 'windows'
           target: 'desktop'
-          arch: 'win64_mingw'
+          arch: 'win64_msvc2022_64'
           modules: 'qtserialport'
 
       - name: Build Plugin 🧱
