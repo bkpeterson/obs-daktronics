@@ -1,56 +1,168 @@
-#ifndef OBS_SERIAL_PLUGIN_HPP
-#define OBS_SERIAL_PLUGIN_HPP
+// SerialPort.h
+#ifndef SERIALPORT_H
+#define SERIALPORT_H
 
-#include <QObject>
-#include <QSerialPort>
-#include <QSerialPortInfo>
-#include <QThread>
-#include <QStringList>
-#include <QIODevice>
+#include <string>
+#include <vector>
+#include <memory>
+#include <functional>
+#include <thread>
+#include <atomic>
+#include <mutex>
+#include <condition_variable>
+#include <queue>
 
-// Define a default baud rate
-#define DEFAULT_BAUD_RATE 19200
-
-// ====================================================================
-// SerialPortWorker (Runs in separate QThread)
-// ====================================================================
-
-/**
- * @brief Worker class to manage QSerialPort in a separate thread.
- * This class uses Qt signals and slots to handle asynchronous serial communication.
- */
-class SerialPortWorker : public QObject {
-    Q_OBJECT
-
+class SerialPort {
 public:
-    QSerialPort *serialPort = nullptr;
-    QString portName;
-    int baudRate = DEFAULT_BAUD_RATE;
+    enum BaudRate {
+        BAUD_9600 = 9600,
+        BAUD_19200 = 19200,
+        BAUD_38400 = 38400,
+        BAUD_57600 = 57600,
+        BAUD_115200 = 115200
+    };
 
-    explicit SerialPortWorker(QObject *parent = nullptr);
-    ~SerialPortWorker() override; // Add virtual destructor
+    // Callback type for line received signal (runs in main thread)
+    using LineReceivedCallback = std::function<void(const std::string& line)>;
+    using ErrorCallback = std::function<void(const std::string& error)>;
 
-signals:
-    // Signal emitted when a complete line of data is received
-    void dataReceived(const QString& data);
+    std::string _port;
 
-public slots:
-    /**
-     * @brief Slot to initialize and connect the serial port.
-     */
-    void connectPort();
+    SerialPort();
+    virtual ~SerialPort();
 
-    /**
-     * @brief Slot to disconnect and close the serial port.
-     */
-    void disconnectPort();
+    // Open/close port
+    bool open(const std::string& portName, BaudRate baudRate = BAUD_9600, 
+              char delimiter = '\n');
+    void close();
+    bool isOpen() const { return opened; }
 
-private slots:
-    /**
-     * @brief Slot triggered by QSerialPort::readyRead() signal.
-     */
-    void readData();
+    std::string getPort() const { return _port; };
+
+    // Start/stop reading
+    bool startReading();
+    void stopReading();
+    bool isReading() const { return reading; }
+
+    // Set callbacks (will be called from main thread)
+    void setLineReceivedCallback(LineReceivedCallback callback);
+    void setErrorCallback(ErrorCallback callback);
+
+    // Configuration
+    bool setBaudRate(BaudRate baudRate);
+    bool setTimeout(int milliseconds);
+
+    // Utility
+    void flush();
+    
+    // Main thread must call this periodically to process signals
+    void processSignals();
+    
+    // Check if there are pending signals to process
+    bool hasPendingSignals() const;
+    
+    // Static utility to list available ports
+    static std::vector<std::string> listPorts();
+
+    // Factory method
+    static std::unique_ptr<SerialPort> create();
+
+protected:
+    bool opened;
+    std::atomic<bool> reading;
+    BaudRate currentBaudRate;
+    int readTimeout;
+    char lineDelimiter;
+
+    // Thread management
+    std::unique_ptr<std::thread> readThread;
+    
+    // Signal queue for thread-safe communication
+    struct Signal {
+        enum Type { LINE_RECEIVED, ERROR };
+        Type type;
+        std::string data;
+    };
+    
+    std::queue<Signal> signalQueue;
+    mutable std::mutex queueMutex;
+    std::condition_variable queueCondition;
+
+    // Callbacks (called from main thread)
+    LineReceivedCallback lineCallback;
+    ErrorCallback errorCallback;
+    std::mutex callbackMutex;
+
+    // Reader thread function
+    void readThreadFunction();
+
+    // Platform-specific abstract methods
+    virtual bool platformOpen(const std::string& portName) = 0;
+    virtual void platformClose() = 0;
+    virtual int platformRead(char* buffer, int size) = 0;
+    virtual void platformFlush() = 0;
+    virtual bool platformSetBaudRate(BaudRate baudRate) = 0;
+    virtual bool platformSetTimeout(int milliseconds) = 0;
+
+    // Platform-specific port listing
+    static std::vector<std::string> platformListPorts();
+
+    // Emit signals from background thread (thread-safe)
+    void emitLineReceived(const std::string& line);
+    void emitError(const std::string& error);
 };
 
+// Platform-specific implementations
 
-#endif // OBS_SERIAL_PLUGIN_HPP
+#ifdef _WIN32
+#include <windows.h>
+
+class WindowsSerialPort : public SerialPort {
+public:
+    WindowsSerialPort();
+    ~WindowsSerialPort() override;
+
+protected:
+    bool platformOpen(const std::string& portName) override;
+    void platformClose() override;
+    int platformRead(char* buffer, int size) override;
+    void platformFlush() override;
+    bool platformSetBaudRate(BaudRate baudRate) override;
+    bool platformSetTimeout(int milliseconds) override;
+
+private:
+    HANDLE hSerial;
+    DCB dcb;
+    COMMTIMEOUTS timeouts;
+    
+    bool applyDCB();
+};
+
+#else
+#include <termios.h>
+
+class PosixSerialPort : public SerialPort {
+public:
+    PosixSerialPort();
+    ~PosixSerialPort() override;
+
+protected:
+    bool platformOpen(const std::string& portName) override;
+    void platformClose() override;
+    int platformRead(char* buffer, int size) override;
+    void platformFlush() override;
+    bool platformSetBaudRate(BaudRate baudRate) override;
+    bool platformSetTimeout(int milliseconds) override;
+
+private:
+    int fd;
+    struct termios tty;
+    struct termios tty_old;
+    
+    bool applyTermios();
+    speed_t baudRateToSpeed(BaudRate baudRate);
+};
+
+#endif
+
+#endif // SERIALPORT_H

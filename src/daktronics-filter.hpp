@@ -25,6 +25,7 @@ public:
 	static void Update(void *data, obs_data_t *settings);
 	static const char *GetName(void *);
 	static void Render(void *data, gs_effect_t *effect);
+	static void video_tick(void *data, float seconds);
 	static obs_properties_t *GetProperties(void *data);
 	static void GetDefaults(obs_data_t *settings);
 

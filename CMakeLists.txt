@@ -21,10 +21,6 @@ if(ENABLE_FRONTEND_API)
   target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::obs-frontend-api)
 endif()
 
-set(Qt6SerialPort_DIR /Users/runner/work/obs-daktronics/Qt/6.8.3/macos/lib/)
-find_package(Qt6 REQUIRED COMPONENTS SerialPort)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt6::SerialPort)
-
 if(ENABLE_QT)
   find_package(Qt6 COMPONENTS Widgets Core)
   target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt6::Core Qt6::Widgets)
@@ -45,6 +41,7 @@ target_sources(
     src/plugin-main.cpp
     src/dak-data-utils.cpp
     src/dak-sport-data.cpp
+    src/dak-serial.cpp
     src/daktronics-filter.cpp
     src/dak-source-support.c
 )

@@ -106,6 +106,35 @@ void DAKFilter::_render()
 	obs_source_skip_video_filter(_source);
 }
 
+/**
+ * @brief OBS video tick handler. Acts as a gatekeeper using a mutex and frame
+ * count to ensure execute_global_tick_logic runs only once per frame.
+ */
+void DAKFilter::video_tick(void *data, float seconds)
+{
+    // 'data' is the source/filter settings pointer, 'seconds' is the delta time.
+    UNUSED_PARAMETER(data);
+    UNUSED_PARAMETER(seconds);
+
+    // 1. Enter the critical section: Acquire the lock on the mutex.
+    os_sync_enter(&DAKDataUtils::tick_mutex);
+
+    // 2. Get the current global video frame count.
+    uint64_t current_frame_count = obs_get_video_frame_count();
+
+    // 3. Check if the frame count has advanced since the last execution.
+    if (current_frame_count != DAKDataUtils::last_frame_count) {
+        // 4. Update the shared state to reflect the processing of the current frame.
+        DAKDataUtils::last_frame_count = current_frame_count;
+
+        // 5. Execute the single-run logic.
+        DAKDataUtils::execute_global_tick_logic();
+    }
+
+    // 6. Exit the critical section: Release the lock.
+    os_sync_leave(&DAKDataUtils::tick_mutex);
+}
+
 void DAKFilter::Update(void *data, obs_data_t *settings)
 {
 	auto &instance = *static_cast<DAKFilter *>(data);
