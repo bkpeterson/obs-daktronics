@@ -145,6 +145,9 @@ jobs:
           arch: 'clang_64'
           modules: 'qtserialport'
 
+      - name: List files
+        run: ls /Users/runner/work/obs-daktronics/Qt/6.8.3/macos/lib/
+        
       - name: Build Plugin 🧱
         uses: ./.github/actions/build-plugin
         with:

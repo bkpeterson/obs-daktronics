@@ -21,6 +21,8 @@ if(ENABLE_FRONTEND_API)
   target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::obs-frontend-api)
 endif()
 
+set(Qt6SerialPort_DIR /Users/runner/work/obs-daktronics/Qt/6.8.3/macos/lib/)
+
 if(ENABLE_QT)
   find_package(Qt6 COMPONENTS Widgets Core SerialPort)
   target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt6::Core Qt6::Widgets Qt::SerialPort)
