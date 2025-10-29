@@ -64,7 +64,7 @@ function(_setup_qt_submodule)
   message(STATUS "Configure ${label} (${arch})")
   execute_process(
     COMMAND
-      "${CMAKE_COMMAND}" -B build_${arch} -G Ninja "${_cmake_arch}"
+      "${CMAKE_COMMAND} -B build_${arch} -G Ninja ${_cmake_arch}"
       "-DCMAKE_INSTALL_PREFIX='${dependencies_dir}/${_qt6_destination}'"
       "-DCMAKE_PREFIX_PATH='${dependencies_dir}/${_qt6_destination}'" "--no-warn-unused-cli"
       "-DBUILD_SHARED_LIBS:BOOL=ON" "-DCMAKE_BUILD_TYPE=${_cmake_config}" "${_cmake_extra}"
