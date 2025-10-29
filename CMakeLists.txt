@@ -22,10 +22,12 @@ if(ENABLE_FRONTEND_API)
 endif()
 
 set(Qt6SerialPort_DIR /Users/runner/work/obs-daktronics/Qt/6.8.3/macos/lib/)
+find_package(Qt6 REQUIRED COMPONENTS SerialPort)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt6::SerialPort)
 
 if(ENABLE_QT)
-  find_package(Qt6 COMPONENTS Widgets Core SerialPort)
-  target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt6::Core Qt6::Widgets Qt::SerialPort)
+  find_package(Qt6 COMPONENTS Widgets Core)
+  target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt6::Core Qt6::Widgets)
   target_compile_options(
     ${CMAKE_PROJECT_NAME}
     PRIVATE $<$<C_COMPILER_ID:Clang,AppleClang>:-Wno-quoted-include-in-framework-header -Wno-comma>
