@@ -1,5 +1,4 @@
 #include "dak-serial.hpp"
-#include <cstring>
 
 SerialPort::SerialPort()
 	: opened(false),

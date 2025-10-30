@@ -154,8 +154,6 @@ void DAKDataUtils::sync_destroy()
 	// Destroys the mutex object when the plugin is unloaded.
 	serial->stopReading();
 	serial->close();
-
-	blog(LOG_INFO, "OBS global tick synchronization destroyed.");
 }
 
 /**
@@ -194,14 +192,10 @@ std::string DAKDataUtils::getSerialPort()
 
 void DAKDataUtils::onLineReceived(const std::string &line)
 {
-	// This runs in the MAIN thread - safe to update UI, call non-thread-safe code
-	std::cout << "Main thread received: " << line << std::endl;
-	// Your consumer library processes the line here
-
 	//=================================  process data line and update fields accordingly =====================//
 }
 
 void DAKDataUtils::onError(const std::string &error)
 {
-	std::cerr << "Main thread error: " << error << std::endl;
+	// Process error
 }
