@@ -28,7 +28,7 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #include <string>
 #include <vector>
 
-DAKDock* dak_dock = nullptr;
+DAKDock *dak_dock = nullptr;
 
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE("daktronics-realtime-data", "en-US")
@@ -61,8 +61,10 @@ bool obs_module_load(void)
 
 	obs_frontend_add_event_callback(
 		[](obs_frontend_event event, void *private_data) {
+			UNUSED_PARAMETER(private_data);
 			if (event == OBS_FRONTEND_EVENT_FINISHED_LOADING) {
-				obs_frontend_add_dock("Daktronics Serial Reader", dak_dock = new DAKDock());
+				obs_frontend_add_dock_by_id("dak_serial_dock", "Daktronics Serial Reader",
+							    dak_dock = new DAKDock());
 			}
 		},
 		nullptr);

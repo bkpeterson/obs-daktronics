@@ -62,11 +62,13 @@ void DAKDataUtils::populateSportsData()
 
 	for (std::string _dataLine : _DAKData) {
 		std::stringstream streamSportData(_dataLine);
+		DAKTSVHeader sportDataLine;
 
-		while (readHeaderLine(streamSportData, DAKTSVHeader sportDataLine) == 0) {
+		while (readHeaderLine(streamSportData, sportDataLine) == 0) {
 			DAKSportData *sportData = new DAKSportData(sportDataLine.sport, sportDataLine.size);
+			DAKTSVData fieldDataLine;
 
-			while (readDataLine(streamSportData, DAKTSVData fieldDataLine) == 0) {
+			while (readDataLine(streamSportData, fieldDataLine) == 0) {
 				sportData->AddFieldData(fieldDataLine.index, fieldDataLine.field, fieldDataLine.length);
 			}
 
@@ -190,7 +192,7 @@ std::string DAKDataUtils::getSerialPort()
 		return "";
 }
 
-void onLineReceived(const std::string &line)
+void DAKDataUtils::onLineReceived(const std::string &line)
 {
 	// This runs in the MAIN thread - safe to update UI, call non-thread-safe code
 	std::cout << "Main thread received: " << line << std::endl;
@@ -199,7 +201,7 @@ void onLineReceived(const std::string &line)
 	//=================================  process data line and update fields accordingly =====================//
 }
 
-void onError(const std::string &error)
+void DAKDataUtils::onError(const std::string &error)
 {
 	std::cerr << "Main thread error: " << error << std::endl;
 }
