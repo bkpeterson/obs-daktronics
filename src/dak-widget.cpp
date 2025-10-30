@@ -1,6 +1,6 @@
 #include "dak-widget.hpp"
 
-DAKDock::DAKDock(QWidget* parent) : QDockWidget("Daktronics Serial Reader", parent) {
+DAKDock::DAKDock() : QDockWidget("Daktronics Serial Reader", nullptr) {
     // 1. Create the main container widget and layout
     QWidget* contentWidget = new QWidget(this);
     mainLayout = new QVBoxLayout(contentWidget);

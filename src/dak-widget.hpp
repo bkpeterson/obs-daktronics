@@ -12,7 +12,7 @@ class DAKDock : public QDockWidget {
     Q_OBJECT
 
 public:
-    DAKDock(QWidget* parent = nullptr);
+    DAKDock();
     ~DAKDock();
 
 private slots:

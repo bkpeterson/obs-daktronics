@@ -62,7 +62,7 @@ bool obs_module_load(void)
 	obs_frontend_add_event_callback(
 		[](obs_frontend_event event, void *private_data) {
 			if (event == OBS_FRONTEND_EVENT_FINISHED_LOADING) {
-				obs_frontend_add_dock("Daktronics Serial Reader", dak_dock = new DAKDock(obs_frontend_get_main_window()));
+				obs_frontend_add_dock("Daktronics Serial Reader", dak_dock = new DAKDock());
 			}
 		},
 		nullptr);
