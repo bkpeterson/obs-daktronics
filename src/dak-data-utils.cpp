@@ -60,7 +60,7 @@ uint32_t DAKDataUtils::readHeaderLine(std::stringstream &is, DAKTSVHeader &sport
 
 void DAKDataUtils::populateSportsData()
 {
-	for(std::string _dataLine : _DAKData) {
+	for (std::string _dataLine : _DAKData) {
 		std::stringstream streamSportData(_dataLine);
 
 		while (readHeaderLine(streamSportData, DAKTSVHeader sportDataLine) == 0) {
@@ -140,20 +140,20 @@ void DAKDataUtils::UpdateField(uint32_t index, std::string value)
 void DAKDataUtils::sync_init()
 {
 	serial = SerialPort::create();
-    
-    // Set callbacks (will be invoked in main thread)
-    serial->setLineReceivedCallback(onLineReceived);
-    serial->setErrorCallback(onError);
+
+	// Set callbacks (will be invoked in main thread)
+	serial->setLineReceivedCallback(onLineReceived);
+	serial->setErrorCallback(onError);
 }
 
 // Call this once when the plugin unloads (e.g., in obs_module_unload).
 void DAKDataUtils::sync_destroy()
 {
-    // Destroys the mutex object when the plugin is unloaded.
-    serial->stopReading();
-    serial->close();
+	// Destroys the mutex object when the plugin is unloaded.
+	serial->stopReading();
+	serial->close();
 
-    blog(LOG_INFO, "OBS global tick synchronization destroyed.");
+	blog(LOG_INFO, "OBS global tick synchronization destroyed.");
 }
 
 /**
@@ -166,37 +166,40 @@ void DAKDataUtils::execute_global_tick_logic(void *data, uint32_t width, uint32_
 	UNUSED_PARAMETER(width);
 	UNUSED_PARAMETER(height);
 
-    // --- CORE SINGLE-RUN LOGIC GOES HERE ---
-    // This block will execute exactly once per global OBS frame tick.
+	// --- CORE SINGLE-RUN LOGIC GOES HERE ---
+	// This block will execute exactly once per global OBS frame tick.
 
-    if(SerialPort::hasPendingSignals()) {
+	if (SerialPort::hasPendingSignals()) {
 		serial->processSignals();
 	}
 }
 
-void DAKDataUtils::startSerial(std::string port) {    
-    // Open and start reading
-    if (serial->open(port, SerialPort::BAUD_19200, '\n')) {
-        serial->startReading();
-    }
+void DAKDataUtils::startSerial(std::string port)
+{
+	// Open and start reading
+	if (serial->open(port, SerialPort::BAUD_19200, '\n')) {
+		serial->startReading();
+	}
 }
 
 std::string DAKDataUtils::getSerialPort()
 {
-	if(serial)
+	if (serial)
 		return serial->getPort();
 	else
 		return "";
 }
 
-void onLineReceived(const std::string& line) {
-    // This runs in the MAIN thread - safe to update UI, call non-thread-safe code
-    std::cout << "Main thread received: " << line << std::endl;
-    // Your consumer library processes the line here
+void onLineReceived(const std::string &line)
+{
+	// This runs in the MAIN thread - safe to update UI, call non-thread-safe code
+	std::cout << "Main thread received: " << line << std::endl;
+	// Your consumer library processes the line here
 
 	//=================================  process data line and update fields accordingly =====================//
 }
 
-void onError(const std::string& error) {
-    std::cerr << "Main thread error: " << error << std::endl;
+void onError(const std::string &error)
+{
+	std::cerr << "Main thread error: " << error << std::endl;
 }

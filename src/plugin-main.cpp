@@ -27,7 +27,6 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #include <string>
 #include <vector>
 
-
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE("daktronics-realtime-data", "en-US")
 
@@ -57,11 +56,13 @@ bool obs_module_load(void)
 	obs_source_info dakFilter = create_daktronics_filter_info();
 	obs_register_source(&dakFilter);
 
-    obs_frontend_add_event_callback([](obs_frontend_event event, void* private_data) {
-        if (event == OBS_FRONTEND_EVENT_FINISHED_LOADING) {
-            setup_menu();
-        }
-    }, nullptr);
+	obs_frontend_add_event_callback(
+		[](obs_frontend_event event, void *private_data) {
+			if (event == OBS_FRONTEND_EVENT_FINISHED_LOADING) {
+				setup_menu();
+			}
+		},
+		nullptr);
 
 	obs_add_main_render_callback(DAKDataUtils::execute_global_tick_logic, NULL);
 
@@ -80,10 +81,6 @@ void obs_module_unload(void)
 	obs_log(LOG_INFO, "Daktronics plugin unloaded");
 }
 
-
-
-
-
 // ******************************************************
 
 //============================== Do menu updates and stuff =============================//
@@ -91,94 +88,93 @@ void obs_module_unload(void)
 /**
  * @brief Called on plugin load to create the "Tools -> Serial Port Selector" menu.
  */
-static void setup_menu() {
-    // Add the main "Serial Port Selector" item to the Tools menu.
-    // When clicked, it will call refresh_ports_callback which dynamically generates the submenu.
-    obs_frontend_add_tools_menu_item(
-        "Serial Port Selector", // Menu item text
-        refresh_ports_callback,
-        nullptr, // No custom data needed for root callback
-        "obs_serial_data_selector_root" // Unique ID for the root item
-    );
+static void setup_menu()
+{
+	// Add the main "Serial Port Selector" item to the Tools menu.
+	// When clicked, it will call refresh_ports_callback which dynamically generates the submenu.
+	obs_frontend_add_tools_menu_item("Serial Port Selector", // Menu item text
+					 refresh_ports_callback,
+					 nullptr,                        // No custom data needed for root callback
+					 "obs_serial_data_selector_root" // Unique ID for the root item
+	);
 
-    // Call it once to initialize the submenu with the list of ports
-    refresh_ports_callback(nullptr, nullptr);
+	// Call it once to initialize the submenu with the list of ports
+	refresh_ports_callback(nullptr, nullptr);
 }
 
 /**
  * @brief Menu item callback to refresh the list of ports.
  * This is the main callback for the "Serial Port Selector" menu item.
  */
-static void refresh_ports_callback(void *data, obs_frontend_source_t *source) {
+static void refresh_ports_callback(void *data, obs_frontend_source_t *source)
+{
 	UNUSED_PARAMETER(data);
 	UNUSED_PARAMETER(source);
 
-    obs_frontend_menu_t menu = obs_frontend_get_tools_menu();
-    if (!menu) return;
+	obs_frontend_menu_t menu = obs_frontend_get_tools_menu();
+	if (!menu)
+		return;
 
-    // Remove old submenu items and then add the new ones
-    obs_frontend_menu_remove_all_sub_items(menu, "obs_serial_data_selector_root");
+	// Remove old submenu items and then add the new ones
+	obs_frontend_menu_remove_all_sub_items(menu, "obs_serial_data_selector_root");
 
-    std::vector<std::string> ports = SerialPort::listPorts();
+	std::vector<std::string> ports = SerialPort::listPorts();
 	std::string currentPort = DAKDataUtils::getSerialPort();
 
-    // 1. Add 'Stop Listening' option
-    // Passing an empty string "" as data signals to StartSerialListener to stop.
-    obs_frontend_menu_add_item(menu, "obs_serial_data_selector_root",
-        "Stop Listening", port_selected_callback, (void*)"",
-        "obs_serial_data_selector_stop");
+	// 1. Add 'Stop Listening' option
+	// Passing an empty string "" as data signals to StartSerialListener to stop.
+	obs_frontend_menu_add_item(menu, "obs_serial_data_selector_root", "Stop Listening", port_selected_callback,
+				   (void *)"", "obs_serial_data_selector_stop");
 
-    // Check 'Stop Listening' if no port is currently active
-    obs_frontend_set_tools_menu_item_checked("obs_serial_data_selector_stop", currentPort.empty());
+	// Check 'Stop Listening' if no port is currently active
+	obs_frontend_set_tools_menu_item_checked("obs_serial_data_selector_stop", currentPort.empty());
 
-    obs_frontend_menu_add_separator(menu, "obs_serial_data_selector_root");
+	obs_frontend_menu_add_separator(menu, "obs_serial_data_selector_root");
 
-    // 2. Add available ports
-    for (const auto& port : ports) {
-        // Use the full port path/name as both the display text and the menu item ID
-        obs_frontend_menu_add_item(menu, "obs_serial_data_selector_root",
-            port.c_str(), port_selected_callback, (void*)port.c_str(), 
-            port.c_str()); 
+	// 2. Add available ports
+	for (const auto &port : ports) {
+		// Use the full port path/name as both the display text and the menu item ID
+		obs_frontend_menu_add_item(menu, "obs_serial_data_selector_root", port.c_str(), port_selected_callback,
+					   (void *)port.c_str(), port.c_str());
 
-        // Check if this is the currently selected port
-        if (port == currentPort && !currentPort.empty()) {
-            obs_frontend_set_tools_menu_item_checked(port.c_str(), true);
-        } else {
-            obs_frontend_set_tools_menu_item_checked(port.c_str(), false);
-        }
-    }
+		// Check if this is the currently selected port
+		if (port == currentPort && !currentPort.empty()) {
+			obs_frontend_set_tools_menu_item_checked(port.c_str(), true);
+		} else {
+			obs_frontend_set_tools_menu_item_checked(port.c_str(), false);
+		}
+	}
 
-    // 3. If no ports are found, add a placeholder
-    if (ports.empty()) {
-        obs_frontend_menu_add_item(menu, "obs_serial_data_selector_root",
-            "No Serial Ports Found", nullptr, nullptr, 
-            "obs_serial_data_selector_no_ports");
-    }
+	// 3. If no ports are found, add a placeholder
+	if (ports.empty()) {
+		obs_frontend_menu_add_item(menu, "obs_serial_data_selector_root", "No Serial Ports Found", nullptr,
+					   nullptr, "obs_serial_data_selector_no_ports");
+	}
 }
 
 /**
  * @brief Menu item callback when a specific port is clicked.
  */
-static void port_selected_callback(void *data, obs_frontend_source_t *source) {
+static void port_selected_callback(void *data, obs_frontend_source_t *source)
+{
 	UNUSED_PARAMETER(source);
 
-    const char *port_name = (const char *)data;
-    StartSerialListener(port_name);
+	const char *port_name = (const char *)data;
+	StartSerialListener(port_name);
 }
-
 
 /**
  * @brief Manages the lifecycle of the serial listener thread based on menu selection.
  */
-static void StartSerialListener(const std::string& port) {
+static void StartSerialListener(const std::string &port)
+{
 
-    // Update menu item checkmarks for visual feedback
-    obs_frontend_menu_t menu = obs_frontend_get_tools_menu();
-    if (menu) {
-        // Update the 'Stop Listening' checkmark
-        obs_frontend_set_tools_menu_item_checked(
-            "obs_serial_data_selector_stop", port.empty());
-    }
+	// Update menu item checkmarks for visual feedback
+	obs_frontend_menu_t menu = obs_frontend_get_tools_menu();
+	if (menu) {
+		// Update the 'Stop Listening' checkmark
+		obs_frontend_set_tools_menu_item_checked("obs_serial_data_selector_stop", port.empty());
+	}
 
 	DAKDataUtils::startSerial(port);
 }

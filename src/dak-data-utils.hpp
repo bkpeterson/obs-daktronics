@@ -47,7 +47,7 @@ private:
 	extern static std::string _DAKData[4];
 	static std::map<std::string, DAKSportData *> _allSportsData;
 	static std::map<uint32_t, std::vector<DAKFilter *>> _filters;
-	static SerialPort* serial;
+	static SerialPort *serial;
 
 	static void read_csv_field(std::stringstream &ss, std::string &field);
 	static void read_csv_field(std::stringstream &ss, uint32_t &field);
