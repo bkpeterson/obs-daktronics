@@ -1,5 +1,9 @@
 #include "dak-data-utils.hpp"
 
+std::map<std::string, DAKSportData *> DAKDataUtils::_allSportsData;
+std::map<uint32_t, std::vector<DAKFilter *>> DAKDataUtils::_filters;
+std::unique_ptr<SerialPort> DAKDataUtils::serial;
+
 void DAKDataUtils::read_csv_field(std::stringstream &ss, std::string &field)
 {
 	std::getline(ss, field, '\t');
