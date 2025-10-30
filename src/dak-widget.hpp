@@ -6,24 +6,25 @@
 #include <QPushButton>
 
 #include "dak-serial.hpp"
+#include "dak-data-utils.hpp"
 
 /**
  * @brief Custom Qt Dock Widget for the OBS Plugin.
  */
 class DAKDock : public QDockWidget {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    DAKDock();
-    ~DAKDock();
+	DAKDock();
+	~DAKDock();
 
 private slots:
-    void refreshList();
-    void selectItem();
+	void refreshList();
+	void selectItem();
 
 private:
-    QVBoxLayout* mainLayout;
-    QComboBox* dropDownList;
-    QPushButton* refreshButton;
-    QPushButton* selectButton;
+	QVBoxLayout *mainLayout;
+	QComboBox *dropDownList;
+	QPushButton *refreshButton;
+	QPushButton *selectButton;
 };
