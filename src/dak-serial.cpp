@@ -349,6 +349,7 @@ std::vector<std::string> SerialPort::platformListPorts()
 #include <sys/ioctl.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <cstring>
 
 PosixSerialPort::PosixSerialPort() : SerialPort(), fd(-1)
 {
