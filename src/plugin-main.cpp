@@ -26,10 +26,7 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 
 #include <string>
 #include <vector>
-#include <QThread>
-#include <QObject>
-#include <QSerialPort>
-#include <QSerialPortInfo>
+
 
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE("daktronics-realtime-data", "en-US")

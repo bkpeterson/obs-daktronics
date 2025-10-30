@@ -139,15 +139,6 @@ void DAKDataUtils::UpdateField(uint32_t index, std::string value)
 // Call this once when the plugin loads (e.g., in obs_module_load).
 void DAKDataUtils::sync_init()
 {
-	last_frame_count = 0;
-
-    // Initializes the mutex object.
-    if (os_sync_init(&tick_mutex) != 0) {
-        blog(LOG_ERROR, "Failed to initialize global tick synchronization mutex!");
-    } else {
-        blog(LOG_INFO, "OBS global tick synchronization initialized.");
-    }
-
 	serial = SerialPort::create();
     
     // Set callbacks (will be invoked in main thread)
@@ -161,7 +152,7 @@ void DAKDataUtils::sync_destroy()
     // Destroys the mutex object when the plugin is unloaded.
     serial->stopReading();
     serial->close();
-    os_sync_destroy(&tick_mutex);
+
     blog(LOG_INFO, "OBS global tick synchronization destroyed.");
 }
 
@@ -174,7 +165,7 @@ void DAKDataUtils::execute_global_tick_logic(void *data, uint32_t width, uint32_
 	UNUSED_PARAMETER(data);
 	UNUSED_PARAMETER(width);
 	UNUSED_PARAMETER(height);
-	
+
     // --- CORE SINGLE-RUN LOGIC GOES HERE ---
     // This block will execute exactly once per global OBS frame tick.
 
