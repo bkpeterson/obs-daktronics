@@ -44,7 +44,7 @@ public:
 	static void startSerial(std::string port);
 
 private:
-	extern static std::string _DAKData[4];
+	static std::string _DAKData[4];
 	static std::map<std::string, DAKSportData *> _allSportsData;
 	static std::map<uint32_t, std::vector<DAKFilter *>> _filters;
 	static SerialPort *serial;
