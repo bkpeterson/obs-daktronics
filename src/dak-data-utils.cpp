@@ -171,7 +171,7 @@ void DAKDataUtils::execute_global_tick_logic(void *data, uint32_t width, uint32_
 	// --- CORE SINGLE-RUN LOGIC GOES HERE ---
 	// This block will execute exactly once per global OBS frame tick.
 
-	if (SerialPort::hasPendingSignals()) {
+	if (serial->hasPendingSignals()) {
 		serial->processSignals();
 	}
 }

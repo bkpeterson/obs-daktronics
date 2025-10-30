@@ -14,14 +14,6 @@
 
 class SerialPort {
 public:
-    enum BaudRate {
-        BAUD_9600 = 9600,
-        BAUD_19200 = 19200,
-        BAUD_38400 = 38400,
-        BAUD_57600 = 57600,
-        BAUD_115200 = 115200
-    };
-
     // Callback type for line received signal (runs in main thread)
     using LineReceivedCallback = std::function<void(const std::string& line)>;
     using ErrorCallback = std::function<void(const std::string& error)>;
@@ -32,7 +24,7 @@ public:
     virtual ~SerialPort();
 
     // Open/close port
-    bool open(const std::string& portName, BaudRate baudRate = BAUD_9600, 
+    bool open(const std::string& portName, int baudRate = 19200, 
               char delimiter = '\n');
     void close();
     bool isOpen() const { return opened; }
@@ -49,7 +41,7 @@ public:
     void setErrorCallback(ErrorCallback callback);
 
     // Configuration
-    bool setBaudRate(BaudRate baudRate);
+    bool setBaudRate(int baudRate);
     bool setTimeout(int milliseconds);
 
     // Utility
@@ -70,7 +62,7 @@ public:
 protected:
     bool opened;
     std::atomic<bool> reading;
-    BaudRate currentBaudRate;
+    int currentBaudRate;
     int readTimeout;
     char lineDelimiter;
 
@@ -101,7 +93,7 @@ protected:
     virtual void platformClose() = 0;
     virtual int platformRead(char* buffer, int size) = 0;
     virtual void platformFlush() = 0;
-    virtual bool platformSetBaudRate(BaudRate baudRate) = 0;
+    virtual bool platformSetBaudRate(int baudRate) = 0;
     virtual bool platformSetTimeout(int milliseconds) = 0;
 
     // Platform-specific port listing
@@ -127,7 +119,7 @@ protected:
     void platformClose() override;
     int platformRead(char* buffer, int size) override;
     void platformFlush() override;
-    bool platformSetBaudRate(BaudRate baudRate) override;
+    bool platformSetBaudRate(int baudRate) override;
     bool platformSetTimeout(int milliseconds) override;
 
 private:
@@ -151,7 +143,7 @@ protected:
     void platformClose() override;
     int platformRead(char* buffer, int size) override;
     void platformFlush() override;
-    bool platformSetBaudRate(BaudRate baudRate) override;
+    bool platformSetBaudRate(int baudRate) override;
     bool platformSetTimeout(int milliseconds) override;
 
 private:
@@ -160,7 +152,7 @@ private:
     struct termios tty_old;
     
     bool applyTermios();
-    speed_t baudRateToSpeed(BaudRate baudRate);
+    speed_t baudRateToSpeed(int baudRate);
 };
 
 #endif

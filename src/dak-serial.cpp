@@ -4,7 +4,7 @@
 SerialPort::SerialPort()
 	: opened(false),
 	  reading(false),
-	  currentBaudRate(BAUD_19200),
+	  currentBaudRate(19200),
 	  readTimeout(1000),
 	  lineDelimiter('\n'),
 	  lineCallback(nullptr),
@@ -28,7 +28,7 @@ std::unique_ptr<SerialPort> SerialPort::create()
 #endif
 }
 
-bool SerialPort::open(const std::string &portName, BaudRate baudRate, char delimiter)
+bool SerialPort::open(const std::string &portName, int baudRate, char delimiter)
 {
 	if (opened) {
 		close();
@@ -95,7 +95,7 @@ void SerialPort::setErrorCallback(ErrorCallback callback)
 	errorCallback = callback;
 }
 
-bool SerialPort::setBaudRate(BaudRate baudRate)
+bool SerialPort::setBaudRate(int baudRate)
 {
 	if (!opened)
 		return false;
@@ -307,7 +307,7 @@ void WindowsSerialPort::platformFlush()
 	PurgeComm(hSerial, PURGE_RXCLEAR);
 }
 
-bool WindowsSerialPort::platformSetBaudRate(BaudRate baudRate)
+bool WindowsSerialPort::platformSetBaudRate(int baudRate)
 {
 	dcb.BaudRate = baudRate;
 	return applyDCB();
@@ -423,7 +423,7 @@ void PosixSerialPort::platformFlush()
 	tcflush(fd, TCIFLUSH);
 }
 
-bool PosixSerialPort::platformSetBaudRate(BaudRate baudRate)
+bool PosixSerialPort::platformSetBaudRate(int baudRate)
 {
 	speed_t speed = baudRateToSpeed(baudRate);
 	cfsetospeed(&tty, speed);
@@ -442,21 +442,21 @@ bool PosixSerialPort::applyTermios()
 	return tcsetattr(fd, TCSANOW, &tty) == 0;
 }
 
-speed_t PosixSerialPort::baudRateToSpeed(BaudRate baudRate)
+speed_t PosixSerialPort::baudRateToSpeed(int baudRate)
 {
 	switch (baudRate) {
-	case BAUD_9600:
+	case 9600:
 		return B9600;
-	case BAUD_19200:
+	case 19200:
 		return B19200;
-	case BAUD_38400:
+	case 38400:
 		return B38400;
-	case BAUD_57600:
+	case 57600:
 		return B57600;
-	case BAUD_115200:
+	case 115200:
 		return B115200;
 	default:
-		return B9600;
+		return B19200;
 	}
 }
 
