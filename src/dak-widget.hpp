@@ -5,6 +5,8 @@
 #include <QComboBox>
 #include <QPushButton>
 
+#include "dak-serial.hpp"
+
 /**
  * @brief Custom Qt Dock Widget for the OBS Plugin.
  */

@@ -23,8 +23,8 @@ DAKDock::DAKDock() : QDockWidget("Daktronics Serial Reader", nullptr) {
     setWidget(contentWidget);
 
     // 4. Connect Signals and Slots
-    connect(refreshButton, &QPushButton::clicked, this, &MyDock::refreshList);
-    connect(selectButton, &QPushButton::clicked, this, &MyDock::selectItem);
+    connect(refreshButton, &QPushButton::clicked, this, &DAKDock::refreshList);
+    connect(selectButton, &QPushButton::clicked, this, &DAKDock::selectItem);
 }
 
 DAKDock::~DAKDock() {}
@@ -44,7 +44,7 @@ void DAKDock::refreshList() {
 
 	// 3. If no ports are found, add a placeholder
 	if (ports.empty()) {
-		dropDownList->addItem()"No Serial Ports Found");
+		dropDownList->addItem("No Serial Ports Found");
 	}
 }
 
@@ -57,5 +57,5 @@ void DAKDock::selectItem() {
     // Example: Show a small message
     selectButton->setText("Selected: " + selected);
 
-    DAKDataUtils::startSerial(elected.toStdString());
+    DAKDataUtils::startSerial(selected.toStdString());
 }
