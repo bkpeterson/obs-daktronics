@@ -42,6 +42,7 @@ target_sources(
     src/dak-data-utils.cpp
     src/dak-sport-data.cpp
     src/dak-serial.cpp
+    src/dak-widget.cpp
     src/daktronics-filter.cpp
     src/dak-source-support.c
 )
