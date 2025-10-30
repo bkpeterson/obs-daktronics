@@ -14,94 +14,92 @@
 
 class SerialPort {
 public:
-    // Callback type for line received signal (runs in main thread)
-    using LineReceivedCallback = std::function<void(const std::string& line)>;
-    using ErrorCallback = std::function<void(const std::string& error)>;
+	// Callback type for line received signal (runs in main thread)
+	using LineReceivedCallback = std::function<void(const std::string &line)>;
+	using ErrorCallback = std::function<void(const std::string &error)>;
 
-    std::string _port;
+	std::string _port;
 
-    SerialPort();
-    virtual ~SerialPort();
+	SerialPort();
+	virtual ~SerialPort();
 
-    // Open/close port
-    bool open(const std::string& portName, int baudRate = 19200, 
-              char delimiter = '\n');
-    void close();
-    bool isOpen() const { return opened; }
+	// Open/close port
+	bool open(const std::string &portName, int baudRate = 19200, char delimiter = '\n');
+	void close();
+	bool isOpen() const { return opened; }
 
-    std::string getPort() const { return _port; };
+	std::string getPort() const { return _port; };
 
-    // Start/stop reading
-    bool startReading();
-    void stopReading();
-    bool isReading() const { return reading; }
+	// Start/stop reading
+	bool startReading();
+	void stopReading();
+	bool isReading() const { return reading; }
 
-    // Set callbacks (will be called from main thread)
-    void setLineReceivedCallback(LineReceivedCallback callback);
-    void setErrorCallback(ErrorCallback callback);
+	// Set callbacks (will be called from main thread)
+	void setLineReceivedCallback(LineReceivedCallback callback);
+	void setErrorCallback(ErrorCallback callback);
 
-    // Configuration
-    bool setBaudRate(int baudRate);
-    bool setTimeout(int milliseconds);
+	// Configuration
+	bool setBaudRate(int baudRate);
+	bool setTimeout(int milliseconds);
 
-    // Utility
-    void flush();
-    
-    // Main thread must call this periodically to process signals
-    void processSignals();
-    
-    // Check if there are pending signals to process
-    bool hasPendingSignals() const;
-    
-    // Static utility to list available ports
-    static std::vector<std::string> listPorts();
+	// Utility
+	void flush();
 
-    // Factory method
-    static std::unique_ptr<SerialPort> create();
+	// Main thread must call this periodically to process signals
+	void processSignals();
+
+	// Check if there are pending signals to process
+	bool hasPendingSignals() const;
+
+	// Static utility to list available ports
+	static std::vector<std::string> listPorts();
+
+	// Factory method
+	static std::unique_ptr<SerialPort> create();
 
 protected:
-    bool opened;
-    std::atomic<bool> reading;
-    int currentBaudRate;
-    int readTimeout;
-    char lineDelimiter;
+	bool opened;
+	std::atomic<bool> reading;
+	int currentBaudRate;
+	int readTimeout;
+	char lineDelimiter;
 
-    // Thread management
-    std::unique_ptr<std::thread> readThread;
-    
-    // Signal queue for thread-safe communication
-    struct Signal {
-        enum Type { LINE_RECEIVED, ERROR };
-        Type type;
-        std::string data;
-    };
-    
-    std::queue<Signal> signalQueue;
-    mutable std::mutex queueMutex;
-    std::condition_variable queueCondition;
+	// Thread management
+	std::unique_ptr<std::thread> readThread;
 
-    // Callbacks (called from main thread)
-    LineReceivedCallback lineCallback;
-    ErrorCallback errorCallback;
-    std::mutex callbackMutex;
+	// Signal queue for thread-safe communication
+	struct Signal {
+		int type;
+		std::string data;
+	};
 
-    // Reader thread function
-    void readThreadFunction();
+	std::queue<Signal> signalQueue;
+	mutable std::mutex queueMutex;
+	std::condition_variable queueCondition;
 
-    // Platform-specific abstract methods
-    virtual bool platformOpen(const std::string& portName) = 0;
-    virtual void platformClose() = 0;
-    virtual int platformRead(char* buffer, int size) = 0;
-    virtual void platformFlush() = 0;
-    virtual bool platformSetBaudRate(int baudRate) = 0;
-    virtual bool platformSetTimeout(int milliseconds) = 0;
+	// Callbacks (called from main thread)
+	LineReceivedCallback lineCallback;
+	ErrorCallback errorCallback;
+	std::mutex callbackMutex;
 
-    // Platform-specific port listing
-    static std::vector<std::string> platformListPorts();
+	// Reader thread function
+	void readThreadFunction();
 
-    // Emit signals from background thread (thread-safe)
-    void emitLineReceived(const std::string& line);
-    void emitError(const std::string& error);
+	// Platform-specific abstract methods
+	virtual bool platformOpen(const std::string &portName) = 0;
+	virtual void platformClose() = 0;
+	virtual int platformRead(char *buffer, int size) = 0;
+	virtual void platformFlush() = 0;
+	virtual bool platformSetBaudRate(int baudRate) = 0;
+	virtual bool platformSetTimeout(int milliseconds) = 0;
+
+	// Platform-specific port listing
+	static std::vector<std::string> platformListPorts();
+
+	// Emit signals from background thread (thread-safe)
+	void emitLineReceived(const std::string &line);
+	void emitError(const std::string &error);
 };
 
 // Platform-specific implementations
@@ -111,23 +109,23 @@ protected:
 
 class WindowsSerialPort : public SerialPort {
 public:
-    WindowsSerialPort();
-    ~WindowsSerialPort() override;
+	WindowsSerialPort();
+	~WindowsSerialPort() override;
 
 protected:
-    bool platformOpen(const std::string& portName) override;
-    void platformClose() override;
-    int platformRead(char* buffer, int size) override;
-    void platformFlush() override;
-    bool platformSetBaudRate(int baudRate) override;
-    bool platformSetTimeout(int milliseconds) override;
+	bool platformOpen(const std::string &portName) override;
+	void platformClose() override;
+	int platformRead(char *buffer, int size) override;
+	void platformFlush() override;
+	bool platformSetBaudRate(int baudRate) override;
+	bool platformSetTimeout(int milliseconds) override;
 
 private:
-    HANDLE hSerial;
-    DCB dcb;
-    COMMTIMEOUTS timeouts;
-    
-    bool applyDCB();
+	HANDLE hSerial;
+	DCB dcb;
+	COMMTIMEOUTS timeouts;
+
+	bool applyDCB();
 };
 
 #else
@@ -135,24 +133,24 @@ private:
 
 class PosixSerialPort : public SerialPort {
 public:
-    PosixSerialPort();
-    ~PosixSerialPort() override;
+	PosixSerialPort();
+	~PosixSerialPort() override;
 
 protected:
-    bool platformOpen(const std::string& portName) override;
-    void platformClose() override;
-    int platformRead(char* buffer, int size) override;
-    void platformFlush() override;
-    bool platformSetBaudRate(int baudRate) override;
-    bool platformSetTimeout(int milliseconds) override;
+	bool platformOpen(const std::string &portName) override;
+	void platformClose() override;
+	int platformRead(char *buffer, int size) override;
+	void platformFlush() override;
+	bool platformSetBaudRate(int baudRate) override;
+	bool platformSetTimeout(int milliseconds) override;
 
 private:
-    int fd;
-    struct termios tty;
-    struct termios tty_old;
-    
-    bool applyTermios();
-    speed_t baudRateToSpeed(int baudRate);
+	int fd;
+	struct termios tty;
+	struct termios tty_old;
+
+	bool applyTermios();
+	speed_t baudRateToSpeed(int baudRate);
 };
 
 #endif

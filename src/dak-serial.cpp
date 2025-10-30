@@ -150,13 +150,13 @@ void SerialPort::processSignals()
 
 	for (const auto &signal : signalsToProcess) {
 		switch (signal.type) {
-		case Signal::LINE_RECEIVED:
+		case 0:
 			if (lineCallback) {
 				lineCallback(signal.data);
 			}
 			break;
 
-		case Signal::ERROR:
+		case 1:
 			if (errorCallback) {
 				errorCallback(signal.data);
 			}
@@ -209,7 +209,7 @@ void SerialPort::emitLineReceived(const std::string &line)
 {
 	std::lock_guard<std::mutex> lock(queueMutex);
 	Signal signal;
-	signal.type = Signal::LINE_RECEIVED;
+	signal.type = 0;
 	signal.data = line;
 	signalQueue.push(signal);
 	queueCondition.notify_one();
@@ -219,7 +219,7 @@ void SerialPort::emitError(const std::string &error)
 {
 	std::lock_guard<std::mutex> lock(queueMutex);
 	Signal signal;
-	signal.type = Signal::ERROR;
+	signal.type = 1;
 	signal.data = error;
 	signalQueue.push(signal);
 	queueCondition.notify_one();
