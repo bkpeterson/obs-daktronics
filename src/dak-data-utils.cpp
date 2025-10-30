@@ -193,9 +193,11 @@ std::string DAKDataUtils::getSerialPort()
 void DAKDataUtils::onLineReceived(const std::string &line)
 {
 	//=================================  process data line and update fields accordingly =====================//
+	obs_log(LOG_INFO, "Line received %s", line);
 }
 
 void DAKDataUtils::onError(const std::string &error)
 {
 	// Process error
+	obs_log(LOG_ERROR, "Serial error %s", error);
 }
