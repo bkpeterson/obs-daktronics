@@ -242,8 +242,8 @@ void DAKDataUtils::onLineReceived(const std::string &line)
 			for (DAKFilter *curFilter : dakFilters) {
 				std::string dakText = text;
 				std::string curSport = curFilter->GetSport();
-				DAKSportData sportData = getSportData(curSport);
-				uint32_t fieldLen = sportData.GetFieldLen(dakKey);
+				DAKSportData *sportData = getSportData(curSport);
+				uint32_t fieldLen = sportData->GetFieldLen(dakKey);
 
 				if (codeVal < dakKey) {
 					dakText = dakText.substr(dakKey - codeVal, fieldLen);
