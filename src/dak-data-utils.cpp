@@ -216,7 +216,7 @@ void DAKDataUtils::onLineReceived(const std::string &line)
 		return;
 	code = code.substr(0, pos);
 
-	int codeLen = code.length();
+	int codeLen = static_cast<int>(code.length());
 	if (codeLen < 4)
 		return;
 	code = code.substr(codeLen - 4);
@@ -253,7 +253,7 @@ void DAKDataUtils::onLineReceived(const std::string &line)
 
 				//Basketball shot clock adds a z at the end when at :00
 				if (curSport == "Basketball" && dakKey == 201 &&
-									dakText.substr(dakText.length() - 1) == "z")
+				    dakText.substr(dakText.length() - 1) == "z")
 					dakText = dakText.substr(0, dakText.length() - 1);
 
 				curFilter->SetValue(dakText);
