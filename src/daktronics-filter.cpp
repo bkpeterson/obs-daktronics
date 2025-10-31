@@ -138,8 +138,8 @@ void DAKFilter::Update(obs_data_t *settings)
 	_colorAlpha = (int)obs_data_get_int(settings, "dak_color_alpha");
 
 	if (_filterType == DAK_COLOR) {
-		_origColor = (int)obs_data_get_int(settings, _paramName);
-		_origColorAlpha = (int)obs_data_get_int(settings, _paramName);
+		_origColor = (int)obs_data_get_int(settings, _paramName.c_str());
+		_origColorAlpha = (int)obs_data_get_int(settings, _paramName.c_str());
 	} else {
 		_origColor = _color;
 		_origColorAlpha = _colorAlpha;
