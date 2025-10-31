@@ -18,6 +18,7 @@ public:
 
 	uint32_t GetFilterType();
 	uint32_t GetIndex();
+	std::string GetSport();
 	void Update(obs_data_t *settings);
 
 	static void *Create(obs_data_t *settings, obs_source_t *obs_source);
@@ -47,7 +48,9 @@ private:
 	std::string _paramName;
 	uint32_t _paramType;
 	int _color;
+	int _origColor;
 	int _colorAlpha;
+	int _origColorAlpha;
 
 	void _render();
 };

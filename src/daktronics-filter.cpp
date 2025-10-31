@@ -65,7 +65,7 @@ void DAKFilter::SetValue(std::string newValue)
 
 	switch (_filterType) {
 	case DAKFilter::DAK_VISIBLE:
-		obs_source_set_enabled(_source, _internalValue.length() > 0);
+		obs_source_set_enabled(_source, (_internalValue.length() > 0 && _internalValue != ":00"));
 		break;
 
 	case DAKFilter::DAK_TEXT:
@@ -75,10 +75,15 @@ void DAKFilter::SetValue(std::string newValue)
 
 	case DAKFilter::DAK_COLOR:
 		if (_paramType == OBS_PROPERTY_COLOR) {
-			obs_data_set_int(sourceData, _paramName.c_str(), _color);
+
+			obs_data_set_int(sourceData, _paramName.c_str(),
+					 (_internalValue.length() > 0 && _internalValue != ":00") ? _color
+												  : _origColor);
 			obs_source_update(targetSource, sourceData);
 		} else if (_paramType == OBS_PROPERTY_COLOR_ALPHA) {
-			obs_data_set_int(sourceData, _paramName.c_str(), _colorAlpha);
+			obs_data_set_int(sourceData, _paramName.c_str(),
+					 (_internalValue.length() > 0 && _internalValue != ":00") ? _colorAlpha
+												  : _origColorAlpha);
 			obs_source_update(targetSource, sourceData);
 		}
 
@@ -91,6 +96,11 @@ void DAKFilter::SetValue(std::string newValue)
 uint32_t DAKFilter::GetIndex()
 {
 	return _index;
+}
+
+std::string DAKFilter::GetSport()
+{
+	return _sport;
 }
 
 void DAKFilter::Render(void *data, gs_effect_t *effect)
@@ -126,6 +136,14 @@ void DAKFilter::Update(obs_data_t *settings)
 	_paramType = (uint32_t)obs_property_get_type(targetProp);
 	_color = (int)obs_data_get_int(settings, "dak_color");
 	_colorAlpha = (int)obs_data_get_int(settings, "dak_color_alpha");
+
+	if (_filterType == DAK_COLOR) {
+		_origColor = (int)obs_data_get_int(settings, _paramName);
+		_origColorAlpha = (int)obs_data_get_int(settings, _paramName);
+	} else {
+		_origColor = _color;
+		_origColorAlpha = _colorAlpha;
+	}
 
 	obs_properties_destroy(sourceProps);
 }
