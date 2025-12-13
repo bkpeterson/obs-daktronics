@@ -256,7 +256,7 @@ void DAKDataUtils::onLineReceived(const std::string &line)
 				    dakText.substr(dakText.length() - 1) == "z")
 					dakText = dakText.substr(0, dakText.length() - 1);
 				
-				obs_log(LOG_INFO, "Received data (%u): %s", dakKey, dakText);
+				obs_log(LOG_INFO, "Received data (%u): %s", dakKey, dakText.c_str());
 				curFilter->SetValue(dakText);
 			}
 		}
