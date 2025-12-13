@@ -255,7 +255,8 @@ void DAKDataUtils::onLineReceived(const std::string &line)
 				if (curSport == "Basketball" && dakKey == 201 &&
 				    dakText.substr(dakText.length() - 1) == "z")
 					dakText = dakText.substr(0, dakText.length() - 1);
-
+				
+				obs_log(LOG_INFO, "Received data (%u): %s", dakKey, dakText);
 				curFilter->SetValue(dakText);
 			}
 		}
