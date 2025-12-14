@@ -166,15 +166,13 @@ void SerialPort::readThreadFunction()
 {
 	std::string lineBuffer;
 	char readBuffer[256];
+	bool readingHeader = true;
+	obs_log(LOG_INFO, "Reading header, total bytes %i", bytesRead);
 
 	while (reading && opened) {
 		int bytesRead = platformRead(readBuffer, sizeof(readBuffer) - 1);
 
 		if (bytesRead > 0) {
-			readBuffer[bytesRead] = '\0';
-			bool readingHeader = true;
-
-			obs_log(LOG_INFO, "Reading header, total bytes %i", bytesRead);
 
 			// Process each character
 			for (int i = 0; i < bytesRead; i++) {
@@ -194,7 +192,9 @@ void SerialPort::readThreadFunction()
 					if (!lineBuffer.empty()) {
 						obs_log(LOG_INFO, "Read line: %s", lineBuffer.c_str());
 						emitLineReceived(lineBuffer);
-						lineBuffer.clear();
+						readingHeader = true;
+						obs_log(LOG_INFO, "Reading header");
+	 					lineBuffer.clear();
 					}
 				} else {
 					lineBuffer += c;
@@ -202,6 +202,8 @@ void SerialPort::readThreadFunction()
 					// Prevent buffer overflow
 					if (lineBuffer.size() > 4096) {
 						emitError("Line buffer overflow - line too long");
+						readingHeader = true;
+						obs_log(LOG_INFO, "Reading header");
 						lineBuffer.clear();
 					}
 				}
