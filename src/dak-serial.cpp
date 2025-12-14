@@ -174,7 +174,7 @@ void SerialPort::readThreadFunction()
 			readBuffer[bytesRead] = '\0';
 			bool readingHeader = true;
 
-			obs_log(LOG_INFO, "Reading header");
+			obs_log(LOG_INFO, "Reading header, total bytes %i", bytesRead);
 
 			// Process each character
 			for (int i = 0; i < bytesRead; i++) {
