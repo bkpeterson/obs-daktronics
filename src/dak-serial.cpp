@@ -174,6 +174,8 @@ void SerialPort::readThreadFunction()
 			readBuffer[bytesRead] = '\0';
 			bool readingHeader = true;
 
+			obs_log(LOG_INFO, "Reading header");
+
 			// Process each character
 			for (int i = 0; i < bytesRead; i++) {
 				char c = readBuffer[i];
@@ -183,12 +185,14 @@ void SerialPort::readThreadFunction()
 				} else {
 					if (readingHeader && c == 0x10) {
 						readingHeader = false;
+						obs_log(LOG_INFO, "Done reading header.");
 						continue;
 					}
 				}
 				if (c == 0x11) {
 					// Complete line received - emit signal
 					if (!lineBuffer.empty()) {
+						obs_log(LOG_INFO, "Read line: %s", lineBuffer.c_str());
 						emitLineReceived(lineBuffer);
 						lineBuffer.clear();
 					}

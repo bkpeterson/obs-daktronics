@@ -12,6 +12,9 @@
 #include <condition_variable>
 #include <queue>
 
+#include <obs-module.h>
+#include "dak-source-support.h"
+
 class SerialPort {
 public:
 	// Callback type for line received signal (runs in main thread)
