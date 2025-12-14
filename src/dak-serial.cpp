@@ -5,7 +5,6 @@ SerialPort::SerialPort()
 	  reading(false),
 	  currentBaudRate(19200),
 	  readTimeout(1000),
-	  lineDelimiter('\n'),
 	  lineCallback(nullptr),
 	  errorCallback(nullptr),
 	  _port("")
@@ -27,14 +26,13 @@ std::unique_ptr<SerialPort> SerialPort::create()
 #endif
 }
 
-bool SerialPort::open(const std::string &portName, int baudRate, char delimiter)
+bool SerialPort::open(const std::string &portName, int baudRate)
 {
 	if (opened) {
 		close();
 	}
 
 	currentBaudRate = baudRate;
-	lineDelimiter = delimiter;
 
 	if (platformOpen(portName)) {
 		opened = true;
@@ -174,18 +172,27 @@ void SerialPort::readThreadFunction()
 
 		if (bytesRead > 0) {
 			readBuffer[bytesRead] = '\0';
+			bool readingHeader = true;
 
 			// Process each character
 			for (int i = 0; i < bytesRead; i++) {
 				char c = readBuffer[i];
 
-				if (c == lineDelimiter) {
+				if (readingHeader && c != 0x10) {
+					continue;
+				} else {
+					if (readingHeader && c == 0x10) {
+						readingHeader = false;
+						continue;
+					}
+				}
+				if (c == 0x11) {
 					// Complete line received - emit signal
 					if (!lineBuffer.empty()) {
 						emitLineReceived(lineBuffer);
 						lineBuffer.clear();
 					}
-				} else if (c != '\r') { // Skip carriage returns
+				} else {
 					lineBuffer += c;
 
 					// Prevent buffer overflow

@@ -24,7 +24,7 @@ public:
 	virtual ~SerialPort();
 
 	// Open/close port
-	bool open(const std::string &portName, int baudRate = 19200, char delimiter = '\n');
+	bool open(const std::string &portName, int baudRate = 19200);
 	void close();
 	bool isOpen() const { return opened; }
 
@@ -63,7 +63,6 @@ protected:
 	std::atomic<bool> reading;
 	int currentBaudRate;
 	int readTimeout;
-	char lineDelimiter;
 
 	// Thread management
 	std::unique_ptr<std::thread> readThread;

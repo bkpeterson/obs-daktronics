@@ -183,7 +183,7 @@ void DAKDataUtils::execute_global_tick_logic(void *data, uint32_t width, uint32_
 void DAKDataUtils::startSerial(std::string port)
 {
 	// Open and start reading
-	if (serial->open(port, 19200, '\n')) {
+	if (serial->open(port, 19200)) {
 		serial->startReading();
 	}
 }
