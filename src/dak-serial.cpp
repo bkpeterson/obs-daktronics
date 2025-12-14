@@ -167,7 +167,7 @@ void SerialPort::readThreadFunction()
 	std::string lineBuffer;
 	char readBuffer[256];
 	bool readingHeader = true;
-	obs_log(LOG_INFO, "Reading header, total bytes %i", bytesRead);
+	obs_log(LOG_INFO, "Reading header");
 
 	while (reading && opened) {
 		int bytesRead = platformRead(readBuffer, sizeof(readBuffer) - 1);
