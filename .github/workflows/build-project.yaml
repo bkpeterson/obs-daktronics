@@ -136,20 +136,16 @@ jobs:
           notarizationUser: ${{ secrets.MACOS_NOTARIZATION_USERNAME }}
           notarizationPassword: ${{ secrets.MACOS_NOTARIZATION_PASSWORD }}
 
-      - name: Set up Python 3.11.7
-        uses: actions/setup-python@v5 # Use the latest version of setup-python
-        with:
-          python-version: '3.11.7'
-
       - name: Set Up Serial library 🔧
         run: |
           git clone https://github.com/wjwwood/serial.git
-          mv src/catkin-makefile serial/Makefile
+          mv src/serial-CMakeLists.txt serial/CMakeLists.txt
+          mv src/serial-package.xml serial/package.xml
+          mv src/serial-serialConfig.cmake serial/cmake/serialConfig.cmake
           cd serial
-          make install_deps
           mkdir build
           cd build
-          cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ..
+          cmake ..
           make
           make install
 
