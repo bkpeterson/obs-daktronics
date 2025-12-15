@@ -408,11 +408,12 @@ void Serial::SerialImpl::setPort(const string &port)
 string Serial::SerialImpl::getPort() const
 {
 	//return string(port_.begin(), port_.end());
-    using convert_typeX = std::codecvt_utf8<wchar_t>;
-    std::wstring_convert<convert_typeX, wchar_t> converterX;
-    
-    // Use the converter to_bytes method
-    return converterX.to_bytes(port_)
+	if (port_.empty())
+		return std::string();
+	int size_needed = WideCharToMultiByte(CP_UTF8, 0, &port_[0], (int)port_.size(), NULL, 0, NULL, NULL);
+	std::string strTo(size_needed, 0);
+	WideCharToMultiByte(CP_UTF8, 0, &port_[0], (int)port_.size(), &strTo[0], size_needed, NULL, NULL);
+	return strTo;
 }
 
 void Serial::SerialImpl::setTimeout(serial::Timeout &timeout)
