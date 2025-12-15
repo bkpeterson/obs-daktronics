@@ -144,6 +144,7 @@ jobs:
 
       - name: Set Up Serial library 🔧
         run: |
+          mv src/catkin-makefile serial/Makefile
           git clone https://github.com/wjwwood/serial.git
           cd serial
           make install_deps
