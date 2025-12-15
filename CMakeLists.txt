@@ -16,7 +16,7 @@ add_library(${CMAKE_PROJECT_NAME} MODULE)
 
 find_package(libobs REQUIRED)
 find_package(serial REQUIRED)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs serial)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs /usr/local/lib/libserial.a)
 
 if(ENABLE_FRONTEND_API)
   find_package(obs-frontend-api REQUIRED)
