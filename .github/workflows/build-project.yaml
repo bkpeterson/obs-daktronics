@@ -138,6 +138,8 @@ jobs:
           
       - name: Set Up Serial library 🔧
         run: |
+          pwd
+          ls
           mv /Users/runner/work/obs-daktronics/obs-daktronics/src/catkin-makefile serial/Makefile
           git clone https://github.com/wjwwood/serial.git
           cd serial
