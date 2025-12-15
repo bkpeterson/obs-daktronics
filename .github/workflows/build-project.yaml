@@ -140,10 +140,10 @@ jobs:
         run: |
           git clone https://github.com/wjwwood/serial.git
           cd serial
+          make install_deps
           mkdir build
           cd build
           cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ..
-          make install_deps
           make
           make install
 
