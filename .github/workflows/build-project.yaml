@@ -141,7 +141,6 @@ jobs:
           git clone https://github.com/wjwwood/serial.git
           mv src/serial-CMakeLists.txt serial/CMakeLists.txt
           mv src/serial-package.xml serial/package.xml
-          mv src/serial-tests-CMakeLists.txt serial/tests/CMakeLists.txt
           mkdir serial/cmake
           mv src/serial-serialConfig.cmake serial/cmake/serialConfig.cmake
           cd serial
