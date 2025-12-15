@@ -119,7 +119,8 @@ size_t Serial::read(std::vector<uint8_t> &buffer, size_t size)
 
 	try {
 		bytes_read = this->pimpl_->read(buffer_, size);
-	} catch (const std::exception &e) {
+	} catch ([[maybe_unused]] const std::exception &e) {
+        
 		delete[] buffer_;
 		throw;
 	}
@@ -136,7 +137,7 @@ size_t Serial::read(std::string &buffer, size_t size)
 	size_t bytes_read = 0;
 	try {
 		bytes_read = this->pimpl_->read(buffer_, size);
-	} catch (const std::exception &e) {
+	} catch ([[maybe_unused]] const std::exception &e) {
 		delete[] buffer_;
 		throw;
 	}
