@@ -200,7 +200,7 @@ vector<std::string> serial::list_ports(void)
 
 	while ((serial_port = IOIteratorNext(serial_port_iterator))) {
 		string device_path = get_device_path(serial_port);
-		io_registry_entry_t parent = get_parent_iousb_device(serial_port);
+		//io_registry_entry_t parent = get_parent_iousb_device(serial_port);
 		IOObjectRelease(serial_port);
 
 		if (device_path.empty())
