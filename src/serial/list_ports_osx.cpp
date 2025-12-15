@@ -14,7 +14,6 @@
 
 #include "serial.hpp"
 
-using serial::PortInfo;
 using std::string;
 using std::vector;
 
@@ -173,9 +172,9 @@ string rtrim(const string &str)
 	return result;
 }
 
-vector<PortInfo> serial::list_ports(void)
+vector<std::string> serial::list_ports(void)
 {
-	vector<PortInfo> devices_found;
+	vector<std::string> devices_found;
 	CFMutableDictionaryRef classes_to_match;
 	io_iterator_t serial_port_iterator;
 	io_object_t serial_port;
@@ -207,16 +206,16 @@ vector<PortInfo> serial::list_ports(void)
 		if (device_path.empty())
 			continue;
 
-		PortInfo port_info;
-		port_info.port = device_path;
-		port_info.description = "n/a";
-		port_info.hardware_id = "n/a";
+		//PortInfo port_info;
+		//port_info.port = device_path;
+		//port_info.description = "n/a";
+		//port_info.hardware_id = "n/a";
 
 		string device_name = rtrim(get_string_property(parent, "USB Product Name"));
 		string vendor_name = rtrim(get_string_property(parent, "USB Vendor Name"));
 		string description = rtrim(vendor_name + " " + device_name);
-		if (!description.empty())
-			port_info.description = description;
+		//if (!description.empty())
+		//	port_info.description = description;
 
 		string serial_number = rtrim(get_string_property(parent, "USB Serial Number"));
 		uint16_t vendor_id = get_int_property(parent, "idVendor");
@@ -231,11 +230,12 @@ vector<PortInfo> serial::list_ports(void)
 			int ret = snprintf(cstring, HARDWARE_ID_STRING_LENGTH, "USB VID:PID=%04x:%04x SNR=%s",
 					   vendor_id, product_id, serial_number.c_str());
 
-			if ((ret >= 0) && (ret < HARDWARE_ID_STRING_LENGTH))
-				port_info.hardware_id = cstring;
+			//if ((ret >= 0) && (ret < HARDWARE_ID_STRING_LENGTH))
+			//	port_info.hardware_id = cstring;
 		}
 
-		devices_found.push_back(port_info);
+		//devices_found.push_back(port_info);
+        devices_found.push_back(device_path);
 	}
 
 	IOObjectRelease(serial_port_iterator);

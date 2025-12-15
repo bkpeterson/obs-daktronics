@@ -15,7 +15,6 @@
 #include <devguid.h>
 #include <cstring>
 
-using serial::PortInfo;
 using std::vector;
 using std::string;
 
@@ -32,9 +31,9 @@ std::string utf8_encode(const std::wstring &wstr)
 	return strTo;
 }
 
-vector<PortInfo> serial::list_ports()
+vector<std::string> serial::list_ports()
 {
-	vector<PortInfo> devices_found;
+	vector<std::string> devices_found;
 
 	HDEVINFO device_info_set = SetupDiGetClassDevs((const GUID *)&GUID_DEVCLASS_PORTS, NULL, NULL, DIGCF_PRESENT);
 
@@ -111,12 +110,13 @@ vector<PortInfo> serial::list_ports()
 		std::string hardwareId = hardware_id;
 #endif
 
-		PortInfo port_entry;
-		port_entry.port = portName;
-		port_entry.description = friendlyName;
-		port_entry.hardware_id = hardwareId;
+		//PortInfo port_entry;
+		//port_entry.port = portName;
+		//port_entry.description = friendlyName;
+		//port_entry.hardware_id = hardwareId;
 
-		devices_found.push_back(port_entry);
+		//devices_found.push_back(port_entry);
+		devices_found.push_back(portName);
 	}
 
 	SetupDiDestroyDeviceInfoList(device_info_set);
