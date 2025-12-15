@@ -15,8 +15,7 @@ include(helpers)
 add_library(${CMAKE_PROJECT_NAME} MODULE)
 
 find_package(libobs REQUIRED)
-find_package(serial REQUIRED)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs /usr/local/lib/libserial.a)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobsa)
 
 if(ENABLE_FRONTEND_API)
   find_package(obs-frontend-api REQUIRED)
@@ -47,6 +46,12 @@ target_sources(
     src/dak-widget.cpp
     src/daktronics-filter.cpp
     src/dak-source-support.c
+    src/serial/list_ports_linux.cpp
+    src/serial/list_ports_osx.cpp
+    src/serial/list_ports_win.cpp
+    src/serial/serial.cpp
+    src/serial/unix.cpp
+    src/serial/win.cpp
 )
 
 set_target_properties_plugin(${CMAKE_PROJECT_NAME} PROPERTIES OUTPUT_NAME ${_name})

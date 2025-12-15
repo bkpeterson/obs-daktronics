@@ -136,20 +136,6 @@ jobs:
           notarizationUser: ${{ secrets.MACOS_NOTARIZATION_USERNAME }}
           notarizationPassword: ${{ secrets.MACOS_NOTARIZATION_PASSWORD }}
 
-      - name: Set Up Serial library 🔧
-        run: |
-          git clone https://github.com/wjwwood/serial.git
-          mv src/serial-CMakeLists.txt serial/CMakeLists.txt
-          mv src/serial-package.xml serial/package.xml
-          mkdir serial/cmake
-          mv src/serial-serialConfig.cmake serial/cmake/serialConfig.cmake
-          cd serial
-          mkdir build
-          cd build
-          cmake ..
-          make
-          sudo make install
-
       - name: Build Plugin 🧱
         uses: ./.github/actions/build-plugin
         with:
@@ -233,16 +219,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ matrix.os }}-ccache-x86_64-
 
-      - name: Set Up Serial library 🔧
-        run: |
-          git clone https://github.com/wjwwood/serial.git
-          cd serial
-          mkdir build
-          cd build
-          cmake ..
-          make
-          make install
-
       - name: Build Plugin 🧱
         uses: ./.github/actions/build-plugin
         with:
@@ -294,19 +270,6 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
-      - name: Checkout Serial
-        uses: actions/checkout@v4
-        with:
-          repository: 'wjwwood/serial' # Specify the second repo
-          path: serial # Clones the second repo into this directory
-
-      - name: Build Serial
-        run: |
-          cd serial
-          cmake -B build -S .
-          cmake --build build --config Release
-        shell: cmd # or powershell
-      
       - name: Set Up Environment 🔧
         id: setup
         run: |
