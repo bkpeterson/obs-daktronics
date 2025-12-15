@@ -3,6 +3,7 @@
 /* Copyright 2012 William Woodall and John Harrison */
 
 #include <sstream>
+#include <codecvt>
 
 #include "win.hpp"
 
@@ -406,7 +407,12 @@ void Serial::SerialImpl::setPort(const string &port)
 
 string Serial::SerialImpl::getPort() const
 {
-	return string(port_.begin(), port_.end());
+	//return string(port_.begin(), port_.end());
+    using convert_typeX = std::codecvt_utf8<wchar_t>;
+    std::wstring_convert<convert_typeX, wchar_t> converterX;
+    
+    // Use the converter to_bytes method
+    return converterX.to_bytes(port_)
 }
 
 void Serial::SerialImpl::setTimeout(serial::Timeout &timeout)
