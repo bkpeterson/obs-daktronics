@@ -136,6 +136,12 @@ jobs:
           notarizationUser: ${{ secrets.MACOS_NOTARIZATION_USERNAME }}
           notarizationPassword: ${{ secrets.MACOS_NOTARIZATION_PASSWORD }}
           
+      # Explicitly install Python 2.x
+      - name: Set up Python 2.7
+        uses: actions/setup-python@v5
+        with:
+          python-version: '2.7' 
+
       - name: Set Up Serial library 🔧
         run: |
           git clone https://github.com/wjwwood/serial.git
