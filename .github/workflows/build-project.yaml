@@ -142,7 +142,8 @@ jobs:
           cd serial
           mkdir build
           cd build
-          cmake ..
+          cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ..
+          make install_deps
           make
           make install
 
