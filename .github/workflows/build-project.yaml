@@ -148,7 +148,7 @@ jobs:
           cd build
           cmake ..
           make
-          make install
+          sudo make install
 
       - name: Build Plugin 🧱
         uses: ./.github/actions/build-plugin
