@@ -210,7 +210,7 @@ vector<std::string> serial::list_ports(void)
 		//port_info.port = device_path;
 		//port_info.description = "n/a";
 		//port_info.hardware_id = "n/a";
-
+		/*
 		string device_name = rtrim(get_string_property(parent, "USB Product Name"));
 		string vendor_name = rtrim(get_string_property(parent, "USB Vendor Name"));
 		string description = rtrim(vendor_name + " " + device_name);
@@ -227,15 +227,16 @@ vector<std::string> serial::list_ports(void)
 			if (serial_number.empty())
 				serial_number = "None";
 
-			int ret = snprintf(cstring, HARDWARE_ID_STRING_LENGTH, "USB VID:PID=%04x:%04x SNR=%s",
-					   vendor_id, product_id, serial_number.c_str());
+			//int ret = snprintf(cstring, HARDWARE_ID_STRING_LENGTH, "USB VID:PID=%04x:%04x SNR=%s",
+			//		   vendor_id, product_id, serial_number.c_str());
 
 			//if ((ret >= 0) && (ret < HARDWARE_ID_STRING_LENGTH))
 			//	port_info.hardware_id = cstring;
 		}
+        */
 
 		//devices_found.push_back(port_info);
-        devices_found.push_back(device_path);
+		devices_found.push_back(device_path);
 	}
 
 	IOObjectRelease(serial_port_iterator);

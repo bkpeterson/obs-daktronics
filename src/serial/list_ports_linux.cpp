@@ -293,7 +293,7 @@ vector<std::string> serial::list_ports()
 		//device_entry.hardware_id = hardware_id;
 
 		//results.push_back(device_entry);
-        results.push_back(device);
+		results.push_back(device);
 	}
 
 	return results;

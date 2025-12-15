@@ -666,7 +666,6 @@ public:
 	virtual const char *what() const throw() { return e_what_.c_str(); }
 };
 
-
 /* Lists the serial ports available on the system
  *
  * Returns a vector of available serial ports, each represented
