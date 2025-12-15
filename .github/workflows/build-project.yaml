@@ -135,7 +135,14 @@ jobs:
           provisioningProfile: ${{ secrets.MACOS_SIGNING_PROVISIONING_PROFILE }}
           notarizationUser: ${{ secrets.MACOS_NOTARIZATION_USERNAME }}
           notarizationPassword: ${{ secrets.MACOS_NOTARIZATION_PASSWORD }}
-          
+
+      - name: Set up Python 3.11.7
+        uses: actions/setup-python@v5 # Use the latest version of setup-python
+        with:
+          python-version: '3.11.7'
+          # Optional: Caches pip dependencies for faster subsequent runs
+          cache: 'pip'
+
       - name: Set Up Serial library 🔧
         run: |
           git clone https://github.com/wjwwood/serial.git
