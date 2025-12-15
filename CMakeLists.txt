@@ -10,20 +10,12 @@ option(ENABLE_QT "Use Qt functionality" ON)
 include(compilerconfig)
 include(defaults)
 include(helpers)
-include(FetchContent)
 
-FetchContent_Declare(
-  # Name for internal use
-  serial_lib
-  GIT_REPOSITORY https://github.com/wjwwood/serial.git
-  GIT_TAG        1.2.1 # Use a specific tag, commit hash, or branch name
-)
-
-FetchContent_MakeAvailable(serial_lib)
 
 add_library(${CMAKE_PROJECT_NAME} MODULE)
 
 find_package(libobs REQUIRED)
+find_package(serial REQUIRED)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs serial)
 
 if(ENABLE_FRONTEND_API)
