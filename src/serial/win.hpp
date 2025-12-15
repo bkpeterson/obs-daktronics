@@ -41,7 +41,7 @@
 
 #include "serial.hpp"
 
-#include "windows.hpp"
+#include "windows.h"
 
 namespace serial {
 

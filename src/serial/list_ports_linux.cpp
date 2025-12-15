@@ -61,7 +61,7 @@ vector<string> glob(const vector<string> &patterns)
 		glob_retval = glob(iter->c_str(), GLOB_APPEND, NULL, &glob_results);
 	}
 
-	for (int path_index = 0; path_index < glob_results.gl_pathc; path_index++) {
+	for (int path_index = 0; static_cast<size_t>(path_index) < glob_results.gl_pathc; path_index++) {
 		paths_found.push_back(glob_results.gl_pathv[path_index]);
 	}
 
@@ -220,7 +220,7 @@ string format(const char *format, ...)
 
 		if (return_value < 0) {
 			done = true;
-		} else if (return_value >= buffer_size_bytes) {
+		} else if (static_cast<size_t>(return_value) >= buffer_size_bytes) {
 			// Realloc and try again.
 
 			buffer_size_bytes = return_value + 1;
