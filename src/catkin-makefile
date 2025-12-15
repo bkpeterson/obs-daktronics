@@ -15,7 +15,7 @@ ifeq ($(UNAME),Darwin)
 	sudo -H rosdep init
 	rosdep update
 	mkdir catkin_ws
-	cd catkin_ws && rosinstall_generator catkin --rosdistro rolling --tar > catkin.rosinstall
+	cd catkin_ws && rosinstall_generator catkin --rosdistro kilted --tar > catkin.rosinstall
 	cd catkin_ws && wstool init src catkin.rosinstall
 	cd catkin_ws && rosdep install --from-paths src --ignore-src -y
 	cd catkin_ws && python ./src/catkin/bin/catkin_make -DPYTHON_EXECUTABLE=`which python` install
