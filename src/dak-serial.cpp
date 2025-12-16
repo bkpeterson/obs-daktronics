@@ -162,8 +162,7 @@ void SerialPort::readThreadFunction()
 	obs_log(LOG_INFO, "Reading header");
 
 	while (reading && opened) {
-		size_t bufSize = 65536;
-		int bytesRead = portObj->readline(readBuffer, bufSize, {0x11});
+		int bytesRead = static_cast<int>(portObj->readline(readBuffer, 65536, {0x11}));
 
 		if (bytesRead > 0) {
 			const char *buf = readBuffer.c_str();
