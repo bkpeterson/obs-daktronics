@@ -9,6 +9,7 @@ SerialPort::SerialPort()
 	  errorCallback(nullptr),
 	  _port("")
 {
+	obs_log(LOG_INFO, "Creating serial port...");
 	portObj = new serial::Serial();
 }
 
@@ -25,6 +26,7 @@ std::unique_ptr<SerialPort> SerialPort::create()
 
 bool SerialPort::open(const std::string &portName, int baudRate)
 {
+	obs_log(LOG_INFO, "Calling serial port open...");
 	if (opened) {
 		close();
 	}
@@ -36,10 +38,12 @@ bool SerialPort::open(const std::string &portName, int baudRate)
 	portObj->open();
 
 	if (portObj->isOpen()) {
+		obs_log(LOG_INFO, "Port opened!!!");
 		opened = true;
 		_port = portName;
 		return true;
 	}
+	obs_log(LOG_INFO, "Port NOT open.");
 	return false;
 }
 
