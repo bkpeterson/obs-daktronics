@@ -164,7 +164,7 @@ void SerialPort::readThreadFunction()
 	std::string readBuffer;
 	//bool readingHeader = true;
 	//obs_log(LOG_INFO, "Reading header");
-/*
+	/*
 
 			header, unprocessed = message.split(chr(2))
             text, checksum = unprocessed.split(chr(4))
@@ -208,59 +208,18 @@ void SerialPort::readThreadFunction()
 		portObj->readline(readBuffer, 65536, {0x16});
 
 		//Read until end of transmission
+		readBuffer.clear();
 		int bytesRead = static_cast<int>(portObj->readline(readBuffer, 65536, {0x17}));
 
 		if (bytesRead > 0) {
-			obs_log(LOG_INFO, "Read %i bytes.", bytesRead);
-			//std::vector<std::string> elems = split(readBuffer, {0x02});
-			//std::string header = elems[0];
-			
-			//std::vector<std::string> msg = split(elems[1], {0x04});
-			//std::string data = msg[0];
-
-			//const char *buf = readBuffer.c_str();
-
-			// Process each character
-			//for (int i = 0; i < bytesRead; i++) {
-			//	char c = buf[i];
-			//	obs_log(LOG_INFO, "Char val: %i", int(c));
-
-			//	if (readingHeader && c != 0x10) {
-			//		continue;
-			//	} else {
-			//		if (readingHeader && c == 0x10) {
-			//			readingHeader = false;
-			//			obs_log(LOG_INFO, "Done reading header.");
-			//			continue;
-			//		}
-			//	}
-
-			//	lineBuffer += c;
-
-				// Prevent buffer overflow
-			//	if (lineBuffer.size() > 4096) {
-			//		emitError("Line buffer overflow - line too long");
-			//		readingHeader = true;
-			//		obs_log(LOG_INFO, "Reading header");
-			//		lineBuffer.clear();
-			//	}
-			//}
-
-			// Complete line received - emit signal
 			if (!readBuffer.empty()) {
-				obs_log(LOG_INFO, "Read line: %s", readBuffer.c_str());
 				emitLineReceived(readBuffer);
-				//readingHeader = true;
-				//obs_log(LOG_INFO, "Reading header");
-				readBuffer.clear();
 			}
-
 		} else if (bytesRead < 0) {
 			emitError("Read error occurred");
 			// Small delay to prevent tight loop on persistent errors
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
-		// bytesRead == 0 means timeout, which is normal
 	}
 }
 
