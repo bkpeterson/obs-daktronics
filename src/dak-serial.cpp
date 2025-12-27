@@ -160,51 +160,99 @@ void SerialPort::processSignals()
 
 void SerialPort::readThreadFunction()
 {
-	std::string lineBuffer;
+	//std::string lineBuffer;
 	std::string readBuffer;
-	bool readingHeader = true;
-	obs_log(LOG_INFO, "Reading header");
+	//bool readingHeader = true;
+	//obs_log(LOG_INFO, "Reading header");
+/*
 
+			header, unprocessed = message.split(chr(2))
+            text, checksum = unprocessed.split(chr(4))
+
+            start = int(header[-4] + header[-3] + header[-2] + header[-1]) + 1
+            end = start + len(text) - 1
+            self.process(text, (start, end))
+
+
+        self.header = self.rtd.partition(b'\x16')[2].partition(b'\x01')[0]
+        self.code = self.rtd.partition(b'\x01')[2].partition(b'\x02')[0].partition(b'\x04')[0]
+        self.text = self.rtd.partition(b'\x02')[2].partition(b'\x04')[0]
+        self.checksum = self.rtd.partition(b'\x04')[2].partition(b'\x17')[0]
+
+        code = self.code.decode()
+        code = code[-4:]
+        text = self.text.decode()
+        self.dakString = self.dakString[:int(code)] + text + self.dakString[int(code) + len(text):]
+
+
+
+		code = rtd.partition(b'\x01')[2].partition(b'\x02')[0].partition(b'\x04')[0]
+        text = rtd.partition(b'\x02')[2].partition(b'\x04')[0]
+
+        code = code.decode()
+        code = code[-4:]
+        text = text.decode()
+
+        doLog('Code: ')
+        doLog(code)
+        doLog('Text: ')
+        doLog(text)
+
+        dakString = dakString[:int(code)] + text + dakString[int(code) + len(text):]
+
+
+
+*/
 	while (reading && opened) {
-		int bytesRead = static_cast<int>(portObj->readline(readBuffer, 65536, {0x11}));
+		//Read until a start transmission character encountered
+		static_cast<int>(portObj->readline(readBuffer, 65536, {0x16}));
+
+		//Read until end of transmission
+		int bytesRead = static_cast<int>(portObj->readline(readBuffer, 65536, {0x17}));
 
 		if (bytesRead > 0) {
 			obs_log(LOG_INFO, "Read %i bytes.", bytesRead);
-			const char *buf = readBuffer.c_str();
+			//std::vector<std::string> elems = split(readBuffer, {0x02});
+			//std::string header = elems[0];
+			
+			//std::vector<std::string> msg = split(elems[1], {0x04});
+			//std::string data = msg[0];
+
+			//const char *buf = readBuffer.c_str();
 
 			// Process each character
-			for (int i = 0; i < bytesRead; i++) {
-				char c = buf[i];
-				obs_log(LOG_INFO, "Char val: %i", int(c));
+			//for (int i = 0; i < bytesRead; i++) {
+			//	char c = buf[i];
+			//	obs_log(LOG_INFO, "Char val: %i", int(c));
 
-				if (readingHeader && c != 0x10) {
-					continue;
-				} else {
-					if (readingHeader && c == 0x10) {
-						readingHeader = false;
-						obs_log(LOG_INFO, "Done reading header.");
-						continue;
-					}
-				}
+			//	if (readingHeader && c != 0x10) {
+			//		continue;
+			//	} else {
+			//		if (readingHeader && c == 0x10) {
+			//			readingHeader = false;
+			//			obs_log(LOG_INFO, "Done reading header.");
+			//			continue;
+			//		}
+			//	}
 
-				lineBuffer += c;
+			//	lineBuffer += c;
 
 				// Prevent buffer overflow
-				if (lineBuffer.size() > 4096) {
-					emitError("Line buffer overflow - line too long");
-					readingHeader = true;
-					obs_log(LOG_INFO, "Reading header");
-					lineBuffer.clear();
-				}
-			}
+			//	if (lineBuffer.size() > 4096) {
+			//		emitError("Line buffer overflow - line too long");
+			//		readingHeader = true;
+			//		obs_log(LOG_INFO, "Reading header");
+			//		lineBuffer.clear();
+			//	}
+			//}
 
 			// Complete line received - emit signal
-			if (!lineBuffer.empty()) {
-				obs_log(LOG_INFO, "Read line: %s", lineBuffer.c_str());
-				emitLineReceived(lineBuffer);
-				readingHeader = true;
-				obs_log(LOG_INFO, "Reading header");
-				lineBuffer.clear();
+			if (!readBuffer.empty()) {
+				obs_log(LOG_INFO, "Read line: %s", readBuffer.c_str());
+				emitLineReceived(readBuffer);
+				//readingHeader = true;
+				//obs_log(LOG_INFO, "Reading header");
+				readBuffer.clear();
 			}
 
 		} else if (bytesRead < 0) {
@@ -216,7 +264,7 @@ void SerialPort::readThreadFunction()
 	}
 }
 
-void SerialPort::emitLineReceived(const std::string &line)
+void SerialPort::emitLineReceived(const std::string line)
 {
 	std::lock_guard<std::mutex> lock(queueMutex);
 	Signal signal;
@@ -226,7 +274,7 @@ void SerialPort::emitLineReceived(const std::string &line)
 	queueCondition.notify_one();
 }
 
-void SerialPort::emitError(const std::string &error)
+void SerialPort::emitError(const std::string error)
 {
 	std::lock_guard<std::mutex> lock(queueMutex);
 	Signal signal;

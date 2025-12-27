@@ -19,8 +19,8 @@
 class SerialPort {
 public:
 	// Callback type for line received signal (runs in main thread)
-	using LineReceivedCallback = std::function<void(const std::string &line)>;
-	using ErrorCallback = std::function<void(const std::string &error)>;
+	using LineReceivedCallback = std::function<void(const std::string line)>;
+	using ErrorCallback = std::function<void(const std::string error)>;
 
 	std::string _port;
 
@@ -91,8 +91,8 @@ protected:
 	void readThreadFunction();
 
 	// Emit signals from background thread (thread-safe)
-	void emitLineReceived(const std::string &line);
-	void emitError(const std::string &error);
+	void emitLineReceived(const std::string line);
+	void emitError(const std::string error);
 };
 
 #endif // SERIALPORT_H
