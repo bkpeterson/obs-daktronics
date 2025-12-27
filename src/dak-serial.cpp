@@ -169,11 +169,13 @@ void SerialPort::readThreadFunction()
 		int bytesRead = static_cast<int>(portObj->readline(readBuffer, 65536, {0x11}));
 
 		if (bytesRead > 0) {
+			obs_log(LOG_INFO, "Read %i bytes.", bytesRead);
 			const char *buf = readBuffer.c_str();
 
 			// Process each character
 			for (int i = 0; i < bytesRead; i++) {
 				char c = buf[i];
+				obs_log(LOG_INFO, "Char val: %i", int(c));
 
 				if (readingHeader && c != 0x10) {
 					continue;
