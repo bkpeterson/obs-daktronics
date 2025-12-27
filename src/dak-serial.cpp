@@ -205,7 +205,7 @@ void SerialPort::readThreadFunction()
 */
 	while (reading && opened) {
 		//Read until a start transmission character encountered
-		static_cast<int>(portObj->readline(readBuffer, 65536, {0x16}));
+		portObj->readline(readBuffer, 65536, {0x16});
 
 		//Read until end of transmission
 		int bytesRead = static_cast<int>(portObj->readline(readBuffer, 65536, {0x17}));
