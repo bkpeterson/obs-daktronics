@@ -199,18 +199,18 @@ std::string DAKDataUtils::getSerialPort()
 		return "";
 }
 
-void DAKDataUtils::onLineReceived(const std::string &line)
+void DAKDataUtils::onLineReceived(std::string &line)
 {
 	obs_log(LOG_INFO, "Line received: %s", line.c_str());
 
 	std::string outBuf = "";
 
-	for(int i=0; i<line.length(); i++) {
-		outBuf += (int)line.c_str()[i];
+	for(char& c : line) {
+		outBuf += (int)c;
 		outBuf += " ";
 	}
 
-	obs_log(LOG_INFO, "****Line data: %s", outBuf);
+	obs_log(LOG_INFO, "****Line data: %s", outBuf.c_str());
 
 	// Extract the scoreboard field code
 	size_t pos = line.find("\x01");
