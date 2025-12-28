@@ -210,6 +210,7 @@ void SerialPort::readThreadFunction()
 			readChar = portObj->read(1);
 		}
 
+		readBuffer.clear();
 		while(readChar != "\x17") {
 			readChar = portObj->read(1);
 			readBuffer += readChar;
