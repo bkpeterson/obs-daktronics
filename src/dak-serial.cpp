@@ -238,7 +238,7 @@ void SerialPort::readThreadFunction()
 	}
 }
 
-void SerialPort::emitLineReceived(std::string &line)
+void SerialPort::emitLineReceived(std::string line)
 {
 	std::lock_guard<std::mutex> lock(queueMutex);
 	Signal signal;
@@ -248,7 +248,7 @@ void SerialPort::emitLineReceived(std::string &line)
 	queueCondition.notify_one();
 }
 
-void SerialPort::emitError(std::string &error)
+void SerialPort::emitError(std::string error)
 {
 	std::lock_guard<std::mutex> lock(queueMutex);
 	Signal signal;
