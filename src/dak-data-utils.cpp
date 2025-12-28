@@ -205,7 +205,7 @@ void DAKDataUtils::onLineReceived(std::string line)
 
 	std::string outBuf = "";
 
-	for(char& c : line) {
+	for (char &c : line) {
 		outBuf += (int)c;
 		outBuf += " ";
 	}
