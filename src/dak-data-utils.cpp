@@ -213,17 +213,17 @@ void DAKDataUtils::onLineReceived(std::string line)
 	obs_log(LOG_INFO, "****Line data: %s", outBuf.c_str());
 
 	// Extract the scoreboard field code
-	size_t pos = line.find("\1");
+	size_t pos = line.find("\x01");
 	if (pos == std::string::npos)
 		return;
 	std::string code = line.substr(pos + 1);
 
-	pos = code.find("\2");
+	pos = code.find("\x02");
 	if (pos == std::string::npos)
 		return;
 	code = code.substr(0, pos);
 
-	pos = code.find("\4");
+	pos = code.find("\x04");
 	if (pos == std::string::npos)
 		return;
 	code = code.substr(0, pos);
@@ -237,12 +237,12 @@ void DAKDataUtils::onLineReceived(std::string line)
 	uint32_t codeVal = static_cast<uint32_t>(std::stoul(code));
 
 	// Extract the new scoreboard data
-	pos = line.find("\2");
+	pos = line.find("\x02");
 	if (pos == std::string::npos)
 		return;
 	std::string text = line.substr(pos + 1);
 
-	pos = text.find("\4");
+	pos = text.find("\x04");
 	if (pos == std::string::npos)
 		return;
 	text = text.substr(0, pos);
