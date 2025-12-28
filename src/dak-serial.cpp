@@ -206,14 +206,16 @@ void SerialPort::readThreadFunction()
 */
 	while (reading && opened) {
 		readChar = "";
-		while(readChar != "\x16") {
+		while (readChar != "\x16") {
 			readChar = portObj->read(1);
 		}
 
 		readBuffer.clear();
-		while(readChar != "\x17") {
+		while (readChar != "\x17") {
 			readChar = portObj->read(1);
-			readBuffer += readChar;
+			if (readChar != "\x17") {
+				readBuffer += readChar;
+			}
 		}
 
 		//Read until a start transmission character encountered
@@ -225,9 +227,9 @@ void SerialPort::readThreadFunction()
 
 		if (readBuffer.length() > 0) {
 			//if (!readBuffer.empty()) {
-				emitLineReceived(readBuffer);
+			emitLineReceived(readBuffer);
 			//}
-		//} else if (bytesRead < 0) {
+			//} else if (bytesRead < 0) {
 			//std::string errEmitted = "Read error occurred";
 			//emitError(errEmitted);
 			// Small delay to prevent tight loop on persistent errors

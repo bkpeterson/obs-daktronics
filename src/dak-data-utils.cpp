@@ -199,7 +199,7 @@ std::string DAKDataUtils::getSerialPort()
 		return "";
 }
 
-void DAKDataUtils::onLineReceived(std::string line)
+void DAKDataUtils::onLineReceived(std::string &line)
 {
 	obs_log(LOG_INFO, "Line received: %s", line.c_str());
 

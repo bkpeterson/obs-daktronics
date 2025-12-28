@@ -51,6 +51,6 @@ private:
 	static void read_csv_field(std::stringstream &ss, uint32_t &field);
 	static uint32_t readDataLine(std::stringstream &is, DAKTSVData &data);
 	static uint32_t readHeaderLine(std::stringstream &is, DAKTSVHeader &data);
-	static void onLineReceived(std::string line);
+	static void onLineReceived(std::string &line);
 	static void onError(std::string error);
 };
