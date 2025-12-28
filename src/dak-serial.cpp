@@ -216,14 +216,15 @@ void SerialPort::readThreadFunction()
 				emitLineReceived(readBuffer);
 			}
 		} else if (bytesRead < 0) {
-			emitError("Read error occurred");
+			std::string errEmitted = "Read error occurred";
+			emitError(errEmitted);
 			// Small delay to prevent tight loop on persistent errors
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
 	}
 }
 
-void SerialPort::emitLineReceived(const std::string line)
+void SerialPort::emitLineReceived(std::string &line)
 {
 	std::lock_guard<std::mutex> lock(queueMutex);
 	Signal signal;
@@ -233,7 +234,7 @@ void SerialPort::emitLineReceived(const std::string line)
 	queueCondition.notify_one();
 }
 
-void SerialPort::emitError(const std::string error)
+void SerialPort::emitError(std::string &error)
 {
 	std::lock_guard<std::mutex> lock(queueMutex);
 	Signal signal;
