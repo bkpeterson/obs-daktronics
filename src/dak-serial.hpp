@@ -19,8 +19,8 @@
 class SerialPort {
 public:
 	// Callback type for line received signal (runs in main thread)
-	using LineReceivedCallback = std::function<void(std::string line)>;
-	using ErrorCallback = std::function<void(const std::string error)>;
+	using LineReceivedCallback = std::function<void(std::string &line)>;
+	using ErrorCallback = std::function<void(const std::string &error)>;
 
 	std::string _port;
 
