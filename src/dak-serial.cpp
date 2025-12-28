@@ -162,6 +162,7 @@ void SerialPort::readThreadFunction()
 {
 	//std::string lineBuffer;
 	std::string readBuffer;
+	std::string readChar;
 	//bool readingHeader = true;
 	//obs_log(LOG_INFO, "Reading header");
 	/*
@@ -204,22 +205,32 @@ void SerialPort::readThreadFunction()
 
 */
 	while (reading && opened) {
+		readChar = "";
+		while(readChar != "\x16") {
+			readChar = portObj->read(1);
+		}
+
+		while(readChar != "\x17") {
+			readChar = portObj->read(1);
+			readBuffer += readChar;
+		}
+
 		//Read until a start transmission character encountered
-		portObj->readline(readBuffer, 65536, {0x16});
+		//portObj->readline(readBuffer, 65536, {0x16});
 
 		//Read until end of transmission
-		readBuffer.clear();
-		int bytesRead = static_cast<int>(portObj->readline(readBuffer, 65536, {0x17}));
+		//readBuffer.clear();
+		//int bytesRead = static_cast<int>(portObj->readline(readBuffer, 65536, {0x17}));
 
-		if (bytesRead > 0) {
-			if (!readBuffer.empty()) {
+		if (readBuffer.length() > 0) {
+			//if (!readBuffer.empty()) {
 				emitLineReceived(readBuffer);
-			}
-		} else if (bytesRead < 0) {
-			std::string errEmitted = "Read error occurred";
-			emitError(errEmitted);
+			//}
+		//} else if (bytesRead < 0) {
+			//std::string errEmitted = "Read error occurred";
+			//emitError(errEmitted);
 			// Small delay to prevent tight loop on persistent errors
-			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+			//std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
 	}
 }
