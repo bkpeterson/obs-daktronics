@@ -182,12 +182,9 @@ void DAKDataUtils::execute_global_tick_logic(void *data, uint32_t width, uint32_
 
 void DAKDataUtils::startSerial(std::string port)
 {
-	obs_log(LOG_INFO, "Starting serial....");
 	// Open and start reading
 	if (serial->open(port, 19200)) {
-		obs_log(LOG_INFO, "Serial started.");
 		serial->startReading();
-		obs_log(LOG_INFO, "Reading from serial.");
 	}
 }
 
@@ -213,7 +210,7 @@ void DAKDataUtils::onLineReceived(std::string &line)
 	obs_log(LOG_INFO, "****Line data: %s", outBuf.c_str());
 
 	// Extract the scoreboard field code
-	size_t pos = line.find("\x01");
+	size_t pos = line.find("\001");
 	if (pos == std::string::npos)
 		return;
 	std::string code = line.substr(pos + 1);
@@ -223,10 +220,10 @@ void DAKDataUtils::onLineReceived(std::string &line)
 		return;
 	code = code.substr(0, pos);
 
-	pos = code.find("\x04");
-	if (pos == std::string::npos)
-		return;
-	code = code.substr(0, pos);
+	//pos = code.find("\x04");
+	//if (pos == std::string::npos)
+	//	return;
+	//code = code.substr(0, pos);
 
 	obs_log(LOG_INFO, "===CODE===: %s", code.c_str());
 
