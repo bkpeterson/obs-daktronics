@@ -57,7 +57,7 @@ const char *DAKFilter::GetSourceName()
 {
 	if (!_source)
 		return "";
-	
+
 	const char *srcId = obs_source_get_id(_source);
 	return obs_source_get_display_name(srcId);
 }

@@ -19,7 +19,7 @@ public:
 	uint32_t GetFilterType();
 	uint32_t GetIndex();
 	std::string GetSport();
-	const char *DAKFilter::GetSourceName();
+	const char *GetSourceName();
 	void Update(obs_data_t *settings);
 
 	static void *Create(obs_data_t *settings, obs_source_t *obs_source);

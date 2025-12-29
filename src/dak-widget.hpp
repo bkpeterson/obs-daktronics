@@ -22,7 +22,7 @@ public:
 	~DAKDock();
 
 	void updateLog(uint32_t code, std::string text);
-	void updateFilterLog(uint32_t code, const char *source, std:string text);
+	void updateFilterLog(uint32_t code, const char *source, std::string text);
 
 private slots:
 	void refreshList();
