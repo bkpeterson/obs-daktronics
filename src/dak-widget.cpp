@@ -39,7 +39,7 @@ void DAKDock::updateLog(uint32_t code, std::string text)
 	logBox->appendPlainText(buf.str().c_str());
 }
 
-void DAKDock::UpdateFilterLog(uint32_t code, const char *source, std::string text)
+void DAKDock::updateFilterLog(uint32_t code, const char *source, std::string text)
 {
 	std::ostringstream buf;
 	buf << "[" << code << "]-<" << source << "> " << text;

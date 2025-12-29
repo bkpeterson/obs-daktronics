@@ -49,7 +49,7 @@ public:
 	static void startSerial(std::string port);
 
 private:
-	static DAKDock widget;
+	static DAKDock *widget;
 
 	static void read_csv_field(std::stringstream &ss, std::string &field);
 	static void read_csv_field(std::stringstream &ss, uint32_t &field);
