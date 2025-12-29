@@ -32,6 +32,7 @@ public:
 	static void populateSportsData();
 	static void clearSportsData();
 	static DAKSportData *getSportData(std::string sport);
+	static void setDockWidget(DAKDock *dock);
 
 	static void AddFilter(DAKFilter *newFilter);
 	static void RemoveFilter(DAKFilter *oldFilter);
@@ -48,6 +49,8 @@ public:
 	static void startSerial(std::string port);
 
 private:
+	static DAKDock *dockWidget;
+
 	static void read_csv_field(std::stringstream &ss, std::string &field);
 	static void read_csv_field(std::stringstream &ss, uint32_t &field);
 	static uint32_t readDataLine(std::stringstream &is, DAKTSVData &data);

@@ -28,18 +28,11 @@ DAKDock::DAKDock() : QDockWidget("Daktronics Serial Reader", (QWidget *)obs_fron
 	// 4. Connect Signals and Slots
 	connect(refreshButton, &QPushButton::clicked, this, &DAKDock::refreshList);
 	connect(selectButton, &QPushButton::clicked, this, &DAKDock::selectItem);
-
-	_self = this;
 }
 
 DAKDock::~DAKDock() {}
 
 void DAKDock::updateLog(uint32_t code, std::string text)
-{
-	_self->_updateLog(code, text);
-}
-
-void DAKDock::_updateLog(uint32_t code, std::string text)
 {
 	std::ostringstream buf;
 	buf << "[" << code << "] " << text;
@@ -47,11 +40,6 @@ void DAKDock::_updateLog(uint32_t code, std::string text)
 }
 
 void DAKDock::updateFilterLog(uint32_t code, const char *source, std::string text)
-{
-	_self->_updateFilterLog(code, source, text);
-}
-
-void DAKDock::_updateFilterLog(uint32_t code, const char *source, std::string text)
 {
 	std::ostringstream buf;
 	buf << "[" << code << "]-<" << source << "> " << text;

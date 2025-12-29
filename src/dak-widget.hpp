@@ -24,8 +24,8 @@ public:
 	DAKDock();
 	~DAKDock();
 
-	static void updateLog(uint32_t code, std::string text);
-	static void updateFilterLog(uint32_t code, const char *source, std::string text);
+	void updateLog(uint32_t code, std::string text);
+	void updateFilterLog(uint32_t code, const char *source, std::string text);
 
 private slots:
 	void refreshList();
@@ -38,7 +38,4 @@ private:
 	QPushButton *refreshButton;
 	QPushButton *selectButton;
 	QPlainTextEdit *logBox;
-
-	void _updateLog(uint32_t code, std::string text);
-	void _updateFilterLog(uint32_t code, const char *source, std::string text);
 };

@@ -109,6 +109,11 @@ void DAKDataUtils::PopulateSportProps(obs_property_t *sportList)
 	}
 }
 
+void DAKDataUtils::setDockWidget(DAKDock *widget)
+{
+	dockWidget = widget;
+}
+
 void DAKDataUtils::AddFilter(DAKFilter *newFilter)
 {
 	uint32_t index = newFilter->GetIndex();
@@ -244,7 +249,7 @@ void DAKDataUtils::onLineReceived(std::string line)
 		return;
 	text = text.substr(0, pos);
 
-	DAKDock::updateLog(codeVal, text);
+	dockWidget->updateLog(codeVal, text);
 
 	// Iterate over registered filters to see if any need to be updated based on the field code
 	for (const auto &pair : _filters) {
@@ -270,7 +275,7 @@ void DAKDataUtils::onLineReceived(std::string line)
 				    dakText.substr(dakText.length() - 1) == "z")
 					dakText = dakText.substr(0, dakText.length() - 1);
 
-				DAKDock::updateFilterLog(dakKey, curFilter->GetSourceName(), dakText);
+				dockWidget->updateFilterLog(dakKey, curFilter->GetSourceName(), dakText);
 				obs_log(LOG_INFO, "Received data (%u): %s", dakKey, dakText.c_str());
 
 				curFilter->SetValue(dakText);
