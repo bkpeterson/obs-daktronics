@@ -28,6 +28,8 @@ DAKDock::DAKDock() : QDockWidget("Daktronics Serial Reader", (QWidget *)obs_fron
 	// 4. Connect Signals and Slots
 	connect(refreshButton, &QPushButton::clicked, this, &DAKDock::refreshList);
 	connect(selectButton, &QPushButton::clicked, this, &DAKDock::selectItem);
+
+	_self = this;
 }
 
 DAKDock::~DAKDock() {}
@@ -36,14 +38,14 @@ void DAKDock::updateLog(uint32_t code, std::string text)
 {
 	std::ostringstream buf;
 	buf << "[" << code << "] " << text;
-	logBox->appendPlainText(buf.str().c_str());
+	_self->logBox->appendPlainText(buf.str().c_str());
 }
 
 void DAKDock::updateFilterLog(uint32_t code, const char *source, std::string text)
 {
 	std::ostringstream buf;
 	buf << "[" << code << "]-<" << source << "> " << text;
-	logBox->appendPlainText(buf.str().c_str());
+	_self->logBox->appendPlainText(buf.str().c_str());
 }
 
 // --- Slot Implementations ---
