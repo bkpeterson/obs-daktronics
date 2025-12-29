@@ -8,6 +8,9 @@
 #include <string>
 #include <sstream>
 
+#include <obs-module.h>
+#include <obs-frontend-api.h>
+
 #include "dak-serial.hpp"
 #include "dak-data-utils.hpp"
 
