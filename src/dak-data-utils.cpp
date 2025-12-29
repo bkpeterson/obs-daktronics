@@ -109,11 +109,6 @@ void DAKDataUtils::PopulateSportProps(obs_property_t *sportList)
 	}
 }
 
-void DAKDataUtils::setDockWidget(DAKDock *newWidget)
-{
-	widget = newWidget;
-}
-
 void DAKDataUtils::AddFilter(DAKFilter *newFilter)
 {
 	uint32_t index = newFilter->GetIndex();
