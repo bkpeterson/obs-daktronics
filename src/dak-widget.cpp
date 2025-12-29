@@ -1,6 +1,6 @@
 #include "dak-widget.hpp"
 
-DAKDock::DAKDock() : QDockWidget("Daktronics Serial Reader", nullptr)
+DAKDock::DAKDock() : QDockWidget("Daktronics Serial Reader", (QWidget *)obs_frontend_get_main_window())
 {
 	// 1. Create the main container widget and layout
 	QWidget *contentWidget = new QWidget(this);
@@ -10,6 +10,7 @@ DAKDock::DAKDock() : QDockWidget("Daktronics Serial Reader", nullptr)
 	dropDownList = new QComboBox(this);
 	refreshButton = new QPushButton("Refresh Ports", this);
 	selectButton = new QPushButton("Select Port", this);
+	logBox = new QPlainTextEdit(this);
 
 	// Initialize the dropdown with placeholder items
 	refreshList();
@@ -18,6 +19,7 @@ DAKDock::DAKDock() : QDockWidget("Daktronics Serial Reader", nullptr)
 	mainLayout->addWidget(dropDownList);
 	mainLayout->addWidget(refreshButton);
 	mainLayout->addWidget(selectButton);
+	mainLayout->addWidget(logBox);
 
 	// Set the content widget to the dock
 	contentWidget->setLayout(mainLayout);
@@ -29,6 +31,20 @@ DAKDock::DAKDock() : QDockWidget("Daktronics Serial Reader", nullptr)
 }
 
 DAKDock::~DAKDock() {}
+
+void DAKDock::updateLog(uint32_t code, std::string text)
+{
+	std::ostringstream buf;
+	buf << "[" << code << "] " << text;
+	logBox->appendPlainText(buf.str().c_str());
+}
+
+void DAKDock::UpdateFilterLog(uint32_t code, const char *source, std::string text)
+{
+	std::ostringstream buf;
+	buf << "[" << code << "]-<" << source << "> " << text;
+	logBox->appendPlainText(buf.str().c_str());
+}
 
 // --- Slot Implementations ---
 

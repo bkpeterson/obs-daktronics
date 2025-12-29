@@ -53,6 +53,15 @@ const char *DAKFilter::GetName(void *type_data)
 	return "Daktronics Scoreboard Filter";
 }
 
+const char *DAKFilter::GetSourceName()
+{
+	if (!_source)
+		return "";
+	
+	const char *srcId = obs_source_get_id(_source);
+	return obs_source_get_display_name(srcId);
+}
+
 void DAKFilter::SetValue(std::string newValue)
 {
 	_internalValue = newValue;

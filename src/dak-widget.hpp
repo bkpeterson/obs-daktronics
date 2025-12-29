@@ -4,6 +4,9 @@
 #include <QVBoxLayout>
 #include <QComboBox>
 #include <QPushButton>
+#include <QPlainTextEdit>
+#include <string>
+#include <sstream>
 
 #include "dak-serial.hpp"
 #include "dak-data-utils.hpp"
@@ -18,6 +21,9 @@ public:
 	DAKDock();
 	~DAKDock();
 
+	void updateLog(uint32_t code, std::string text);
+	void updateFilterLog(uint32_t code, const char *source, std:string text);
+
 private slots:
 	void refreshList();
 	void selectItem();
@@ -27,4 +33,5 @@ private:
 	QComboBox *dropDownList;
 	QPushButton *refreshButton;
 	QPushButton *selectButton;
+	QPlainTextEdit *logBox;
 };

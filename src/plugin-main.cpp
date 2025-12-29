@@ -70,6 +70,8 @@ bool obs_module_load(void)
 		nullptr);
 
 	obs_add_main_render_callback(DAKDataUtils::execute_global_tick_logic, NULL);
+	
+	DAKDataUtils::setDockWidget(dak_dock);
 
 	obs_log(LOG_INFO, "Daktronics plugin loaded successfully (version %s)", PLUGIN_VERSION);
 

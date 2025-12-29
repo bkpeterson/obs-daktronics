@@ -160,50 +160,9 @@ void SerialPort::processSignals()
 
 void SerialPort::readThreadFunction()
 {
-	//std::string lineBuffer;
 	std::string readBuffer;
 	std::string readChar;
-	//bool readingHeader = true;
-	//obs_log(LOG_INFO, "Reading header");
-	/*
 
-			header, unprocessed = message.split(chr(2))
-            text, checksum = unprocessed.split(chr(4))
-
-            start = int(header[-4] + header[-3] + header[-2] + header[-1]) + 1
-            end = start + len(text) - 1
-            self.process(text, (start, end))
-
-
-        self.header = self.rtd.partition(b'\x16')[2].partition(b'\x01')[0]
-        self.code = self.rtd.partition(b'\x01')[2].partition(b'\x02')[0].partition(b'\x04')[0]
-        self.text = self.rtd.partition(b'\x02')[2].partition(b'\x04')[0]
-        self.checksum = self.rtd.partition(b'\x04')[2].partition(b'\x17')[0]
-
-        code = self.code.decode()
-        code = code[-4:]
-        text = self.text.decode()
-        self.dakString = self.dakString[:int(code)] + text + self.dakString[int(code) + len(text):]
-
-
-
-		code = rtd.partition(b'\x01')[2].partition(b'\x02')[0].partition(b'\x04')[0]
-        text = rtd.partition(b'\x02')[2].partition(b'\x04')[0]
-
-        code = code.decode()
-        code = code[-4:]
-        text = text.decode()
-
-        doLog('Code: ')
-        doLog(code)
-        doLog('Text: ')
-        doLog(text)
-
-        dakString = dakString[:int(code)] + text + dakString[int(code) + len(text):]
-
-
-
-*/
 	while (reading && opened) {
 		readChar = "";
 		while (readChar != "\x16") {
@@ -218,22 +177,8 @@ void SerialPort::readThreadFunction()
 			}
 		}
 
-		//Read until a start transmission character encountered
-		//portObj->readline(readBuffer, 65536, {0x16});
-
-		//Read until end of transmission
-		//readBuffer.clear();
-		//int bytesRead = static_cast<int>(portObj->readline(readBuffer, 65536, {0x17}));
-
 		if (readBuffer.length() > 0) {
-			//if (!readBuffer.empty()) {
 			emitLineReceived(readBuffer);
-			//}
-			//} else if (bytesRead < 0) {
-			//std::string errEmitted = "Read error occurred";
-			//emitError(errEmitted);
-			// Small delay to prevent tight loop on persistent errors
-			//std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
 	}
 }
