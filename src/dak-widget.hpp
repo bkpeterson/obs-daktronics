@@ -38,4 +38,7 @@ private:
 	QPushButton *refreshButton;
 	QPushButton *selectButton;
 	QPlainTextEdit *logBox;
+
+	void _updateLog(uint32_t code, std::string text);
+	void _updateFilterLog(uint32_t code, const char *source, std::string text);
 };

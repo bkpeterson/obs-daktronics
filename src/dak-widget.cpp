@@ -36,16 +36,26 @@ DAKDock::~DAKDock() {}
 
 void DAKDock::updateLog(uint32_t code, std::string text)
 {
+	_self->_updateLog(code, text);
+}
+
+void DAKDock::_updateLog(uint32_t code, std::string text)
+{
 	std::ostringstream buf;
 	buf << "[" << code << "] " << text;
-	_self->logBox->appendPlainText(buf.str().c_str());
+	logBox->appendPlainText(buf.str().c_str());
 }
 
 void DAKDock::updateFilterLog(uint32_t code, const char *source, std::string text)
 {
+	_self->_updateFilterLog(code, source, text);
+}
+
+void DAKDock::_updateFilterLog(uint32_t code, const char *source, std::string text)
+{
 	std::ostringstream buf;
 	buf << "[" << code << "]-<" << source << "> " << text;
-	_self->logBox->appendPlainText(buf.str().c_str());
+	logBox->appendPlainText(buf.str().c_str());
 }
 
 // --- Slot Implementations ---
