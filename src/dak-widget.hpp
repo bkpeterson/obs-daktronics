@@ -5,6 +5,7 @@
 #include <QComboBox>
 #include <QPushButton>
 #include <QPlainTextEdit>
+#include <QString>
 #include <string>
 #include <sstream>
 
@@ -24,18 +25,17 @@ public:
 	DAKDock();
 	~DAKDock();
 
-	void updateLog(uint32_t code, std::string text);
-	void updateFilterLog(uint32_t code, const char *source, std::string text);
+	static void updateLog(uint32_t code, std::string text);
+	static void updateFilterLog(uint32_t code, const char *source, std::string text);
 
 private slots:
 	void refreshList();
 	void selectItem();
 
 private:
-	static DAKDock *_self;
 	QVBoxLayout *mainLayout;
 	QComboBox *dropDownList;
 	QPushButton *refreshButton;
 	QPushButton *selectButton;
-	QPlainTextEdit *logBox;
+	static QPlainTextEdit *logBox;
 };
