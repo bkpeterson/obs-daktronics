@@ -65,6 +65,7 @@ bool obs_module_load(void)
 			if (event == OBS_FRONTEND_EVENT_FINISHED_LOADING) {
 				obs_frontend_add_dock_by_id("dak_serial_dock", "Daktronics Serial Reader",
 							    dak_dock = new DAKDock());
+				DAKLogger::instance().emit logMessage("Plugin loaded!");
 			}
 		},
 		nullptr);
