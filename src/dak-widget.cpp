@@ -11,6 +11,7 @@ DAKDock::DAKDock() : QDockWidget("Daktronics Serial Reader", (QWidget *)obs_fron
 	refreshButton = new QPushButton("Refresh Ports", this);
 	selectButton = new QPushButton("Select Port", this);
 	logBox = new QPlainTextEdit(this);
+	logBox->setReadOnly(true);
 
 	// Initialize the dropdown with placeholder items
 	refreshList();
@@ -28,19 +29,11 @@ DAKDock::DAKDock() : QDockWidget("Daktronics Serial Reader", (QWidget *)obs_fron
 	// 4. Connect Signals and Slots
 	connect(refreshButton, &QPushButton::clicked, this, &DAKDock::refreshList);
 	connect(selectButton, &QPushButton::clicked, this, &DAKDock::selectItem);
+	connect(&DAKLogger::instance(), &DAKLogger::logMessage, this, &DAKDock::appendLogMessage);
 }
 
 DAKDock::~DAKDock() {}
 
-void DAKDock::updateLog(uint32_t code, std::string text)
-{
-	logBox->appendPlainText(QString::asprintf("Code %u: %s", code, text.c_str()));
-}
-
-void DAKDock::updateFilterLog(uint32_t code, const char *source, std::string text)
-{
-	logBox->appendPlainText(QString::asprintf("Filter [%s] Code %u: %s", source, code, text.c_str()));
-}
 
 // --- Slot Implementations ---
 
@@ -73,4 +66,9 @@ void DAKDock::selectItem()
 	selectButton->setText("Selected: " + selected);
 
 	DAKDataUtils::startSerial(selected.toStdString());
+}
+
+void DAKDock::appendLogMessage(const QString &message)
+{
+	logBox->appendPlainText(message);
 }

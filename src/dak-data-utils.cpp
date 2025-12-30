@@ -244,7 +244,9 @@ void DAKDataUtils::onLineReceived(std::string line)
 		return;
 	text = text.substr(0, pos);
 
-	DAKDock::updateLog(codeVal, text);
+	std::stringstream ss;
+	ss << "[" << codeVal << "] " << text;
+	DAKLogger::instance().emit logMessage(QString::fromStdString(ss.str()));
 
 	// Iterate over registered filters to see if any need to be updated based on the field code
 	for (const auto &pair : _filters) {
@@ -270,7 +272,9 @@ void DAKDataUtils::onLineReceived(std::string line)
 				    dakText.substr(dakText.length() - 1) == "z")
 					dakText = dakText.substr(0, dakText.length() - 1);
 
-				DAKDock::updateFilterLog(dakKey, curFilter->GetSourceName(), dakText);
+				std::stringstream s2;
+				s2 << "****[" << dakKey << "]-<" << curFilter->GetSourceName() << "> " << dakText;
+				DAKLogger::instance().emit logMessage(QString::fromStdString(s2.str()));
 				obs_log(LOG_INFO, "Received data (%u): %s", dakKey, dakText.c_str());
 
 				curFilter->SetValue(dakText);

@@ -11,6 +11,7 @@
 #include "daktronics-filter.hpp"
 #include "dak-serial.hpp"
 #include "dak-widget.hpp"
+#include "dak-logger.hpp"
 
 struct DAKTSVHeader {
 	std::string sport;

@@ -49,6 +49,7 @@ target_sources(
     src/dak-serial.cpp
     src/dak-widget.cpp
     src/daktronics-filter.cpp
+    src/dak-logger.cpp
     src/dak-source-support.c
     src/serial/list_ports_linux.cpp
     src/serial/list_ports_osx.cpp
