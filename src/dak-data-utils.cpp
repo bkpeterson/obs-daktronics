@@ -106,6 +106,7 @@ void DAKDataUtils::PopulateSportProps(obs_property_t *sportList)
 {
 	for (std::pair<std::string, DAKSportData *> sportData : _allSportsData) {
 		obs_property_list_add_string(sportList, sportData.first.c_str(), sportData.first.c_str());
+		DAKLogger::instance().emit logMessage(QString::fromStdString(sportData.first));
 	}
 }
 
@@ -152,6 +153,8 @@ void DAKDataUtils::sync_init()
 	// Set callbacks (will be invoked in main thread)
 	serial->setLineReceivedCallback(onLineReceived);
 	serial->setErrorCallback(onError);
+
+	DAKLogger::instance().emit logMessage("Serial initialized!");
 }
 
 // Call this once when the plugin unloads (e.g., in obs_module_unload).
