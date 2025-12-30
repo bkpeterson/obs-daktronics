@@ -27,10 +27,6 @@ public:
 	DAKDock();
 	~DAKDock();
 
-public slots:
-	void updateLog(const QString &message);
-	void updateFilterLog(const QString &message);
-
 private slots:
 	void refreshList();
 	void selectItem();

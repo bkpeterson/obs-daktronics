@@ -34,7 +34,6 @@ DAKDock::DAKDock() : QDockWidget("Daktronics Serial Reader", (QWidget *)obs_fron
 
 DAKDock::~DAKDock() {}
 
-
 // --- Slot Implementations ---
 
 void DAKDock::refreshList()
