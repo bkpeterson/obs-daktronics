@@ -11,12 +11,15 @@
 #include <mutex>
 #include <condition_variable>
 #include <queue>
+#include <QObject>
 
 #include <obs-module.h>
 #include "dak-source-support.h"
 #include "serial/serial.hpp"
 
-class SerialPort {
+class SerialPort : public QObject {
+	Q_OBJECT
+
 public:
 	// Callback type for line received signal (runs in main thread)
 	using LineReceivedCallback = std::function<void(std::string line)>;
@@ -60,6 +63,10 @@ public:
 
 	// Factory method
 	static std::unique_ptr<SerialPort> create();
+
+signals:
+	// Signal emitted when a new log message is available
+	void setConnected(const bool isConnected);
 
 protected:
 	bool opened;

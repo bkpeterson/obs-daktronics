@@ -37,12 +37,8 @@ private slots:
 	void refreshList();
 	void selectItem();
 	void appendLogMessage(const QString &message);
+	void setConnected(const bool isConnected);
 
 private:
 	Ui::DAKDock *ui{};
-	QVBoxLayout *mainLayout;
-	QComboBox *dropDownList;
-	QPushButton *refreshButton;
-	QPushButton *selectButton;
-	QPlainTextEdit *logBox;
 };

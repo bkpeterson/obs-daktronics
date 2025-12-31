@@ -198,16 +198,12 @@ std::string DAKDataUtils::getSerialPort()
 
 void DAKDataUtils::onLineReceived(std::string line)
 {
-	obs_log(LOG_INFO, "Line received: %s", line.c_str());
-
 	std::string outBuf = "";
 
 	for (char &c : line) {
 		outBuf += std::to_string((int)c);
 		outBuf += " ";
 	}
-
-	obs_log(LOG_INFO, "****Line data: %s", outBuf.c_str());
 
 	// Extract the scoreboard field code
 	size_t pos = line.find("\001");
@@ -220,13 +216,6 @@ void DAKDataUtils::onLineReceived(std::string line)
 		return;
 	code = code.substr(0, pos);
 
-	//pos = code.find("\x04");
-	//if (pos == std::string::npos)
-	//	return;
-	//code = code.substr(0, pos);
-
-	obs_log(LOG_INFO, "===CODE===: %s", code.c_str());
-
 	int codeLen = static_cast<int>(code.length());
 	if (codeLen < 4)
 		return;
@@ -237,12 +226,12 @@ void DAKDataUtils::onLineReceived(std::string line)
 	pos = line.find("\x02");
 	if (pos == std::string::npos)
 		return;
-	std::string text = line.substr(pos + 1);
+	std::string text = line.substr(pos);
 
 	pos = text.find("\x04");
 	if (pos == std::string::npos)
 		return;
-	text = text.substr(0, pos);
+	text = text.substr(0, pos - 1);
 
 	std::stringstream ss;
 	ss << "[" << codeVal << "] " << text;
