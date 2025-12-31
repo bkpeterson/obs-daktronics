@@ -8,7 +8,7 @@ DAKDock::DAKDock(QWidget *parent) : QDockWidget(parent), ui(new Ui::DAKDock)
 	connect(ui->refreshButton, &QPushButton::clicked, this, &DAKDock::refreshList);
 	connect(ui->selectButton, &QPushButton::clicked, this, &DAKDock::selectItem);
 	connect(&DAKLogger::instance(), &DAKLogger::logMessage, this, &DAKDock::appendLogMessage);
-	connect(&DAKDataUtils::serial, &SerialPort::setConnected, this, &DAKDock::setConnected);
+	connect(DAKDataUtils::serial.get(), &SerialPort::setConnected, this, &DAKDock::setConnected);
 }
 
 DAKDock::~DAKDock()
