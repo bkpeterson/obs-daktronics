@@ -26,7 +26,7 @@ QT_BEGIN_NAMESPACE
 class Ui_DAKDock
 {
       public:
-    //QWidget *dockWidgetContents;
+    QWidget *dockWidgetContents;
     QWidget *gridLayoutWidget;
     QGridLayout *gridLayout;
     QHBoxLayout *horizontalLayout;
@@ -45,7 +45,9 @@ class Ui_DAKDock
         DockWidget->resize(410, 303);
         //DockWidget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
         DockWidget->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
-        gridLayoutWidget = new QWidget(DockWidget);
+        dockWidgetContents = new QWidget();
+        dockWidgetContents->setObjectName("dockWidgetContents");
+        gridLayoutWidget = new QWidget(dockWidgetContents);
         gridLayoutWidget->setObjectName("gridLayoutWidget");
         gridLayoutWidget->setGeometry(QRect(0, 0, 411, 281));
         gridLayout = new QGridLayout(gridLayoutWidget);
@@ -90,7 +92,7 @@ class Ui_DAKDock
 
         gridLayout->addWidget(plainTextEdit, 5, 0, 1, 1);
 
-        DockWidget->setWidget(gridLayoutWidget);
+        DockWidget->setWidget(dockWidgetContents);
 
         retranslateUi(DockWidget);
 
