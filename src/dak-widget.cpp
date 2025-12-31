@@ -1,30 +1,8 @@
 #include "dak-widget.hpp"
 
-DAKDock::DAKDock() : QDockWidget("Daktronics Serial Reader", (QWidget *)obs_frontend_get_main_window())
+DAKDock::DAKDock(QWidget *parent) : QDockWidget(parent, Qt::Window), ui(new Ui::DAKDock)
 {
-	// 1. Create the main container widget and layout
-	QWidget *contentWidget = new QWidget(this);
-	mainLayout = new QVBoxLayout(contentWidget);
-
-	// 2. Create UI Elements
-	dropDownList = new QComboBox(this);
-	refreshButton = new QPushButton("Refresh Ports", this);
-	selectButton = new QPushButton("Select Port", this);
-	logBox = new QPlainTextEdit(this);
-	logBox->setReadOnly(true);
-
-	// Initialize the dropdown with placeholder items
-	refreshList();
-
-	// 3. Add elements to the layout
-	mainLayout->addWidget(dropDownList);
-	mainLayout->addWidget(refreshButton);
-	mainLayout->addWidget(selectButton);
-	mainLayout->addWidget(logBox);
-
-	// Set the content widget to the dock
-	contentWidget->setLayout(mainLayout);
-	setWidget(contentWidget);
+	ui->setupUi(this);
 
 	// 4. Connect Signals and Slots
 	connect(refreshButton, &QPushButton::clicked, this, &DAKDock::refreshList);
@@ -32,7 +10,10 @@ DAKDock::DAKDock() : QDockWidget("Daktronics Serial Reader", (QWidget *)obs_fron
 	connect(&DAKLogger::instance(), &DAKLogger::logMessage, this, &DAKDock::appendLogMessage);
 }
 
-DAKDock::~DAKDock() {}
+DAKDock::~DAKDock() 
+{
+	delete ui;
+}
 
 // --- Slot Implementations ---
 

@@ -15,16 +15,21 @@
 #include "dak-serial.hpp"
 #include "dak-data-utils.hpp"
 #include "dak-logger.hpp"
+#include "dak-ui.h"
 
 /**
  * @brief Custom Qt Dock Widget for the OBS Plugin.
  */
+
+ namespace Ui {
+	class DAKDock;
+ }
+
 class DAKDock : public QDockWidget {
 	Q_OBJECT
 
 public:
-	//DAKDock(QWidget *parent = nullptr);
-	DAKDock();
+	explicit DAKDock(QWidget *parent = nullptr);
 	~DAKDock();
 
 private slots:
@@ -33,6 +38,7 @@ private slots:
 	void appendLogMessage(const QString &message);
 
 private:
+	Ui::DAKDock *ui{};
 	QVBoxLayout *mainLayout;
 	QComboBox *dropDownList;
 	QPushButton *refreshButton;
