@@ -43,8 +43,8 @@ class Ui_DAKDock
         if (DockWidget->objectName().isEmpty())
             DockWidget->setObjectName("DockWidget");
         DockWidget->resize(410, 303);
-        DockWidget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
-        DockWidget->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetClosable);
+        //DockWidget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
+        DockWidget->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
         dockWidgetContents = new QWidget();
         dockWidgetContents->setObjectName("dockWidgetContents");
         gridLayoutWidget = new QWidget(dockWidgetContents);
