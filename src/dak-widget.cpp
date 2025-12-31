@@ -5,12 +5,12 @@ DAKDock::DAKDock(QWidget *parent) : QDockWidget(parent, Qt::Window), ui(new Ui::
 	ui->setupUi(this);
 
 	// 4. Connect Signals and Slots
-	connect(refreshButton, &QPushButton::clicked, this, &DAKDock::refreshList);
-	connect(selectButton, &QPushButton::clicked, this, &DAKDock::selectItem);
-	connect(&DAKLogger::instance(), &DAKLogger::logMessage, this, &DAKDock::appendLogMessage);
+	connect(refreshButton, SIGNAL(&QPushButton::clicked), this, SLOT(&DAKDock::refreshList()));
+	connect(selectButton, SIGNAL(&QPushButton::clicked), this, SLOT(&DAKDock::selectItem()));
+	connect(&DAKLogger::instance(), SIGNAL(&DAKLogger::logMessage), this, SLOT(&DAKDock::appendLogMessage()));
 }
 
-DAKDock::~DAKDock() 
+DAKDock::~DAKDock()
 {
 	delete ui;
 }

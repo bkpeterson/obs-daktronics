@@ -21,9 +21,9 @@
  * @brief Custom Qt Dock Widget for the OBS Plugin.
  */
 
- namespace Ui {
-	class DAKDock;
- }
+namespace Ui {
+class DAKDock;
+}
 
 class DAKDock : public QDockWidget {
 	Q_OBJECT

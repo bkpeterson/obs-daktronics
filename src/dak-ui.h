@@ -25,7 +25,7 @@ QT_BEGIN_NAMESPACE
 
 class Ui_DAKDock
 {
-public:
+      public:
     QWidget *dockWidgetContents;
     QWidget *gridLayoutWidget;
     QGridLayout *gridLayout;
@@ -65,7 +65,6 @@ public:
 
         horizontalLayout->addWidget(lineEdit);
 
-
         gridLayout->addLayout(horizontalLayout, 0, 0, 1, 1);
 
         dropDownList = new QComboBox(gridLayoutWidget);
@@ -85,7 +84,6 @@ public:
 
         horizontalLayout_2->addWidget(selectButton);
 
-
         gridLayout->addLayout(horizontalLayout_2, 4, 0, 1, 1);
 
         plainTextEdit = new QPlainTextEdit(gridLayoutWidget);
@@ -98,7 +96,7 @@ public:
         retranslateUi(DockWidget);
 
         QMetaObject::connectSlotsByName(DockWidget);
-    } // setupUi
+    }  // setupUi
 
     void retranslateUi(QDockWidget *DockWidget)
     {
@@ -106,14 +104,14 @@ public:
         radioButton->setText(QCoreApplication::translate("DockWidget", "Connected", nullptr));
         refreshButton->setText(QCoreApplication::translate("DockWidget", "Refresh Ports", nullptr));
         selectButton->setText(QCoreApplication::translate("DockWidget", "Select Port", nullptr));
-    } // retranslateUi
-
+    }  // retranslateUi
 };
 
 namespace Ui {
-    class DAKDock: public Ui_DAKDock {};
-} // namespace Ui
+    class DAKDock : public Ui_DAKDock
+    {};
+}  // namespace Ui
 
 QT_END_NAMESPACE
 
-#endif // DAK_2D_UI_H
+#endif  // DAK_2D_UI_H
