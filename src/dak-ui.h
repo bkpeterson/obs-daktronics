@@ -1,24 +1,25 @@
 /********************************************************************************
-** Form generated from reading UI file 'dak-control.ui'
+** Form generated from reading UI file 'dak-panel.ui'
 **
 ** Created by: Qt User Interface Compiler version 6.10.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef DAK_2D_UI_H
-#define DAK_2D_UI_H
+#ifndef DAK_2D_PANEL_H
+#define DAK_2D_PANEL_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDockWidget>
-#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -27,70 +28,81 @@ class Ui_DAKDock
 {
       public:
     QWidget *dockWidgetContents;
-    QWidget *gridLayoutWidget;
-    QGridLayout *gridLayout;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout;
     QRadioButton *radioButton;
     QLineEdit *lineEdit;
+    QSpacerItem *horizontalSpacer;
     QComboBox *dropDownList;
     QHBoxLayout *horizontalLayout_2;
     QPushButton *refreshButton;
     QPushButton *selectButton;
+    QSpacerItem *horizontalSpacer_2;
     QPlainTextEdit *plainTextEdit;
 
     void setupUi(QDockWidget *DockWidget)
     {
         if (DockWidget->objectName().isEmpty())
             DockWidget->setObjectName("DockWidget");
-        DockWidget->resize(410, 303);
-        //DockWidget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
-        DockWidget->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
+        DockWidget->resize(357, 312);
+        DockWidget->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
         dockWidgetContents = new QWidget();
         dockWidgetContents->setObjectName("dockWidgetContents");
-        gridLayoutWidget = new QWidget(dockWidgetContents);
-        gridLayoutWidget->setObjectName("gridLayoutWidget");
-        gridLayoutWidget->setGeometry(QRect(0, 0, 411, 281));
-        gridLayout = new QGridLayout(gridLayoutWidget);
-        gridLayout->setObjectName("gridLayout");
-        gridLayout->setContentsMargins(0, 0, 0, 0);
+        verticalLayoutWidget = new QWidget(dockWidgetContents);
+        verticalLayoutWidget->setObjectName("verticalLayoutWidget");
+        verticalLayoutWidget->setGeometry(QRect(0, 0, 351, 281));
+        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
+        verticalLayout->setObjectName("verticalLayout");
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName("horizontalLayout");
-        radioButton = new QRadioButton(gridLayoutWidget);
+        radioButton = new QRadioButton(verticalLayoutWidget);
         radioButton->setObjectName("radioButton");
         radioButton->setCheckable(false);
 
         horizontalLayout->addWidget(radioButton);
 
-        lineEdit = new QLineEdit(gridLayoutWidget);
+        lineEdit = new QLineEdit(verticalLayoutWidget);
         lineEdit->setObjectName("lineEdit");
+        lineEdit->setReadOnly(true);
 
         horizontalLayout->addWidget(lineEdit);
 
-        gridLayout->addLayout(horizontalLayout, 0, 0, 1, 1);
+        verticalLayout->addLayout(horizontalLayout);
 
-        dropDownList = new QComboBox(gridLayoutWidget);
-        dropDownList->setObjectName("comboBox");
+        horizontalSpacer = new QSpacerItem(40, 10, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
-        gridLayout->addWidget(dropDownList, 3, 0, 1, 1);
+        verticalLayout->addItem(horizontalSpacer);
+
+        dropDownList = new QComboBox(verticalLayoutWidget);
+        dropDownList->setObjectName("dropDownList");
+
+        verticalLayout->addWidget(dropDownList);
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName("horizontalLayout_2");
-        refreshButton = new QPushButton(gridLayoutWidget);
-        refreshButton->setObjectName("pushButton_2");
+        refreshButton = new QPushButton(verticalLayoutWidget);
+        refreshButton->setObjectName("refreshButton");
 
         horizontalLayout_2->addWidget(refreshButton);
 
-        selectButton = new QPushButton(gridLayoutWidget);
-        selectButton->setObjectName("pushButton");
+        selectButton = new QPushButton(verticalLayoutWidget);
+        selectButton->setObjectName("selectButton");
 
         horizontalLayout_2->addWidget(selectButton);
 
-        gridLayout->addLayout(horizontalLayout_2, 4, 0, 1, 1);
+        verticalLayout->addLayout(horizontalLayout_2);
 
-        plainTextEdit = new QPlainTextEdit(gridLayoutWidget);
+        horizontalSpacer_2 = new QSpacerItem(40, 10, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+
+        verticalLayout->addItem(horizontalSpacer_2);
+
+        plainTextEdit = new QPlainTextEdit(verticalLayoutWidget);
         plainTextEdit->setObjectName("plainTextEdit");
+        plainTextEdit->setReadOnly(true);
 
-        gridLayout->addWidget(plainTextEdit, 5, 0, 1, 1);
+        verticalLayout->addWidget(plainTextEdit);
 
         DockWidget->setWidget(dockWidgetContents);
 
@@ -101,7 +113,7 @@ class Ui_DAKDock
 
     void retranslateUi(QDockWidget *DockWidget)
     {
-        DockWidget->setWindowTitle(QCoreApplication::translate("DockWidget", "Daktronics Serial Data", nullptr));
+        DockWidget->setWindowTitle(QCoreApplication::translate("DockWidget", "Daktronics Serial Reader", nullptr));
         radioButton->setText(QCoreApplication::translate("DockWidget", "Connected", nullptr));
         refreshButton->setText(QCoreApplication::translate("DockWidget", "Refresh Ports", nullptr));
         selectButton->setText(QCoreApplication::translate("DockWidget", "Select Port", nullptr));
@@ -115,4 +127,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif  // DAK_2D_UI_H
+#endif  // DAK_2D_PANEL_H
