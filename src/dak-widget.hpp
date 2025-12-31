@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QPlainTextEdit>
 #include <QString>
+#include <QWidget>
 #include <string>
 #include <sstream>
 

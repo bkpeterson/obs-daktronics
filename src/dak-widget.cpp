@@ -1,6 +1,6 @@
 #include "dak-widget.hpp"
 
-DAKDock::DAKDock(QWidget *parent) : QDockWidget(parent, Qt::Window), ui(new Ui::DAKDock)
+DAKDock::DAKDock(QWidget *parent) : QDockWidget(parent), ui(new Ui::DAKDock)
 {
 	ui->setupUi(this);
 
