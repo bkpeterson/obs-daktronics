@@ -4,10 +4,41 @@ DAKDock::DAKDock(QWidget *parent) : QFrame(parent)
 {
 	QVBoxLayout *verticalLayout = new QVBoxLayout();
 
+	QHBoxLayout *outputLayout = new QHBoxLayout();
+
+	screenList = new QComboBox(this);
+
+	QList<QScreen *> screens = QGuiApplication::screens();
+	for (int i = 0; i < screens.size(); ++i) {
+		QScreen *screen = screens[i];
+		screenList->addItem((screen->name().toStdString() + " [" + std::to_string(screen->geometry().width()) +
+				     "x" + std::to_string(screen->geometry().height()) + "]")
+					    .c_str(),
+				    (uint)i);
+	}
+
+	outputLayout->addWidget(screenList);
+
+	outputButton = new QPushButton(this);
+	outputLayout->addWidget(outputButton);
+
+	verticalLayout->addLayout(outputLayout);
+
+	QSpacerItem *horizontalSpacer0 =
+		new QSpacerItem(40, 10, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+
+	verticalLayout->addItem(horizontalSpacer0);
+
 	QHBoxLayout *horizontalLayout = new QHBoxLayout();
 
 	radioButton = new QRadioButton(this);
 	radioButton->setCheckable(false);
+	radioButton->setStyleSheet(
+		"QRadioButton:checked { color: green; }"                       // Changes text color when checked
+		"QRadioButton::indicator:checked { background-color: green; }" // Might not work as expected in all styles
+		"QRadioButton:unchecked { color: red; }"                       // Changes text color when checked
+		"QRadioButton::indicator:unchecked { background-color: red; }" // Might not work as expected in all styles
+	);
 
 	horizontalLayout->addWidget(radioButton);
 
@@ -48,22 +79,39 @@ DAKDock::DAKDock(QWidget *parent) : QFrame(parent)
 
 	verticalLayout->addWidget(plainTextEdit);
 
-	radioButton->setText("Connected");
+	outputButton->setText("Show Display");
+	radioButton->setText("Disconnected");
 	refreshButton->setText("Refresh Ports");
 	selectButton->setText("Select Port");
 
 	setLayout(verticalLayout);
 
 	// 4. Connect Signals and Slots
+	connect(outputButton, &QPushButton::clicked, this, &DAKDock::startOutput);
 	connect(refreshButton, &QPushButton::clicked, this, &DAKDock::refreshList);
 	connect(selectButton, &QPushButton::clicked, this, &DAKDock::selectItem);
 	connect(&DAKLogger::instance(), &DAKLogger::logMessage, this, &DAKDock::appendLogMessage);
 	connect(DAKDataUtils::serial.get(), &SerialPort::setConnected, this, &DAKDock::setConnected);
+
+	refreshList();
+
+	char *config_path = obs_module_get_config_path(obs_current_module(), "dak-settings.json");
+	obs_data_t *settings = obs_data_create_from_json_file(config_path);
+
+	const char *lastPort = obs_data_get_string(settings, "serial_port");
+	if (lastPort && std::string(lastPort).length() > 0) {
+		dropDownList->setCurrentText(lastPort);
+		selectItem();
+	}
+
+	obs_data_release(settings);
 }
 
 DAKDock::~DAKDock() {}
 
 // --- Slot Implementations ---
+
+void DAKDock::startOutput() {}
 
 void DAKDock::refreshList()
 {
@@ -87,6 +135,12 @@ void DAKDock::selectItem()
 {
 	QString selected = dropDownList->currentText();
 	DAKDataUtils::startSerial(selected.toStdString());
+
+	char *config_path = obs_module_get_config_path(obs_current_module(), "dak-settings.json");
+	obs_data_t *settings = obs_data_create();
+	obs_data_set_string(settings, "serial_port", selected.toStdString().c_str());
+	obs_data_save_json(settings, config_path);
+	obs_data_release(settings);
 }
 
 void DAKDock::appendLogMessage(const QString &message)
@@ -97,5 +151,9 @@ void DAKDock::appendLogMessage(const QString &message)
 void DAKDock::setConnected(const bool isConnected)
 {
 	radioButton->setChecked(isConnected);
+	if (isConnected)
+		radioButton->setText("Connected");
+	else
+		radioButton->setText("Disconnected");
 	lineEdit->setText(DAKDataUtils::getSerialPort().c_str());
 }

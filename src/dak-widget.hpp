@@ -28,6 +28,7 @@ public:
 	~DAKDock();
 
 private slots:
+	void startOutput();
 	void refreshList();
 	void selectItem();
 	void appendLogMessage(const QString &message);
@@ -40,4 +41,6 @@ private:
 	QPushButton *refreshButton;
 	QPushButton *selectButton;
 	QPlainTextEdit *plainTextEdit;
+	QComboBox *screenList;
+	QPushButton *outputButton;
 };
