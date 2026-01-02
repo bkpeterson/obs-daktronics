@@ -18,7 +18,8 @@ DAKDock::DAKDock(QWidget *parent) : QFrame(parent)
 
 	verticalLayout->addLayout(horizontalLayout);
 
-	QSpacerItem *horizontalSpacer = new QSpacerItem(40, 10, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+	QSpacerItem *horizontalSpacer =
+		new QSpacerItem(40, 10, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
 	verticalLayout->addItem(horizontalSpacer);
 
@@ -37,7 +38,8 @@ DAKDock::DAKDock(QWidget *parent) : QFrame(parent)
 
 	verticalLayout->addLayout(horizontalLayout_2);
 
-	QSpacerItem *horizontalSpacer_2 = new QSpacerItem(40, 10, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+	QSpacerItem *horizontalSpacer_2 =
+		new QSpacerItem(40, 10, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
 	verticalLayout->addItem(horizontalSpacer_2);
 
@@ -59,10 +61,7 @@ DAKDock::DAKDock(QWidget *parent) : QFrame(parent)
 	connect(DAKDataUtils::serial.get(), &SerialPort::setConnected, this, &DAKDock::setConnected);
 }
 
-DAKDock::~DAKDock()
-{
-	delete ui;
-}
+DAKDock::~DAKDock() {}
 
 // --- Slot Implementations ---
 
