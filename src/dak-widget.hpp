@@ -19,6 +19,8 @@
 #include <obs-module.h>
 #include <obs-frontend-api.h>
 
+#include <util/platform.h>
+
 #include "dak-serial.hpp"
 #include "dak-data-utils.hpp"
 #include "dak-logger.hpp"

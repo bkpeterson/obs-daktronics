@@ -94,7 +94,16 @@ DAKDock::DAKDock(QWidget *parent) : QFrame(parent)
 	refreshList();
 
 	char *config_path = obs_module_config_path("dak-settings.json");
-	obs_data_t *settings = obs_data_create_from_json_file(config_path);
+	std::string path = config_path ? config_path : "";
+	bfree(config_path);
+	
+	size_t pos = path.find_last_of("/\\");
+	if (pos != std::string::npos) {
+		std::string dir = path.substr(0, pos);
+		os_mkdirs(dir.c_str());
+	}
+
+	obs_data_t *settings = obs_data_create_from_json_file(path.c_str());
 
 	const char *lastPort = obs_data_get_string(settings, "serial_port");
 	appendLogMessage("Loaded serial port: " + QString::fromStdString(lastPort ? lastPort : "None"));
@@ -118,10 +127,19 @@ DAKDock::~DAKDock() {}
 
 void DAKDock::startOutput() {
 	char *config_path = obs_module_config_path("dak-settings.json");
+	std::string path = config_path ? config_path : "";
+	bfree(config_path);
+	
+	size_t pos = path.find_last_of("/\\");
+	if (pos != std::string::npos) {
+		std::string dir = path.substr(0, pos);
+		os_mkdirs(dir.c_str());
+	}
+
 	obs_data_t *settings = obs_data_create();
 	obs_data_set_string(settings, "serial_port", dropDownList->currentText().toStdString().c_str());
 	obs_data_set_string(settings, "screen", screenList->currentText().toStdString().c_str());
-	if(obs_data_save_json(settings, config_path))
+	if(obs_data_save_json(settings, path.c_str()))
 		appendLogMessage("Settings saved successfully.");
 	else
 		appendLogMessage("Failed to save settings.");
@@ -154,10 +172,19 @@ void DAKDock::selectItem()
 	DAKDataUtils::startSerial(selected.toStdString());
 
 	char *config_path = obs_module_config_path("dak-settings.json");
+	std::string path = config_path ? config_path : "";
+	bfree(config_path);
+	
+	size_t pos = path.find_last_of("/\\");
+	if (pos != std::string::npos) {
+		std::string dir = path.substr(0, pos);
+		os_mkdirs(dir.c_str());
+	}
+
 	obs_data_t *settings = obs_data_create();
 	obs_data_set_string(settings, "serial_port", selected.toStdString().c_str());
 	obs_data_set_string(settings, "screen", screenList->currentText().toStdString().c_str());
-	if(obs_data_save_json(settings, config_path))
+	if(obs_data_save_json(settings, path.c_str()))
 		appendLogMessage("Settings saved successfully.");
 	else
 		appendLogMessage("Failed to save settings.");

@@ -170,12 +170,12 @@ void SerialPort::readThreadFunction()
 
 	while (reading && opened && !exit_flag.load()) {
 		readChar = "";
-		while (readChar != "\x16") {
+		while (readChar != "\x16" && !exit_flag.load()) {
 			readChar = portObj->read(1);
 		}
 
 		readBuffer.clear();
-		while (readChar != "\x17") {
+		while (readChar != "\x17" && !exit_flag.load()) {
 			readChar = portObj->read(1);
 			if (readChar != "\x17") {
 				readBuffer += readChar;
