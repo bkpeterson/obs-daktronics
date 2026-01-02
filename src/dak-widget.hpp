@@ -10,6 +10,9 @@
 #include <QPlainTextEdit>
 #include <QString>
 #include <QWidget>
+#include <QGuiApplication>
+#include <QScreen>
+#include <QSpacerItem>
 #include <string>
 #include <sstream>
 
