@@ -24,7 +24,6 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #include "daktronics-filter.hpp"
 #include "dak-serial.hpp"
 #include "dak-widget.hpp"
-#include "dak-ui.h"
 
 #include <string>
 #include <vector>
