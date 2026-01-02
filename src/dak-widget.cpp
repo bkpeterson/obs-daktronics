@@ -93,7 +93,7 @@ DAKDock::DAKDock(QWidget *parent) : QFrame(parent)
 
 	refreshList();
 
-	char *config_path = obs_module_get_config_path(obs_current_module(), "dak-settings.json");
+	char *config_path = obs_module_config_path("dak-settings.json");
 	obs_data_t *settings = obs_data_create_from_json_file(config_path);
 
 	const char *lastPort = obs_data_get_string(settings, "serial_port");
@@ -117,7 +117,7 @@ DAKDock::~DAKDock() {}
 // --- Slot Implementations ---
 
 void DAKDock::startOutput() {
-	char *config_path = obs_module_get_config_path(obs_current_module(), "dak-settings.json");
+	char *config_path = obs_module_config_path("dak-settings.json");
 	obs_data_t *settings = obs_data_create();
 	obs_data_set_string(settings, "serial_port", dropDownList->currentText().toStdString().c_str());
 	obs_data_set_string(settings, "screen", screenList->currentText().toStdString().c_str());
@@ -153,7 +153,7 @@ void DAKDock::selectItem()
 	QString selected = dropDownList->currentText();
 	DAKDataUtils::startSerial(selected.toStdString());
 
-	char *config_path = obs_module_get_config_path(obs_current_module(), "dak-settings.json");
+	char *config_path = obs_module_config_path("dak-settings.json");
 	obs_data_t *settings = obs_data_create();
 	obs_data_set_string(settings, "serial_port", selected.toStdString().c_str());
 	obs_data_set_string(settings, "screen", screenList->currentText().toStdString().c_str());

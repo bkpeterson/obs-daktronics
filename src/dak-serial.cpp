@@ -1,5 +1,7 @@
 #include "dak-serial.hpp"
 
+std::atomic<bool> exit_flag(false);
+
 SerialPort::SerialPort()
 	: opened(false),
 	  reading(false),
@@ -81,6 +83,7 @@ void SerialPort::stopReading()
 	// Wake up any waiting threads
 	queueCondition.notify_all();
 
+	exit_flag.store(true);
 	if (readThread && readThread->joinable()) {
 		readThread->join();
 	}
@@ -165,7 +168,7 @@ void SerialPort::readThreadFunction()
 	std::string readBuffer;
 	std::string readChar;
 
-	while (reading && opened) {
+	while (reading && opened && !exit_flag.load()) {
 		readChar = "";
 		while (readChar != "\x16") {
 			readChar = portObj->read(1);

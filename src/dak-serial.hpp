@@ -12,6 +12,7 @@
 #include <condition_variable>
 #include <queue>
 #include <QObject>
+#include <atomic>
 
 #include <obs-module.h>
 #include "dak-source-support.h"
