@@ -48,9 +48,9 @@ DAKDock::DAKDock(QWidget *parent) : QFrame(parent)
 
 	verticalLayout->addWidget(plainTextEdit);
 
-	radioButton->setText(QCoreApplication::translate("DockWidget", "Connected", nullptr));
-	refreshButton->setText(QCoreApplication::translate("DockWidget", "Refresh Ports", nullptr));
-	selectButton->setText(QCoreApplication::translate("DockWidget", "Select Port", nullptr));
+	radioButton->setText("Connected");
+	refreshButton->setText("Refresh Ports");
+	selectButton->setText("Select Port");
 
 	setLayout(verticalLayout);
 
