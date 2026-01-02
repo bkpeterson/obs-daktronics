@@ -27,8 +27,8 @@ QT_BEGIN_NAMESPACE
 class Ui_DAKDock
 {
       public:
-    QWidget *dockWidgetContents;
-    QWidget *verticalLayoutWidget;
+    //QWidget *dockWidgetContents;
+    //QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout;
     QRadioButton *radioButton;
@@ -47,23 +47,26 @@ class Ui_DAKDock
             DockWidget->setObjectName("DockWidget");
         DockWidget->resize(357, 312);
         DockWidget->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
-        dockWidgetContents = new QWidget();
-        dockWidgetContents->setObjectName("dockWidgetContents");
-        verticalLayoutWidget = new QWidget(dockWidgetContents);
-        verticalLayoutWidget->setObjectName("verticalLayoutWidget");
-        verticalLayoutWidget->setGeometry(QRect(0, 0, 351, 281));
-        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
+        //dockWidgetContents = new QWidget();
+        //dockWidgetContents->setObjectName("dockWidgetContents");
+        //verticalLayoutWidget = new QWidget(dockWidgetContents);
+        //verticalLayoutWidget->setObjectName("verticalLayoutWidget");
+        //verticalLayoutWidget->setGeometry(QRect(0, 0, 351, 281));
+        //verticalLayout = new QVBoxLayout(verticalLayoutWidget);
+        verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName("verticalLayout");
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName("horizontalLayout");
-        radioButton = new QRadioButton(verticalLayoutWidget);
+        //radioButton = new QRadioButton(verticalLayoutWidget);
+        radioButton = new QRadioButton();
         radioButton->setObjectName("radioButton");
         radioButton->setCheckable(false);
 
         horizontalLayout->addWidget(radioButton);
 
-        lineEdit = new QLineEdit(verticalLayoutWidget);
+        //lineEdit = new QLineEdit(verticalLayoutWidget);
+        lineEdit = new QLineEdit();
         lineEdit->setObjectName("lineEdit");
         lineEdit->setReadOnly(true);
 
@@ -75,19 +78,22 @@ class Ui_DAKDock
 
         verticalLayout->addItem(horizontalSpacer);
 
-        dropDownList = new QComboBox(verticalLayoutWidget);
+        //dropDownList = new QComboBox(verticalLayoutWidget);
+        dropDownList = new QComboBox();
         dropDownList->setObjectName("dropDownList");
 
         verticalLayout->addWidget(dropDownList);
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName("horizontalLayout_2");
-        refreshButton = new QPushButton(verticalLayoutWidget);
+        //refreshButton = new QPushButton(verticalLayoutWidget);
+        refreshButton = new QPushButton();
         refreshButton->setObjectName("refreshButton");
 
         horizontalLayout_2->addWidget(refreshButton);
 
-        selectButton = new QPushButton(verticalLayoutWidget);
+        //selectButton = new QPushButton(verticalLayoutWidget);
+        selectButton = new QPushButton();
         selectButton->setObjectName("selectButton");
 
         horizontalLayout_2->addWidget(selectButton);
@@ -98,13 +104,15 @@ class Ui_DAKDock
 
         verticalLayout->addItem(horizontalSpacer_2);
 
-        plainTextEdit = new QPlainTextEdit(verticalLayoutWidget);
+        //plainTextEdit = new QPlainTextEdit(verticalLayoutWidget);
+        plainTextEdit = new QPlainTextEdit();
         plainTextEdit->setObjectName("plainTextEdit");
         plainTextEdit->setReadOnly(true);
 
         verticalLayout->addWidget(plainTextEdit);
 
-        DockWidget->setWidget(dockWidgetContents);
+        //DockWidget->setWidget(dockWidgetContents);
+        DockWidget->setLayout(verticalLayout);
 
         retranslateUi(DockWidget);
 

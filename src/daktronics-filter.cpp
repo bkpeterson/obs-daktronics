@@ -155,6 +155,9 @@ void DAKFilter::Update(obs_data_t *settings)
 	}
 
 	obs_properties_destroy(sourceProps);
+
+	DAKDataUtils::RemoveFilter(this);
+	DAKDataUtils::AddFilter(this);
 }
 
 void DAKFilter::GetDefaults(obs_data_t *settings)
