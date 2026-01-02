@@ -207,18 +207,25 @@ void DAKDock::appendLogMessage(const QString &message)
 void DAKDock::setConnected(const bool isConnected)
 {
 	radioButton->setChecked(isConnected);
+
+	QPalette pal = radioButton->palette();
+
 	if (isConnected) {
 		radioButton->setText("Connected");
-		radioButton->setStyleSheet(
-			"QRadioButton { color: green; }"                       // Changes text color when checked
-			"QRadioButton::indicator { background-color: green; }" // Might not work as expected in all styles
-		);
+		pal.setColor(QPalette::WindowText, QColor (Qt::darkGreen));
+		radioButton->setPalette(pal);
+		//radioButton->setStyleSheet(
+		//	"QRadioButton { color: green; }"                       // Changes text color when checked
+		//	"QRadioButton::indicator { background-color: green; }" // Might not work as expected in all styles
+		//);
 	} else {
 		radioButton->setText("Disconnected");
-		radioButton->setStyleSheet(
-			"QRadioButton:unchecked { color: red; }"                       // Changes text color when checked
-			"QRadioButton::indicator:unchecked { background-color: red; }" // Might not work as expected in all styles
-		);
+		pal.setColor(QPalette::WindowText, QColor (Qt::darkRed));
+		radioButton->setPalette(pal);
+		//radioButton->setStyleSheet(
+		//	"QRadioButton:unchecked { color: red; }"                       // Changes text color when checked
+		//	"QRadioButton::indicator:unchecked { background-color: red; }" // Might not work as expected in all styles
+		//);
 	}
 
 	lineEdit->setText(DAKDataUtils::getSerialPort().c_str());
