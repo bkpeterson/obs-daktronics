@@ -158,7 +158,15 @@ void DAKDock::selectItem()
 
 void DAKDock::appendLogMessage(const QString &message)
 {
-	plainTextEdit->appendPlainText(message);
+	QString curText = plainTextEdit->toPlainText();
+	curText.append(message);
+
+	if (curText.length() > 10000) {
+		curText = curText.right(8000);
+		plainTextEdit->setPlainText(curText);
+	} else {
+		plainTextEdit->appendPlainText(message);
+	}
 }
 
 void DAKDock::setConnected(const bool isConnected)
