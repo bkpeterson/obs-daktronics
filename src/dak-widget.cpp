@@ -34,8 +34,6 @@ DAKDock::DAKDock(QWidget *parent) : QFrame(parent)
 	radioButton = new QRadioButton(this);
 	radioButton->setCheckable(false);
 	radioButton->setStyleSheet(
-		"QRadioButton:checked { color: green; }"                       // Changes text color when checked
-		"QRadioButton::indicator:checked { background-color: green; }" // Might not work as expected in all styles
 		"QRadioButton:unchecked { color: red; }"                       // Changes text color when checked
 		"QRadioButton::indicator:unchecked { background-color: red; }" // Might not work as expected in all styles
 	);
@@ -104,6 +102,11 @@ DAKDock::DAKDock(QWidget *parent) : QFrame(parent)
 		selectItem();
 	}
 
+	const char *lastScreen = obs_data_get_string(settings, "screen");
+	if (lastScreen && std::string(lastScreen).length() > 0) {
+		screenList->setCurrentText(lastScreen);
+	}
+
 	obs_data_release(settings);
 }
 
@@ -111,7 +114,16 @@ DAKDock::~DAKDock() {}
 
 // --- Slot Implementations ---
 
-void DAKDock::startOutput() {}
+void DAKDock::startOutput() {
+	char *config_path = obs_module_get_config_path(obs_current_module(), "dak-settings.json");
+	obs_data_t *settings = obs_data_create();
+	obs_data_set_string(settings, "serial_port", dropDownList->currentText().toStdString().c_str());
+	obs_data_set_string(settings, "screen", screenList->currentText().toStdString().c_str());
+	obs_data_save_json(settings, config_path);
+	obs_data_release(settings);
+
+	obs_frontend_open_projector("Preview", screenList->currentIndex(), nullptr, "Daktronics Scoreboard Output");
+}
 
 void DAKDock::refreshList()
 {
@@ -139,6 +151,7 @@ void DAKDock::selectItem()
 	char *config_path = obs_module_get_config_path(obs_current_module(), "dak-settings.json");
 	obs_data_t *settings = obs_data_create();
 	obs_data_set_string(settings, "serial_port", selected.toStdString().c_str());
+	obs_data_set_string(settings, "screen", screenList->currentText().toStdString().c_str());
 	obs_data_save_json(settings, config_path);
 	obs_data_release(settings);
 }
@@ -151,9 +164,19 @@ void DAKDock::appendLogMessage(const QString &message)
 void DAKDock::setConnected(const bool isConnected)
 {
 	radioButton->setChecked(isConnected);
-	if (isConnected)
+	if (isConnected) {
 		radioButton->setText("Connected");
-	else
+		radioButton->setStyleSheet(
+			"QRadioButton:checked { color: green; }"                       // Changes text color when checked
+			"QRadioButton::indicator:checked { background-color: green; }" // Might not work as expected in all styles
+		);
+	} else {
 		radioButton->setText("Disconnected");
+		radioButton->setStyleSheet(
+			"QRadioButton:unchecked { color: red; }"                       // Changes text color when checked
+			"QRadioButton::indicator:unchecked { background-color: red; }" // Might not work as expected in all styles
+		);
+	}
+
 	lineEdit->setText(DAKDataUtils::getSerialPort().c_str());
 }
