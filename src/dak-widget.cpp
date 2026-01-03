@@ -41,10 +41,7 @@ DAKDock::DAKDock(QWidget *parent) : QFrame(parent)
 		"height: 12px;"
 		"border-radius: 6px;" // Makes it a circle
 		"border: 2px solid #000;" // Optional border color
-		"background-color: transparent;" // Unchecked state
-		"}"
-		"QRadioButton::indicator:checked {"
-		"background-color: #00FF00;" // Green color when checked
+		"background-color: darkred;" // Unchecked state
 		"}"
 	);
 
@@ -220,8 +217,18 @@ void DAKDock::setConnected(const bool isConnected)
 
 	if (isConnected) {
 		radioButton->setText("Connected");
+		radioButton->setStyleSheet(
+			"QRadioButton::indicator {"
+			"background-color: darkgreen;"
+			"}"
+		);
 	} else {
 		radioButton->setText("Disconnected");
+		radioButton->setStyleSheet(
+			"QRadioButton::indicator {"
+			"background-color: darkred;"
+			"}"
+		);
 	}
 
 	lineEdit->setText(DAKDataUtils::getSerialPort().c_str());

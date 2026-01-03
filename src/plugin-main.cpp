@@ -29,8 +29,6 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #include <vector>
 #include <QMainWindow>
 
-DAKDock *dock = nullptr;
-
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE("daktronics-realtime-data", "en-US")
 
@@ -65,7 +63,7 @@ bool obs_module_load(void)
 			UNUSED_PARAMETER(private_data);
 			if (event == OBS_FRONTEND_EVENT_FINISHED_LOADING) {
 				const auto main_window = static_cast<QMainWindow *>(obs_frontend_get_main_window());
-				dock = new DAKDock(main_window);
+				DAKDock *dock = new DAKDock(main_window);
 				obs_frontend_add_dock_by_id("dak_serial_dock", "Daktronics Serial Reader", dock);
 				DAKLogger::instance().emit logMessage("Plugin loaded!");
 			}
@@ -85,8 +83,6 @@ void obs_module_unload(void)
 
 	DAKDataUtils::sync_destroy();
 	DAKDataUtils::clearSportsData();
-
-	dock->deleteLater();
 
 	obs_log(LOG_INFO, "Daktronics plugin unloaded");
 }
