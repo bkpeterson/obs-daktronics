@@ -52,6 +52,4 @@ private:
 	int _origColor;
 	int _colorAlpha;
 	int _origColorAlpha;
-
-	void _render();
 };

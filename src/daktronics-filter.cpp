@@ -117,15 +117,9 @@ void DAKFilter::Render(void *data, gs_effect_t *effect)
 	UNUSED_PARAMETER(effect);
 	UNUSED_PARAMETER(data);
 
-	//auto instance = static_cast<DAKFilter *>(data);
-	//obs_source_skip_video_filter(instance->_source);
-	//instance->_render();
+	auto instance = static_cast<DAKFilter *>(data);
+	obs_source_skip_video_filter(instance->_source);
 }
-
-//void DAKFilter::_render()
-//{
-//	obs_source_skip_video_filter(_source);
-//}
 
 void DAKFilter::Update(void *data, obs_data_t *settings)
 {
@@ -208,8 +202,8 @@ obs_properties_t *DAKFilter::GetProperties(void *data)
 
 void DAKFilter::populateParams(obs_property_t *list, obs_property_type paramType)
 {
-	obs_source_t *targetSource = obs_filter_get_parent(_source);
-	obs_properties_t *sourceProps = obs_source_properties(targetSource);
+	//obs_source_t *targetSource = obs_filter_get_parent(_source);
+	obs_properties_t *sourceProps = obs_source_properties(_source);
 
 	for (obs_property_t *prop = obs_properties_first(sourceProps); prop != NULL; obs_property_next(&prop)) {
 		const char *prop_name = obs_property_name(prop);
@@ -222,8 +216,8 @@ void DAKFilter::populateParams(obs_property_t *list, obs_property_type paramType
 
 void DAKFilter::doColorProps(obs_properties_t *props, std::string paramName)
 {
-	obs_source_t *targetSource = obs_filter_get_parent(_source);
-	obs_properties_t *sourceProps = obs_source_properties(targetSource);
+	//obs_source_t *targetSource = obs_filter_get_parent(_source);
+	obs_properties_t *sourceProps = obs_source_properties(_source);
 
 	obs_property_t *targetProp = obs_properties_get(sourceProps, paramName.c_str());
 	obs_property_t *color = obs_properties_get(props, "dak_color");
