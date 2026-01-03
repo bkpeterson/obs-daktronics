@@ -33,6 +33,9 @@ public:
 	void close();
 	bool isOpen() const { return opened; }
 
+	// Factory method
+	static std::unique_ptr<SerialPort> create();
+
 	std::string getPort() const { return _port; };
 
 	// Start/stop reading
@@ -63,8 +66,6 @@ private Q_SLOTS:
 	void onLineReceivedSlot(const QString &line);
 	void onErrorSlot(const QString &error);
 
-	// Factory method
-	static std::unique_ptr<SerialPort> create();
 
 signals:
 	// Signal emitted when a new log message is available

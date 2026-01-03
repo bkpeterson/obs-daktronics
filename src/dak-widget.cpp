@@ -34,7 +34,7 @@ DAKDock::DAKDock(QWidget *parent) : QFrame(parent)
 	connectedLabel = new QLabel(this);
 	connectedLabel->setStyleSheet(
 		"QLabel {"
-		"color: darkred;"
+		"color: red;"
 		"}"
 	);
 
@@ -210,14 +210,14 @@ void DAKDock::setConnected(const bool isConnected)
 		connectedLabel->setText("Connected");
 		connectedLabel->setStyleSheet(
 			"QLabel {"
-			"color: darkgreen;"
+			"color: green;"
 			"}"
 		);
 	} else {
 		connectedLabel->setText("Disconnected");
 		connectedLabel->setStyleSheet(
 			"QLabel {"
-			"color: darkred;"
+			"color: red;"
 			"}"
 		);
 	}
