@@ -3,7 +3,7 @@
 #include <QFrame>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-#include <QRadioButton>
+#include <QLabel>
 #include <QLineEdit>
 #include <QComboBox>
 #include <QPushButton>
@@ -40,7 +40,7 @@ private slots:
 	void setConnected(const bool isConnected);
 
 private:
-	QRadioButton *radioButton;
+	QLabel *connectedLabel;
 	QLineEdit *lineEdit;
 	QComboBox *dropDownList;
 	QPushButton *refreshButton;

@@ -31,21 +31,14 @@ DAKDock::DAKDock(QWidget *parent) : QFrame(parent)
 
 	QHBoxLayout *horizontalLayout = new QHBoxLayout();
 
-	radioButton = new QRadioButton(this);
-	radioButton->setCheckable(false);
-	radioButton->setAutoExclusive(false);
-	radioButton->setChecked(false);
-	radioButton->setStyleSheet(
-		"QRadioButton::indicator {"
-		"width: 12px;"
-		"height: 12px;"
-		"border-radius: 6px;" // Makes it a circle
-		"border: 2px solid #000;" // Optional border color
-		"background-color: darkred;" // Unchecked state
+	connectedLabel = new QLabel(this);
+	connectedLabel->setStyleSheet(
+		"QLabel {"
+		"color: darkred;"
 		"}"
 	);
 
-	horizontalLayout->addWidget(radioButton);
+	horizontalLayout->addWidget(connectedLabel);
 
 	lineEdit = new QLineEdit(this);
 	lineEdit->setReadOnly(true);
@@ -85,7 +78,7 @@ DAKDock::DAKDock(QWidget *parent) : QFrame(parent)
 	verticalLayout->addWidget(plainTextEdit);
 
 	outputButton->setText("Show Display");
-	radioButton->setText("Disconnected");
+	connectedLabel->setText("Disconnected");
 	refreshButton->setText("Refresh Ports");
 	selectButton->setText("Select Port");
 
@@ -213,20 +206,18 @@ void DAKDock::appendLogMessage(const QString &message)
 
 void DAKDock::setConnected(const bool isConnected)
 {
-	radioButton->setChecked(isConnected);
-
 	if (isConnected) {
-		radioButton->setText("Connected");
-		radioButton->setStyleSheet(
-			"QRadioButton::indicator {"
-			"background-color: darkgreen;"
+		connectedLabel->setText("Connected");
+		connectedLabel->setStyleSheet(
+			"QLabel {"
+			"color: darkgreen;"
 			"}"
 		);
 	} else {
-		radioButton->setText("Disconnected");
-		radioButton->setStyleSheet(
-			"QRadioButton::indicator {"
-			"background-color: darkred;"
+		connectedLabel->setText("Disconnected");
+		connectedLabel->setStyleSheet(
+			"QLabel {"
+			"color: darkred;"
 			"}"
 		);
 	}
