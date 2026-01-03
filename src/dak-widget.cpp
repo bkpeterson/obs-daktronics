@@ -33,13 +33,20 @@ DAKDock::DAKDock(QWidget *parent) : QFrame(parent)
 
 	radioButton = new QRadioButton(this);
 	radioButton->setCheckable(false);
-	QPalette pal = radioButton->palette();
-	pal.setColor(QPalette::WindowText, QColor (Qt::darkRed));
-	radioButton->setPalette(pal);
-	//radioButton->setStyleSheet(
-	//	"QRadioButton:unchecked { color: red; }"                       // Changes text color when checked
-	//	"QRadioButton::indicator:unchecked { background-color: red; }" // Might not work as expected in all styles
-	//);
+	radioButton->setAutoExclusive(false);
+	radioButton->setChecked(false);
+	radioButton->setStyleSheet(
+		"QRadioButton::indicator {"
+		"width: 12px;"
+		"height: 12px;"
+		"border-radius: 6px;" // Makes it a circle
+		"border: 2px solid #000;" // Optional border color
+		"background-color: transparent;" // Unchecked state
+		"}"
+		"QRadioButton::indicator:checked {"
+		"background-color: #00FF00;" // Green color when checked
+		"}"
+	);
 
 	horizontalLayout->addWidget(radioButton);
 
@@ -211,24 +218,10 @@ void DAKDock::setConnected(const bool isConnected)
 {
 	radioButton->setChecked(isConnected);
 
-	QPalette pal = radioButton->palette();
-
 	if (isConnected) {
 		radioButton->setText("Connected");
-		pal.setColor(QPalette::WindowText, QColor (Qt::darkGreen));
-		radioButton->setPalette(pal);
-		//radioButton->setStyleSheet(
-		//	"QRadioButton { color: green; }"                       // Changes text color when checked
-		//	"QRadioButton::indicator { background-color: green; }" // Might not work as expected in all styles
-		//);
 	} else {
 		radioButton->setText("Disconnected");
-		pal.setColor(QPalette::WindowText, QColor (Qt::darkRed));
-		radioButton->setPalette(pal);
-		//radioButton->setStyleSheet(
-		//	"QRadioButton:unchecked { color: red; }"                       // Changes text color when checked
-		//	"QRadioButton::indicator:unchecked { background-color: red; }" // Might not work as expected in all styles
-		//);
 	}
 
 	lineEdit->setText(DAKDataUtils::getSerialPort().c_str());
