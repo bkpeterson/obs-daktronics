@@ -31,14 +31,15 @@ DAKDock::DAKDock(QWidget *parent) : QFrame(parent)
 
 	QHBoxLayout *horizontalLayout = new QHBoxLayout();
 
-	connectedLabel = new QLabel(this);
-	connectedLabel->setStyleSheet(
+	connectedBox = new QCheckBox(this);
+	connectedBox->setCheckable(false);
+	connectedBox->setStyleSheet(
 		"QLabel {"
 		"color: red;"
 		"}"
 	);
 
-	horizontalLayout->addWidget(connectedLabel);
+	horizontalLayout->addWidget(connectedBox);
 
 	lineEdit = new QLineEdit(this);
 	lineEdit->setReadOnly(true);
@@ -78,7 +79,7 @@ DAKDock::DAKDock(QWidget *parent) : QFrame(parent)
 	verticalLayout->addWidget(plainTextEdit);
 
 	outputButton->setText("Show Display");
-	connectedLabel->setText("Disconnected");
+	connectedBox->setText(" Disconnected");
 	refreshButton->setText("Refresh Ports");
 	selectButton->setText("Select Port");
 
@@ -206,16 +207,18 @@ void DAKDock::appendLogMessage(const QString &message)
 
 void DAKDock::setConnected(const bool isConnected)
 {
+	connectedBox->setChecked(isConnected);
+	
 	if (isConnected) {
-		connectedLabel->setText("Connected");
-		connectedLabel->setStyleSheet(
+		connectedBox->setText(" Connected");
+		connectedBox->setStyleSheet(
 			"QLabel {"
 			"color: green;"
 			"}"
 		);
 	} else {
-		connectedLabel->setText("Disconnected");
-		connectedLabel->setStyleSheet(
+		connectedBox->setText(" Disconnected");
+		connectedBox->setStyleSheet(
 			"QLabel {"
 			"color: red;"
 			"}"

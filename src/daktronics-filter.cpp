@@ -115,15 +115,17 @@ std::string DAKFilter::GetSport()
 void DAKFilter::Render(void *data, gs_effect_t *effect)
 {
 	UNUSED_PARAMETER(effect);
+	UNUSED_PARAMETER(data);
 
-	auto instance = static_cast<DAKFilter *>(data);
-	instance->_render();
+	//auto instance = static_cast<DAKFilter *>(data);
+	//obs_source_skip_video_filter(instance->_source);
+	//instance->_render();
 }
 
-void DAKFilter::_render()
-{
-	obs_source_skip_video_filter(_source);
-}
+//void DAKFilter::_render()
+//{
+//	obs_source_skip_video_filter(_source);
+//}
 
 void DAKFilter::Update(void *data, obs_data_t *settings)
 {
