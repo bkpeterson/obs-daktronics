@@ -33,10 +33,13 @@ DAKDock::DAKDock(QWidget *parent) : QFrame(parent)
 
 	radioButton = new QRadioButton(this);
 	radioButton->setCheckable(false);
-	radioButton->setStyleSheet(
-		"QRadioButton:unchecked { color: red; }"                       // Changes text color when checked
-		"QRadioButton::indicator:unchecked { background-color: red; }" // Might not work as expected in all styles
-	);
+	QPalette pal = radioButton->palette();
+	pal.setColor(QPalette::WindowText, QColor (Qt::darkRed));
+	radioButton->setPalette(pal);
+	//radioButton->setStyleSheet(
+	//	"QRadioButton:unchecked { color: red; }"                       // Changes text color when checked
+	//	"QRadioButton::indicator:unchecked { background-color: red; }" // Might not work as expected in all styles
+	//);
 
 	horizontalLayout->addWidget(radioButton);
 

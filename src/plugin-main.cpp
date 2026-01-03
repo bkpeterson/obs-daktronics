@@ -81,12 +81,12 @@ bool obs_module_load(void)
 
 void obs_module_unload(void)
 {
+	obs_remove_main_render_callback(DAKDataUtils::execute_global_tick_logic, NULL);
+
 	DAKDataUtils::sync_destroy();
 	DAKDataUtils::clearSportsData();
 
-	delete dock;
-	
-	obs_remove_main_render_callback(DAKDataUtils::execute_global_tick_logic, NULL);
+	dock->deleteLater();
 
 	obs_log(LOG_INFO, "Daktronics plugin unloaded");
 }
