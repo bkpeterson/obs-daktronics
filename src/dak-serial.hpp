@@ -7,12 +7,9 @@
 #include <memory>
 #include <functional>
 #include <thread>
-#include <atomic>
 #include <mutex>
-#include <condition_variable>
-#include <queue>
+#include <QString>
 #include <QObject>
-#include <atomic>
 
 #include <obs-module.h>
 #include "dak-source-support.h"
@@ -53,14 +50,18 @@ public:
 	// Utility
 	void flush();
 
-	// Main thread must call this periodically to process signals
-	void processSignals();
-
-	// Check if there are pending signals to process
-	bool hasPendingSignals() const;
-
 	// Static utility to list available ports
 	static std::vector<std::string> listPorts();
+
+	// Qt signals emitted from the reader thread (delivered to this object's thread)
+Q_SIGNALS:
+	void lineReceived(const QString &line);
+	void errorOccurred(const QString &error);
+
+private Q_SLOTS:
+	// Internal slot handlers run in the object's thread and will invoke callbacks
+	void onLineReceivedSlot(const QString &line);
+	void onErrorSlot(const QString &error);
 
 	// Factory method
 	static std::unique_ptr<SerialPort> create();
@@ -80,15 +81,6 @@ protected:
 	// Thread management
 	std::unique_ptr<std::thread> readThread;
 
-	// Signal queue for thread-safe communication
-	struct Signal {
-		int type;
-		std::string data;
-	};
-
-	std::queue<Signal> signalQueue;
-	mutable std::mutex queueMutex;
-	std::condition_variable queueCondition;
 
 	// Callbacks (called from main thread)
 	LineReceivedCallback lineCallback;

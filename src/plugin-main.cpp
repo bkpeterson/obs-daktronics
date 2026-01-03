@@ -70,7 +70,7 @@ bool obs_module_load(void)
 		},
 		nullptr);
 
-	obs_add_main_render_callback(DAKDataUtils::execute_global_tick_logic, NULL);
+	//obs_add_main_render_callback(DAKDataUtils::execute_global_tick_logic, NULL);
 
 	obs_log(LOG_INFO, "Daktronics plugin loaded successfully (version %s)", PLUGIN_VERSION);
 
@@ -79,7 +79,7 @@ bool obs_module_load(void)
 
 void obs_module_unload(void)
 {
-	obs_remove_main_render_callback(DAKDataUtils::execute_global_tick_logic, NULL);
+	//obs_remove_main_render_callback(DAKDataUtils::execute_global_tick_logic, NULL);
 
 	DAKDataUtils::sync_destroy();
 	DAKDataUtils::clearSportsData();

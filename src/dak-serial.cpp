@@ -1,4 +1,5 @@
 #include "dak-serial.hpp"
+#include <QString>
 
 std::atomic<bool> exit_flag(false);
 
@@ -13,6 +14,11 @@ SerialPort::SerialPort()
 {
 	obs_log(LOG_INFO, "Creating serial port...");
 	portObj = new serial::Serial();
+
+	// Connect internal Qt signals to slots so callbacks are invoked in this object's thread
+	connect(this, &SerialPort::lineReceived, this, &SerialPort::onLineReceivedSlot);
+	connect(this, &SerialPort::errorOccurred, this, &SerialPort::onErrorSlot);
+
 }
 
 SerialPort::~SerialPort()
@@ -80,9 +86,6 @@ void SerialPort::stopReading()
 
 	reading = false;
 
-	// Wake up any waiting threads
-	queueCondition.notify_all();
-
 	exit_flag.store(true);
 	if (readThread && readThread->joinable()) {
 		readThread->join();
@@ -124,42 +127,21 @@ std::vector<std::string> SerialPort::listPorts()
 	return serial::list_ports();
 }
 
-bool SerialPort::hasPendingSignals() const
+
+// Slot implementations: these run in the object's thread and call the stored callbacks
+void SerialPort::onLineReceivedSlot(const QString &line)
 {
-	std::lock_guard<std::mutex> lock(queueMutex);
-	return !signalQueue.empty();
+	std::lock_guard<std::mutex> lock(callbackMutex);
+	if (lineCallback) {
+		lineCallback(line.toStdString());
+	}
 }
 
-void SerialPort::processSignals()
+void SerialPort::onErrorSlot(const QString &error)
 {
-	std::vector<Signal> signalsToProcess;
-
-	// Extract all pending signals
-	{
-		std::lock_guard<std::mutex> lock(queueMutex);
-		while (!signalQueue.empty()) {
-			signalsToProcess.push_back(signalQueue.front());
-			signalQueue.pop();
-		}
-	}
-
-	// Process signals outside the lock
-	std::lock_guard<std::mutex> callbackLock(callbackMutex);
-
-	for (const auto &signal : signalsToProcess) {
-		switch (signal.type) {
-		case 0:
-			if (lineCallback) {
-				lineCallback(signal.data);
-			}
-			break;
-
-		case 1:
-			if (errorCallback) {
-				errorCallback(signal.data);
-			}
-			break;
-		}
+	std::lock_guard<std::mutex> lock(callbackMutex);
+	if (errorCallback) {
+		errorCallback(error.toStdString());
 	}
 }
 
@@ -190,20 +172,10 @@ void SerialPort::readThreadFunction()
 
 void SerialPort::emitLineReceived(std::string line)
 {
-	std::lock_guard<std::mutex> lock(queueMutex);
-	Signal signal;
-	signal.type = 0;
-	signal.data = line;
-	signalQueue.push(signal);
-	queueCondition.notify_one();
+	emit lineReceived(QString::fromStdString(line));
 }
 
 void SerialPort::emitError(std::string error)
 {
-	std::lock_guard<std::mutex> lock(queueMutex);
-	Signal signal;
-	signal.type = 1;
-	signal.data = error;
-	signalQueue.push(signal);
-	queueCondition.notify_one();
+	emit errorOccurred(QString::fromStdString(error));
 }
